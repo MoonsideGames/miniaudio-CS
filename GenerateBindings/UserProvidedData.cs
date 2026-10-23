@@ -455,26 +455,26 @@ internal static class UserProvidedData
 
     internal static readonly Dictionary<string, DelegateDefinition> DelegateDefinitions = new()
     {
-        { "ma_log_callback_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:4561:17
-        { "ma_data_source_get_next_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:5851:28
-        { "ma_job_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:6395:22
-        { "ma_device_notification_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:6851:17
-        { "ma_device_data_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:6894:17
-        { "ma_stop_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:6918:17
-        { "ma_enum_devices_callback_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:7206:22
-        { "ma_read_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:9928:22
-        { "ma_seek_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:9929:22
-        { "ma_tell_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:9930:22
-        { "ma_decoder_read_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:9977:22
-        { "ma_decoder_seek_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:9978:22
-        { "ma_decoder_tell_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:9979:22
-        { "ma_encoder_write_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:10122:22
-        { "ma_encoder_seek_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:10123:22
-        { "ma_encoder_init_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:10124:22
-        { "ma_encoder_uninit_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:10125:22
-        { "ma_encoder_write_pcm_frames_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:10126:22
-        { "ma_sound_end_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:11209:17
-        { "ma_engine_process_proc", new DelegateDefinition { ReturnType = "WARN_PLACEHOLDER", Parameters = [] } }, // ../miniaudio/miniaudio.h:11279:17
+        { "ma_log_callback_proc", new DelegateDefinition { ReturnType = "void", Parameters = [("void*", "pUserData"), ("uint", "level"), ("sbyte*", "pMessage")] } }, // ../miniaudio/miniaudio.h:4561:17
+        { "ma_data_source_get_next_proc", new DelegateDefinition { ReturnType = "void*", Parameters = [("void*", "pDataSource")] } }, // ../miniaudio/miniaudio.h:5851:28
+        { "ma_job_proc", new DelegateDefinition { ReturnType = "ma_result", Parameters = [("ma_job*", "pJob")] } }, // ../miniaudio/miniaudio.h:6395:22
+        { "ma_device_notification_proc", new DelegateDefinition { ReturnType = "void", Parameters = [("ma_device_notification*", "pNotification")] } }, // ../miniaudio/miniaudio.h:6851:17
+        { "ma_device_data_proc", new DelegateDefinition { ReturnType = "void", Parameters = [("ma_device*", "pDevice"), ("void*", "pOutput"), ("void*", "pInput"), ("uint", "frameCount")] } }, // ../miniaudio/miniaudio.h:6894:17
+        { "ma_stop_proc", new DelegateDefinition { ReturnType = "void", Parameters = [("ma_device*", "pDevice")] } }, // ../miniaudio/miniaudio.h:6918:17
+        { "ma_enum_devices_callback_proc", new DelegateDefinition { ReturnType = "uint", Parameters = [("ma_context*", "pContext"), ("ma_device_type", "deviceType"), ("ma_device_info*", "pInfo"), ("void*", "pUserData")] } }, // ../miniaudio/miniaudio.h:7206:22
+        { "ma_read_proc", new DelegateDefinition { ReturnType = "ma_result", Parameters = [("void*", "pUserData"), ("void*", "pBufferOut"), ("nuint", "bytesToRead"), ("nuint*", "pBytesRead")] } }, // ../miniaudio/miniaudio.h:9928:22
+        { "ma_seek_proc", new DelegateDefinition { ReturnType = "ma_result", Parameters = [("void*", "pUserData"), ("long", "offset"), ("ma_seek_origin", "origin")] } }, // ../miniaudio/miniaudio.h:9929:22
+        { "ma_tell_proc", new DelegateDefinition { ReturnType = "ma_result", Parameters = [("void*", "pUserData"), ("long*", "pCursor")] } }, // ../miniaudio/miniaudio.h:9930:22
+        { "ma_decoder_read_proc", new DelegateDefinition { ReturnType = "ma_result", Parameters = [("ma_decoder*", "pDecoder"), ("void*", "pBufferOut"), ("nuint", "bytesToRead"), ("nuint*", "pBytesRead")] } }, // ../miniaudio/miniaudio.h:9977:22
+        { "ma_decoder_seek_proc", new DelegateDefinition { ReturnType = "ma_result", Parameters = [("ma_decoder*", "pDecoder"), ("long", "byteOffset"), ("ma_seek_origin", "origin")] } }, // ../miniaudio/miniaudio.h:9978:22
+        { "ma_decoder_tell_proc", new DelegateDefinition { ReturnType = "ma_result", Parameters = [("ma_decoder*", "pDecoder"), ("long*", "pCursor")] } }, // ../miniaudio/miniaudio.h:9979:22
+        { "ma_encoder_write_proc", new DelegateDefinition { ReturnType = "ma_result", Parameters = [("ma_encoder*", "pEncoder"), ("void*", "pBufferIn"), ("nuint", "bytesToWrite"), ("nuint*", "pBytesWritten")] } }, // ../miniaudio/miniaudio.h:10122:22
+        { "ma_encoder_seek_proc", new DelegateDefinition { ReturnType = "ma_result", Parameters = [("ma_encoder*", "pEncoder"), ("long", "offset"), ("ma_seek_origin", "origin")] } }, // ../miniaudio/miniaudio.h:10123:22
+        { "ma_encoder_init_proc", new DelegateDefinition { ReturnType = "ma_result", Parameters = [("ma_encoder*", "pEncoder")] } }, // ../miniaudio/miniaudio.h:10124:22
+        { "ma_encoder_uninit_proc", new DelegateDefinition { ReturnType = "void", Parameters = [("ma_encoder*", "pEncoder")] } }, // ../miniaudio/miniaudio.h:10125:22
+        { "ma_encoder_write_pcm_frames_proc", new DelegateDefinition { ReturnType = "ma_result", Parameters = [("ma_encoder*", "pEncoder"), ("void*", "pFramesIn"), ("ulong", "frameCount"), ("ulong*", "pFramesWritten")] } }, // ../miniaudio/miniaudio.h:10126:22
+        { "ma_sound_end_proc", new DelegateDefinition { ReturnType = "void", Parameters = [("void*", "pUserData"), ("ma_sound*", "pSound")] } }, // ../miniaudio/miniaudio.h:11209:17
+        { "ma_engine_process_proc", new DelegateDefinition { ReturnType = "void", Parameters = [("void*", "pUserData"), ("float*", "pFramesOut"), ("ulong", "frameCount")] } }, // ../miniaudio/miniaudio.h:11279:17
     };
 
     internal static readonly Dictionary<string, string[]> FlagEnumDefinitions = new()

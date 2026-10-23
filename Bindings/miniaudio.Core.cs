@@ -360,7 +360,8 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial IntPtr ma_version_string(); // WARN_UNKNOWN_POINTER_PARAMETER
 
-    // public delegate WARN_PLACEHOLDER ma_log_callback_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void ma_log_callback_proc(void* pUserData, uint level, sbyte* pMessage);
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_log_callback
@@ -2351,7 +2352,8 @@ public static unsafe partial class Interop
         public uint flags;
     }
 
-    // public delegate WARN_PLACEHOLDER ma_data_source_get_next_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void* ma_data_source_get_next_proc(void* pDataSource);
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_data_source_config
@@ -3126,7 +3128,8 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_slot_allocator_free(IntPtr pAllocator, ulong slot);
 
-    // public delegate WARN_PLACEHOLDER ma_job_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate ma_result ma_job_proc(ma_job* pJob);
 
     public enum ma_job_type
     {
@@ -3511,11 +3514,14 @@ public static unsafe partial class Interop
 
     }
 
-    // public delegate WARN_PLACEHOLDER ma_device_notification_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void ma_device_notification_proc(ma_device_notification* pNotification);
 
-    // public delegate WARN_PLACEHOLDER ma_device_data_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void ma_device_data_proc(ma_device* pDevice, void* pOutput, void* pInput, uint frameCount);
 
-    // public delegate WARN_PLACEHOLDER ma_stop_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void ma_stop_proc(ma_device* pDevice);
 
     public enum ma_device_type
     {
@@ -3869,7 +3875,8 @@ public static unsafe partial class Interop
 
     }
 
-    // public delegate WARN_PLACEHOLDER ma_enum_devices_callback_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate uint ma_enum_devices_callback_proc(ma_context* pContext, ma_device_type deviceType, ma_device_info* pInfo, void* pUserData);
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_device_descriptor
@@ -4879,11 +4886,14 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_default_vfs_init(IntPtr pVFS, IntPtr pAllocationCallbacks);
 
-    // public delegate WARN_PLACEHOLDER ma_read_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate ma_result ma_read_proc(void* pUserData, void* pBufferOut, nuint bytesToRead, nuint* pBytesRead);
 
-    // public delegate WARN_PLACEHOLDER ma_seek_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate ma_result ma_seek_proc(void* pUserData, long offset, ma_seek_origin origin);
 
-    // public delegate WARN_PLACEHOLDER ma_tell_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate ma_result ma_tell_proc(void* pUserData, long* pCursor);
 
     public enum ma_encoding_format
     {
@@ -4915,11 +4925,14 @@ public static unsafe partial class Interop
         public IntPtr onUninit; // WARN_ANONYMOUS_FUNCTION_POINTER
     }
 
-    // public delegate WARN_PLACEHOLDER ma_decoder_read_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate ma_result ma_decoder_read_proc(ma_decoder* pDecoder, void* pBufferOut, nuint bytesToRead, nuint* pBytesRead);
 
-    // public delegate WARN_PLACEHOLDER ma_decoder_seek_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate ma_result ma_decoder_seek_proc(ma_decoder* pDecoder, long byteOffset, ma_seek_origin origin);
 
-    // public delegate WARN_PLACEHOLDER ma_decoder_tell_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate ma_result ma_decoder_tell_proc(ma_decoder* pDecoder, long* pCursor);
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_decoder_config
@@ -5059,15 +5072,20 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_decode_memory(IntPtr pData, UIntPtr dataSize, IntPtr pConfig, IntPtr pFrameCountOut, IntPtr ppPCMFramesOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
-    // public delegate WARN_PLACEHOLDER ma_encoder_write_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate ma_result ma_encoder_write_proc(ma_encoder* pEncoder, void* pBufferIn, nuint bytesToWrite, nuint* pBytesWritten);
 
-    // public delegate WARN_PLACEHOLDER ma_encoder_seek_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate ma_result ma_encoder_seek_proc(ma_encoder* pEncoder, long offset, ma_seek_origin origin);
 
-    // public delegate WARN_PLACEHOLDER ma_encoder_init_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate ma_result ma_encoder_init_proc(ma_encoder* pEncoder);
 
-    // public delegate WARN_PLACEHOLDER ma_encoder_uninit_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void ma_encoder_uninit_proc(ma_encoder* pEncoder);
 
-    // public delegate WARN_PLACEHOLDER ma_encoder_write_pcm_frames_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate ma_result ma_encoder_write_pcm_frames_proc(ma_encoder* pEncoder, void* pFramesIn, ulong frameCount, ulong* pFramesWritten);
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_encoder_config
@@ -6497,7 +6515,8 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ma_engine_node_uninit(IntPtr pEngineNode, IntPtr pAllocationCallbacks);
 
-    // public delegate WARN_PLACEHOLDER ma_sound_end_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void ma_sound_end_proc(void* pUserData, ma_sound* pSound);
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_sound_config
@@ -6565,7 +6584,8 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_sound_config ma_sound_group_config_init_2(IntPtr pEngine);
 
-    // public delegate WARN_PLACEHOLDER ma_engine_process_proc();
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void ma_engine_process_proc(void* pUserData, float* pFramesOut, ulong frameCount);
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_engine_config
