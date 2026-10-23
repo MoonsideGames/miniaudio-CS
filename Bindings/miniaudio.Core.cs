@@ -412,6 +412,15 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_log_postf(IntPtr pLog, uint level, ref byte pFormat); // WARN_UNKNOWN_POINTER_PARAMETER
 
+    [StructLayout(LayoutKind.Explicit)]
+    public struct ma_biquad_coefficient
+    {
+        [FieldOffset(0)]
+        public float f32;
+        [FieldOffset(0)]
+        public int s32;
+    }
+
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_biquad_config
     {
@@ -434,6 +443,56 @@ public static unsafe partial class Interop
     {
         public ma_format format;
         public uint channels;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct b0
+        {
+            [FieldOffset(0)]
+            public float f32;
+            [FieldOffset(0)]
+            public int s32;
+        }
+
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct b1
+        {
+            [FieldOffset(0)]
+            public float f32;
+            [FieldOffset(0)]
+            public int s32;
+        }
+
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct b2
+        {
+            [FieldOffset(0)]
+            public float f32;
+            [FieldOffset(0)]
+            public int s32;
+        }
+
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct a1
+        {
+            [FieldOffset(0)]
+            public float f32;
+            [FieldOffset(0)]
+            public int s32;
+        }
+
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct a2
+        {
+            [FieldOffset(0)]
+            public float f32;
+            [FieldOffset(0)]
+            public int s32;
+        }
+
+
         public IntPtr pR1;
         public IntPtr pR2;
         public IntPtr _pHeap;
@@ -505,6 +564,16 @@ public static unsafe partial class Interop
     {
         public ma_format format;
         public uint channels;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct a
+        {
+            [FieldOffset(0)]
+            public float f32;
+            [FieldOffset(0)]
+            public int s32;
+        }
+
+
         public IntPtr pR1;
         public IntPtr _pHeap;
         public uint _ownsHeap;
@@ -673,6 +742,16 @@ public static unsafe partial class Interop
     {
         public ma_format format;
         public uint channels;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct a
+        {
+            [FieldOffset(0)]
+            public float f32;
+            [FieldOffset(0)]
+            public int s32;
+        }
+
+
         public IntPtr pR1;
         public IntPtr _pHeap;
         public uint _ownsHeap;
@@ -1718,6 +1797,26 @@ public static unsafe partial class Interop
         public uint inAdvanceFrac;
         public uint inTimeInt;
         public uint inTimeFrac;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct x0
+        {
+            [FieldOffset(0)]
+            public float* f32;
+            [FieldOffset(0)]
+            public IntPtr s16;
+        }
+
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct x1
+        {
+            [FieldOffset(0)]
+            public float* f32;
+            [FieldOffset(0)]
+            public IntPtr s16;
+        }
+
+
         public ma_lpf lpf;
         public IntPtr _pHeap;
         public uint _ownsHeap;
@@ -1825,6 +1924,14 @@ public static unsafe partial class Interop
         public uint channels;
         public uint sampleRateIn;
         public uint sampleRateOut;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct state
+        {
+            [FieldOffset(0)]
+            public ma_linear_resampler linear;
+        }
+
+
         public IntPtr _pHeap;
         public uint _ownsHeap;
     }
@@ -1923,6 +2030,16 @@ public static unsafe partial class Interop
         public IntPtr pChannelMapIn;
         public IntPtr pChannelMapOut;
         public IntPtr pShuffleTable;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct weights
+        {
+            [FieldOffset(0)]
+            public float** f32;
+            [FieldOffset(0)]
+            public IntPtr* s16;
+        }
+
+
         public IntPtr _pHeap;
         public uint _ownsHeap;
     }
@@ -3031,8 +3148,179 @@ public static unsafe partial class Interop
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_job
     {
+        [StructLayout(LayoutKind.Explicit)]
+        public struct toc
+        {
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct breakup
+            {
+                public ushort code;
+                public ushort slot;
+                public uint refcount;
+            }
+
+
+            [FieldOffset(0)]
+            public ulong allocation;
+        }
+
+
         public ulong next;
         public uint order;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct data
+        {
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct custom
+            {
+                public IntPtr proc; // ma_job_proc
+                public ulong data0;
+                public ulong data1;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Explicit)]
+            public struct resourceManager
+            {
+                [FieldOffset(0)]
+                [StructLayout(LayoutKind.Sequential)]
+                public struct loadDataBufferNode
+                {
+                    public IntPtr pResourceManager;
+                    public IntPtr pDataBufferNode;
+                    public byte* pFilePath;
+                    public byte* pFilePathW;
+                    public uint flags;
+                    public IntPtr pInitNotification;
+                    public IntPtr pDoneNotification;
+                    public IntPtr pInitFence;
+                    public IntPtr pDoneFence;
+                }
+
+
+                [FieldOffset(0)]
+                [StructLayout(LayoutKind.Sequential)]
+                public struct freeDataBufferNode
+                {
+                    public IntPtr pResourceManager;
+                    public IntPtr pDataBufferNode;
+                    public IntPtr pDoneNotification;
+                    public IntPtr pDoneFence;
+                }
+
+
+                [FieldOffset(0)]
+                [StructLayout(LayoutKind.Sequential)]
+                public struct pageDataBufferNode
+                {
+                    public IntPtr pResourceManager;
+                    public IntPtr pDataBufferNode;
+                    public IntPtr pDecoder;
+                    public IntPtr pDoneNotification;
+                    public IntPtr pDoneFence;
+                }
+
+
+                [FieldOffset(0)]
+                [StructLayout(LayoutKind.Sequential)]
+                public struct loadDataBuffer
+                {
+                    public IntPtr pDataBuffer;
+                    public IntPtr pInitNotification;
+                    public IntPtr pDoneNotification;
+                    public IntPtr pInitFence;
+                    public IntPtr pDoneFence;
+                    public ulong rangeBegInPCMFrames;
+                    public ulong rangeEndInPCMFrames;
+                    public ulong loopPointBegInPCMFrames;
+                    public ulong loopPointEndInPCMFrames;
+                    public uint isLooping;
+                }
+
+
+                [FieldOffset(0)]
+                [StructLayout(LayoutKind.Sequential)]
+                public struct freeDataBuffer
+                {
+                    public IntPtr pDataBuffer;
+                    public IntPtr pDoneNotification;
+                    public IntPtr pDoneFence;
+                }
+
+
+                [FieldOffset(0)]
+                [StructLayout(LayoutKind.Sequential)]
+                public struct loadDataStream
+                {
+                    public IntPtr pDataStream;
+                    public byte* pFilePath;
+                    public byte* pFilePathW;
+                    public ulong initialSeekPoint;
+                    public IntPtr pInitNotification;
+                    public IntPtr pInitFence;
+                }
+
+
+                [FieldOffset(0)]
+                [StructLayout(LayoutKind.Sequential)]
+                public struct freeDataStream
+                {
+                    public IntPtr pDataStream;
+                    public IntPtr pDoneNotification;
+                    public IntPtr pDoneFence;
+                }
+
+
+                [FieldOffset(0)]
+                [StructLayout(LayoutKind.Sequential)]
+                public struct pageDataStream
+                {
+                    public IntPtr pDataStream;
+                    public uint pageIndex;
+                }
+
+
+                [FieldOffset(0)]
+                [StructLayout(LayoutKind.Sequential)]
+                public struct seekDataStream
+                {
+                    public IntPtr pDataStream;
+                    public ulong frameIndex;
+                }
+
+
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Explicit)]
+            public struct device
+            {
+                [FieldOffset(0)]
+                [StructLayout(LayoutKind.Explicit)]
+                public struct aaudio
+                {
+                    [FieldOffset(0)]
+                    [StructLayout(LayoutKind.Sequential)]
+                    public struct reroute
+                    {
+                        public IntPtr pDevice;
+                        public uint deviceType;
+                    }
+
+
+                }
+
+
+            }
+
+
+        }
+
+
     }
 
     [LibraryImport(nativeLibName)]
@@ -3183,6 +3471,44 @@ public static unsafe partial class Interop
     {
         public IntPtr pDevice;
         public ma_device_notification_type type;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct data
+        {
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct started
+            {
+                public int _unused;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct stopped
+            {
+                public int _unused;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct rerouted
+            {
+                public int _unused;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct interruption
+            {
+                public int _unused;
+            }
+
+
+        }
+
+
     }
 
     // public delegate WARN_PLACEHOLDER ma_device_notification_proc();
@@ -3305,6 +3631,61 @@ public static unsafe partial class Interop
         ma_aaudio_allow_capture_by_none = 3,
     }
 
+    [StructLayout(LayoutKind.Explicit)]
+    public struct ma_timer
+    {
+        [FieldOffset(0)]
+        public long counter;
+        [FieldOffset(0)]
+        public double counterD;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    public struct ma_device_id
+    {
+        [FieldOffset(0)]
+        public fixed ushort wasapi[64];
+        [FieldOffset(0)]
+        public fixed byte dsound[16];
+        [FieldOffset(0)]
+        public uint winmm;
+        [FieldOffset(0)]
+        public fixed byte alsa[256];
+        [FieldOffset(0)]
+        public fixed byte pulse[256];
+        [FieldOffset(0)]
+        public int jack;
+        [FieldOffset(0)]
+        public fixed byte coreaudio[256];
+        [FieldOffset(0)]
+        public fixed byte sndio[256];
+        [FieldOffset(0)]
+        public fixed byte audio4[256];
+        [FieldOffset(0)]
+        public fixed byte oss[64];
+        [FieldOffset(0)]
+        public int aaudio;
+        [FieldOffset(0)]
+        public uint opensl;
+        [FieldOffset(0)]
+        public fixed byte webaudio[32];
+        [FieldOffset(0)]
+        [StructLayout(LayoutKind.Explicit)]
+        public struct custom
+        {
+            [FieldOffset(0)]
+            public int i;
+            [FieldOffset(0)]
+            public fixed byte s[256];
+            [FieldOffset(0)]
+            public IntPtr p;
+        }
+
+
+        [FieldOffset(0)]
+        public int nullbackend;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_device_id_equal(IntPtr pA, IntPtr pB);
@@ -3312,6 +3693,53 @@ public static unsafe partial class Interop
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_device_info
     {
+        [StructLayout(LayoutKind.Explicit)]
+        public struct id
+        {
+            [FieldOffset(0)]
+            public fixed ushort wasapi[64];
+            [FieldOffset(0)]
+            public fixed byte dsound[16];
+            [FieldOffset(0)]
+            public uint winmm;
+            [FieldOffset(0)]
+            public fixed byte alsa[256];
+            [FieldOffset(0)]
+            public fixed byte pulse[256];
+            [FieldOffset(0)]
+            public int jack;
+            [FieldOffset(0)]
+            public fixed byte coreaudio[256];
+            [FieldOffset(0)]
+            public fixed byte sndio[256];
+            [FieldOffset(0)]
+            public fixed byte audio4[256];
+            [FieldOffset(0)]
+            public fixed byte oss[64];
+            [FieldOffset(0)]
+            public int aaudio;
+            [FieldOffset(0)]
+            public uint opensl;
+            [FieldOffset(0)]
+            public fixed byte webaudio[32];
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Explicit)]
+            public struct custom
+            {
+                [FieldOffset(0)]
+                public int i;
+                [FieldOffset(0)]
+                public fixed byte s[256];
+                [FieldOffset(0)]
+                public IntPtr p;
+            }
+
+
+            [FieldOffset(0)]
+            public int nullbackend;
+        }
+
+
         public fixed byte name[256];
         public uint isDefault;
         public uint nativeDataFormatCount;
@@ -3532,6 +3960,40 @@ public static unsafe partial class Interop
     {
         public int code;
         public IntPtr pEvent;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct data
+        {
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct quit
+            {
+                public int _unused;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct createAudioClient
+            {
+                public ma_device_type deviceType;
+                public IntPtr pAudioClient;
+                public IntPtr* ppAudioClientService;
+                public * pResult;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct releaseAudioClient
+            {
+                public IntPtr pDevice;
+                public ma_device_type deviceType;
+            }
+
+
+        }
+
+
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -3551,6 +4013,212 @@ public static unsafe partial class Interop
         public uint playbackDeviceInfoCount;
         public uint captureDeviceInfoCount;
         public IntPtr pDeviceInfos;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct
+        {
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct alsa
+            {
+                public IntPtr asoundSO;
+                public IntPtr snd_pcm_open;
+                public IntPtr snd_pcm_close;
+                public IntPtr snd_pcm_hw_params_sizeof;
+                public IntPtr snd_pcm_hw_params_any;
+                public IntPtr snd_pcm_hw_params_set_format;
+                public IntPtr snd_pcm_hw_params_set_format_first;
+                public IntPtr snd_pcm_hw_params_get_format_mask;
+                public IntPtr snd_pcm_hw_params_set_channels;
+                public IntPtr snd_pcm_hw_params_set_channels_near;
+                public IntPtr snd_pcm_hw_params_set_channels_minmax;
+                public IntPtr snd_pcm_hw_params_set_rate_resample;
+                public IntPtr snd_pcm_hw_params_set_rate;
+                public IntPtr snd_pcm_hw_params_set_rate_near;
+                public IntPtr snd_pcm_hw_params_set_rate_minmax;
+                public IntPtr snd_pcm_hw_params_set_buffer_size_near;
+                public IntPtr snd_pcm_hw_params_set_periods_near;
+                public IntPtr snd_pcm_hw_params_set_access;
+                public IntPtr snd_pcm_hw_params_get_format;
+                public IntPtr snd_pcm_hw_params_get_channels;
+                public IntPtr snd_pcm_hw_params_get_channels_min;
+                public IntPtr snd_pcm_hw_params_get_channels_max;
+                public IntPtr snd_pcm_hw_params_get_rate;
+                public IntPtr snd_pcm_hw_params_get_rate_min;
+                public IntPtr snd_pcm_hw_params_get_rate_max;
+                public IntPtr snd_pcm_hw_params_get_buffer_size;
+                public IntPtr snd_pcm_hw_params_get_periods;
+                public IntPtr snd_pcm_hw_params_get_access;
+                public IntPtr snd_pcm_hw_params_test_format;
+                public IntPtr snd_pcm_hw_params_test_channels;
+                public IntPtr snd_pcm_hw_params_test_rate;
+                public IntPtr snd_pcm_hw_params;
+                public IntPtr snd_pcm_sw_params_sizeof;
+                public IntPtr snd_pcm_sw_params_current;
+                public IntPtr snd_pcm_sw_params_get_boundary;
+                public IntPtr snd_pcm_sw_params_set_avail_min;
+                public IntPtr snd_pcm_sw_params_set_start_threshold;
+                public IntPtr snd_pcm_sw_params_set_stop_threshold;
+                public IntPtr snd_pcm_sw_params;
+                public IntPtr snd_pcm_format_mask_sizeof;
+                public IntPtr snd_pcm_format_mask_test;
+                public IntPtr snd_pcm_get_chmap;
+                public IntPtr snd_pcm_state;
+                public IntPtr snd_pcm_prepare;
+                public IntPtr snd_pcm_start;
+                public IntPtr snd_pcm_drop;
+                public IntPtr snd_pcm_drain;
+                public IntPtr snd_pcm_reset;
+                public IntPtr snd_device_name_hint;
+                public IntPtr snd_device_name_get_hint;
+                public IntPtr snd_card_get_index;
+                public IntPtr snd_device_name_free_hint;
+                public IntPtr snd_pcm_mmap_begin;
+                public IntPtr snd_pcm_mmap_commit;
+                public IntPtr snd_pcm_recover;
+                public IntPtr snd_pcm_readi;
+                public IntPtr snd_pcm_writei;
+                public IntPtr snd_pcm_avail;
+                public IntPtr snd_pcm_avail_update;
+                public IntPtr snd_pcm_wait;
+                public IntPtr snd_pcm_nonblock;
+                public IntPtr snd_pcm_info;
+                public IntPtr snd_pcm_info_sizeof;
+                public IntPtr snd_pcm_info_get_name;
+                public IntPtr snd_pcm_poll_descriptors;
+                public IntPtr snd_pcm_poll_descriptors_count;
+                public IntPtr snd_pcm_poll_descriptors_revents;
+                public IntPtr snd_config_update_free_global;
+                public IntPtr internalDeviceEnumLock;
+                public uint useVerboseDeviceEnumeration;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct pulse
+            {
+                public IntPtr pulseSO;
+                public IntPtr pa_mainloop_new;
+                public IntPtr pa_mainloop_free;
+                public IntPtr pa_mainloop_quit;
+                public IntPtr pa_mainloop_get_api;
+                public IntPtr pa_mainloop_iterate;
+                public IntPtr pa_mainloop_wakeup;
+                public IntPtr pa_threaded_mainloop_new;
+                public IntPtr pa_threaded_mainloop_free;
+                public IntPtr pa_threaded_mainloop_start;
+                public IntPtr pa_threaded_mainloop_stop;
+                public IntPtr pa_threaded_mainloop_lock;
+                public IntPtr pa_threaded_mainloop_unlock;
+                public IntPtr pa_threaded_mainloop_wait;
+                public IntPtr pa_threaded_mainloop_signal;
+                public IntPtr pa_threaded_mainloop_accept;
+                public IntPtr pa_threaded_mainloop_get_retval;
+                public IntPtr pa_threaded_mainloop_get_api;
+                public IntPtr pa_threaded_mainloop_in_thread;
+                public IntPtr pa_threaded_mainloop_set_name;
+                public IntPtr pa_context_new;
+                public IntPtr pa_context_unref;
+                public IntPtr pa_context_connect;
+                public IntPtr pa_context_disconnect;
+                public IntPtr pa_context_set_state_callback;
+                public IntPtr pa_context_get_state;
+                public IntPtr pa_context_get_sink_info_list;
+                public IntPtr pa_context_get_source_info_list;
+                public IntPtr pa_context_get_sink_info_by_name;
+                public IntPtr pa_context_get_source_info_by_name;
+                public IntPtr pa_operation_unref;
+                public IntPtr pa_operation_get_state;
+                public IntPtr pa_channel_map_init_extend;
+                public IntPtr pa_channel_map_valid;
+                public IntPtr pa_channel_map_compatible;
+                public IntPtr pa_stream_new;
+                public IntPtr pa_stream_unref;
+                public IntPtr pa_stream_connect_playback;
+                public IntPtr pa_stream_connect_record;
+                public IntPtr pa_stream_disconnect;
+                public IntPtr pa_stream_get_state;
+                public IntPtr pa_stream_get_sample_spec;
+                public IntPtr pa_stream_get_channel_map;
+                public IntPtr pa_stream_get_buffer_attr;
+                public IntPtr pa_stream_set_buffer_attr;
+                public IntPtr pa_stream_get_device_name;
+                public IntPtr pa_stream_set_write_callback;
+                public IntPtr pa_stream_set_read_callback;
+                public IntPtr pa_stream_set_suspended_callback;
+                public IntPtr pa_stream_set_moved_callback;
+                public IntPtr pa_stream_is_suspended;
+                public IntPtr pa_stream_flush;
+                public IntPtr pa_stream_drain;
+                public IntPtr pa_stream_is_corked;
+                public IntPtr pa_stream_cork;
+                public IntPtr pa_stream_trigger;
+                public IntPtr pa_stream_begin_write;
+                public IntPtr pa_stream_write;
+                public IntPtr pa_stream_peek;
+                public IntPtr pa_stream_drop;
+                public IntPtr pa_stream_writable_size;
+                public IntPtr pa_stream_readable_size;
+                public IntPtr pMainLoop;
+                public IntPtr pPulseContext;
+                public byte* pApplicationName;
+                public byte* pServerName;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct jack
+            {
+                public IntPtr jackSO;
+                public IntPtr jack_client_open;
+                public IntPtr jack_client_close;
+                public IntPtr jack_client_name_size;
+                public IntPtr jack_set_process_callback;
+                public IntPtr jack_set_buffer_size_callback;
+                public IntPtr jack_on_shutdown;
+                public IntPtr jack_get_sample_rate;
+                public IntPtr jack_get_buffer_size;
+                public IntPtr jack_get_ports;
+                public IntPtr jack_activate;
+                public IntPtr jack_deactivate;
+                public IntPtr jack_connect;
+                public IntPtr jack_port_register;
+                public IntPtr jack_port_name;
+                public IntPtr jack_port_get_buffer;
+                public IntPtr jack_free;
+                public byte* pClientName;
+                public uint tryStartServer;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct null_backend
+            {
+                public int _unused;
+            }
+
+
+        }
+
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct
+        {
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct posix
+            {
+                public int _unused;
+            }
+
+
+            [FieldOffset(0)]
+            public int _unused;
+        }
+
+
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -3597,6 +4265,53 @@ public static unsafe partial class Interop
         public struct playback
         {
             public IntPtr pID;
+            [StructLayout(LayoutKind.Explicit)]
+            public struct id
+            {
+                [FieldOffset(0)]
+                public fixed ushort wasapi[64];
+                [FieldOffset(0)]
+                public fixed byte dsound[16];
+                [FieldOffset(0)]
+                public uint winmm;
+                [FieldOffset(0)]
+                public fixed byte alsa[256];
+                [FieldOffset(0)]
+                public fixed byte pulse[256];
+                [FieldOffset(0)]
+                public int jack;
+                [FieldOffset(0)]
+                public fixed byte coreaudio[256];
+                [FieldOffset(0)]
+                public fixed byte sndio[256];
+                [FieldOffset(0)]
+                public fixed byte audio4[256];
+                [FieldOffset(0)]
+                public fixed byte oss[64];
+                [FieldOffset(0)]
+                public int aaudio;
+                [FieldOffset(0)]
+                public uint opensl;
+                [FieldOffset(0)]
+                public fixed byte webaudio[32];
+                [FieldOffset(0)]
+                [StructLayout(LayoutKind.Explicit)]
+                public struct custom
+                {
+                    [FieldOffset(0)]
+                    public int i;
+                    [FieldOffset(0)]
+                    public fixed byte s[256];
+                    [FieldOffset(0)]
+                    public IntPtr p;
+                }
+
+
+                [FieldOffset(0)]
+                public int nullbackend;
+            }
+
+
             public fixed byte name[256];
             public ma_share_mode shareMode;
             public ma_format format;
@@ -3625,6 +4340,53 @@ public static unsafe partial class Interop
         public struct capture
         {
             public IntPtr pID;
+            [StructLayout(LayoutKind.Explicit)]
+            public struct id
+            {
+                [FieldOffset(0)]
+                public fixed ushort wasapi[64];
+                [FieldOffset(0)]
+                public fixed byte dsound[16];
+                [FieldOffset(0)]
+                public uint winmm;
+                [FieldOffset(0)]
+                public fixed byte alsa[256];
+                [FieldOffset(0)]
+                public fixed byte pulse[256];
+                [FieldOffset(0)]
+                public int jack;
+                [FieldOffset(0)]
+                public fixed byte coreaudio[256];
+                [FieldOffset(0)]
+                public fixed byte sndio[256];
+                [FieldOffset(0)]
+                public fixed byte audio4[256];
+                [FieldOffset(0)]
+                public fixed byte oss[64];
+                [FieldOffset(0)]
+                public int aaudio;
+                [FieldOffset(0)]
+                public uint opensl;
+                [FieldOffset(0)]
+                public fixed byte webaudio[32];
+                [FieldOffset(0)]
+                [StructLayout(LayoutKind.Explicit)]
+                public struct custom
+                {
+                    [FieldOffset(0)]
+                    public int i;
+                    [FieldOffset(0)]
+                    public fixed byte s[256];
+                    [FieldOffset(0)]
+                    public IntPtr p;
+                }
+
+
+                [FieldOffset(0)]
+                public int nullbackend;
+            }
+
+
             public fixed byte name[256];
             public ma_share_mode shareMode;
             public ma_format format;
@@ -3642,6 +4404,81 @@ public static unsafe partial class Interop
             public IntPtr pIntermediaryBuffer;
             public uint intermediaryBufferCap;
             public uint intermediaryBufferLen;
+        }
+
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct
+        {
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct alsa
+            {
+                public IntPtr pPCMPlayback;
+                public IntPtr pPCMCapture;
+                public IntPtr pPollDescriptorsPlayback;
+                public IntPtr pPollDescriptorsCapture;
+                public int pollDescriptorCountPlayback;
+                public int pollDescriptorCountCapture;
+                public int wakeupfdPlayback;
+                public int wakeupfdCapture;
+                public byte isUsingMMapPlayback;
+                public byte isUsingMMapCapture;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct pulse
+            {
+                public IntPtr pMainLoop;
+                public IntPtr pPulseContext;
+                public IntPtr pStreamPlayback;
+                public IntPtr pStreamCapture;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct jack
+            {
+                public IntPtr pClient;
+                public IntPtr ppPortsPlayback;
+                public IntPtr ppPortsCapture;
+                public float* pIntermediaryBufferPlayback;
+                public float* pIntermediaryBufferCapture;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct null_device
+            {
+                public IntPtr deviceThread;
+                public ma_event operationEvent;
+                public ma_event operationCompletionEvent;
+                public ma_semaphore operationSemaphore;
+                public uint operation;
+                public ma_result operationResult;
+                [StructLayout(LayoutKind.Explicit)]
+                public struct timer
+                {
+                    [FieldOffset(0)]
+                    public long counter;
+                    [FieldOffset(0)]
+                    public double counterD;
+                }
+
+
+                public double priorRunTime;
+                public uint currentPeriodFramesRemainingPlayback;
+                public uint currentPeriodFramesRemainingCapture;
+                public ulong lastProcessedFramePlayback;
+                public ulong lastProcessedFrameCapture;
+                public ma_atomic_bool32 isStarted;
+            }
+
+
         }
 
 
@@ -4123,6 +4960,31 @@ public static unsafe partial class Interop
         public ulong inputCacheConsumed;
         public ulong inputCacheRemaining;
         public ma_allocation_callbacks allocationCallbacks;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct data
+        {
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct vfs
+            {
+                public IntPtr pVFS;
+                public IntPtr file;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct memory
+            {
+                public IntPtr pData;
+                public UIntPtr dataSize;
+                public UIntPtr currentReadPos;
+            }
+
+
+        }
+
+
     }
 
     [LibraryImport(nativeLibName)]
@@ -4232,6 +5094,21 @@ public static unsafe partial class Interop
         public IntPtr onWritePCMFrames; // ma_encoder_write_pcm_frames_proc
         public IntPtr pUserData;
         public IntPtr pInternalEncoder;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct data
+        {
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct vfs
+            {
+                public IntPtr pVFS;
+                public IntPtr file;
+            }
+
+
+        }
+
+
     }
 
     [LibraryImport(nativeLibName)]
@@ -4408,6 +5285,30 @@ public static unsafe partial class Interop
         public ma_data_source_base ds;
         public ma_noise_config config;
         public ma_lcg lcg;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct state
+        {
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct pink
+            {
+                public double** bin;
+                public double* accumulation;
+                public IntPtr counter;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct brownian
+            {
+                public double* accumulation;
+            }
+
+
+        }
+
+
         public IntPtr _pHeap;
         public uint _ownsHeap;
     }
@@ -4509,6 +5410,44 @@ public static unsafe partial class Interop
     public struct ma_resource_manager_data_supply
     {
         public ma_resource_manager_data_supply_type type;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct backend
+        {
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct encoded
+            {
+                public IntPtr pData;
+                public UIntPtr sizeInBytes;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct decoded
+            {
+                public IntPtr pData;
+                public ulong totalFrameCount;
+                public ulong decodedFrameCount;
+                public ma_format format;
+                public uint channels;
+                public uint sampleRate;
+            }
+
+
+            [FieldOffset(0)]
+            [StructLayout(LayoutKind.Sequential)]
+            public struct decodedPaged
+            {
+                public ma_paged_audio_buffer_data data;
+                public ulong decodedFrameCount;
+                public uint sampleRate;
+            }
+
+
+        }
+
+
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -4540,6 +5479,18 @@ public static unsafe partial class Interop
         public ma_result result;
         public uint isLooping;
         public ma_atomic_bool32 isConnectorInitialized;
+        [StructLayout(LayoutKind.Explicit)]
+        public struct connector
+        {
+            [FieldOffset(0)]
+            public ma_decoder decoder;
+            [FieldOffset(0)]
+            public ma_audio_buffer buffer;
+            [FieldOffset(0)]
+            public ma_paged_audio_buffer pagedBuffer;
+        }
+
+
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -4568,6 +5519,16 @@ public static unsafe partial class Interop
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_resource_manager_data_source
     {
+        [StructLayout(LayoutKind.Explicit)]
+        public struct backend
+        {
+            [FieldOffset(0)]
+            public ma_resource_manager_data_buffer buffer;
+            [FieldOffset(0)]
+            public ma_resource_manager_data_stream stream;
+        }
+
+
         public uint flags;
         public uint executionCounter;
         public uint executionPointer;

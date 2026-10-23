@@ -20,13 +20,6 @@ internal static partial class Program
 
         public bool ContainsBitfield { get; set; }
         public string BitfieldType { get; set; } = "";
-
-        public void Reset()
-        {
-            ContainsBitfield = false;
-            BitfieldType = "";
-            OffsetFields.Clear();
-        }
     }
 
     private class FunctionSignatureType
@@ -316,9 +309,21 @@ internal static partial class Program
 
                     definitions.Append(ConstructStruct(entry.Name!, type));
                 }
+                else if (entry.Type!.Name == "" && entry.Type!.Tag == "union")
+                {
+                    var type = entry.Type!;
+
+                    // workaround for typedef to typedef'd union
+                    if (entry.Type.Fields == null)
+                    {
+                        type = AnonymousTypeIDMap[type.ID!.Value].Type!;
+                    }
+
+                    definitions.Append(ConstructUnion(entry.Name!, type));
+                }
             }
 
-            else if ((entry.Tag == "struct") || (entry.Tag == "union"))
+            else if (entry.Tag == "struct")
             {
                 TypedefMap[entry.Name!] = entry;
                 if (entry.Fields!.Length == 0)
@@ -328,6 +333,18 @@ internal static partial class Program
 
                 DefinedTypes.Add(entry.Name!);
                 definitions.Append(ConstructStruct(structName: entry.Name!, entry));
+            }
+
+            else if (entry.Tag == "union")
+            {
+                TypedefMap[entry.Name!] = entry;
+                if (entry.Fields!.Length == 0)
+                {
+                    continue;
+                }
+
+                DefinedTypes.Add(entry.Name!);
+                definitions.Append(ConstructUnion(entry.Name!, entry));
             }
 
             else if (entry.Tag == "function")
@@ -1221,6 +1238,10 @@ public static unsafe class Interop
             else if ((fieldTypeName == "") && fieldTypedef.Tag == "union")
             {
                 // TODO UNION OUTPUT
+                structDefinition.OffsetFields.Add((
+                    byteOffset + (uint) field.BitOffset! / 8,
+                    ConstructUnion(field.Name!, fieldTypedef)
+                ));
             }
             else if (fieldTypeName == "" && fieldTypedef.Tag == "enum" && fieldTypedef.ID.HasValue)
             {
@@ -1348,6 +1369,28 @@ public static unsafe class Interop
                 );
             }
         }
+    }
+
+    // A "union" is just a struct with explicitly defined offsets.
+    private static string ConstructUnion(string unionName, RawFFIEntry entry)
+    {
+        var structDefinition = new StructDefinitionType();
+        var definitions = new StringBuilder();
+
+        ConstructStructFields(structDefinition, entry, typePrefix: $"{unionName}");
+
+        definitions.Append("[StructLayout(LayoutKind.Explicit)]\n");
+        definitions.Append($"public struct {unionName}\n{{\n");
+
+        foreach (var (offset, field) in structDefinition.OffsetFields)
+        {
+            definitions.Append($"[FieldOffset({offset})]\n");
+            definitions.Append($"{field}\n");
+        }
+
+        definitions.Append("}\n\n");
+
+        return definitions.ToString();
     }
 
     private static string EmitFunctionPointerSignature(UserProvidedData.DelegateDefinition definition)
