@@ -279,6 +279,51 @@ public static unsafe partial class Interop
         ma_performance_profile_conservative = 1,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_allocation_callbacks
+    {
+        public IntPtr pUserData;
+        public IntPtr onMalloc; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onRealloc; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onFree; // WARN_ANONYMOUS_FUNCTION_POINTER
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_lcg
+    {
+        public uint state;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_atomic_uint32
+    {
+        public uint value;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_atomic_int32
+    {
+        public int value;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_atomic_uint64
+    {
+        public ulong value;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_atomic_float
+    {
+        public float value;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_atomic_bool32
+    {
+        public uint value;
+    }
+
     public enum ma_thread_priority
     {
         ma_thread_priority_idle = -5,
@@ -291,6 +336,22 @@ public static unsafe partial class Interop
         ma_thread_priority_default = 0,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_event
+    {
+        public uint value;
+        public IntPtr @lock;
+        public pthread_cond_t cond;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_semaphore
+    {
+        public int value;
+        public IntPtr @lock;
+        public pthread_cond_t cond;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ma_version(IntPtr pMajor, IntPtr pMinor, IntPtr pRevision);
@@ -301,9 +362,28 @@ public static unsafe partial class Interop
 
     // public delegate WARN_PLACEHOLDER ma_log_callback_proc();
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_log_callback
+    {
+        public IntPtr onLog; // ma_log_callback_proc
+        public IntPtr pUserData;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_log_callback ma_log_callback_init(ma_log_callback_proc onLog, IntPtr pUserData);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_log
+    {
+        public ma_log_callback callbacks0;
+        public ma_log_callback callbacks1;
+        public ma_log_callback callbacks2;
+        public ma_log_callback callbacks3;
+        public uint callbackCount;
+        public ma_allocation_callbacks allocationCallbacks;
+        public IntPtr @lock;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -329,9 +409,33 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_log_postf(IntPtr pLog, uint level, ref byte pFormat); // WARN_UNKNOWN_POINTER_PARAMETER
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_biquad_config
+    {
+        public ma_format format;
+        public uint channels;
+        public double b0;
+        public double b1;
+        public double b2;
+        public double a0;
+        public double a1;
+        public double a2;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_biquad_config ma_biquad_config_init(ma_format format, uint channels, double b0, double b1, double b2, double a0, double a1, double a2);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_biquad
+    {
+        public ma_format format;
+        public uint channels;
+        public IntPtr pR1;
+        public IntPtr pR2;
+        public IntPtr _pHeap;
+        public uint _ownsHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -365,13 +469,43 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_biquad_get_latency(IntPtr pBQ);
 
-    [LibraryImport(nativeLibName)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_lpf2_config ma_lpf1_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency);
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_lpf1_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double cutoffFrequency;
+        public double q;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_lpf2_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double cutoffFrequency;
+        public double q;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_lpf2_config ma_lpf2_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency, double q);
+    public static partial ma_lpf1_config ma_lpf1_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_lpf1_config ma_lpf2_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency, double q);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_lpf1
+    {
+        public ma_format format;
+        public uint channels;
+        public IntPtr pR1;
+        public IntPtr _pHeap;
+        public uint _ownsHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -405,6 +539,12 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_lpf1_get_latency(IntPtr pLPF);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_lpf2
+    {
+        public ma_biquad bq;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_lpf2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
@@ -437,9 +577,33 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_lpf2_get_latency(IntPtr pLPF);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_lpf_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double cutoffFrequency;
+        public uint order;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_lpf_config ma_lpf_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency, uint order);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_lpf
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public uint lpf1Count;
+        public uint lpf2Count;
+        public IntPtr pLPF1;
+        public IntPtr pLPF2;
+        public IntPtr _pHeap;
+        public uint _ownsHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -473,13 +637,43 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_lpf_get_latency(IntPtr pLPF);
 
-    [LibraryImport(nativeLibName)]
-    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_hpf2_config ma_hpf1_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency);
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_hpf1_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double cutoffFrequency;
+        public double q;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_hpf2_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double cutoffFrequency;
+        public double q;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_hpf2_config ma_hpf2_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency, double q);
+    public static partial ma_hpf1_config ma_hpf1_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_hpf1_config ma_hpf2_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency, double q);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_hpf1
+    {
+        public ma_format format;
+        public uint channels;
+        public IntPtr pR1;
+        public IntPtr _pHeap;
+        public uint _ownsHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -509,6 +703,12 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_hpf1_get_latency(IntPtr pHPF);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_hpf2
+    {
+        public ma_biquad bq;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_hpf2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
@@ -537,9 +737,33 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_hpf2_get_latency(IntPtr pHPF);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_hpf_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double cutoffFrequency;
+        public uint order;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_hpf_config ma_hpf_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency, uint order);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_hpf
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public uint hpf1Count;
+        public uint hpf2Count;
+        public IntPtr pHPF1;
+        public IntPtr pHPF2;
+        public IntPtr _pHeap;
+        public uint _ownsHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -569,9 +793,25 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_hpf_get_latency(IntPtr pHPF);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_bpf2_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double cutoffFrequency;
+        public double q;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_bpf2_config ma_bpf2_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency, double q);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_bpf2
+    {
+        public ma_biquad bq;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -601,9 +841,30 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_bpf2_get_latency(IntPtr pBPF);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_bpf_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double cutoffFrequency;
+        public uint order;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_bpf_config ma_bpf_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency, uint order);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_bpf
+    {
+        public ma_format format;
+        public uint channels;
+        public uint bpf2Count;
+        public IntPtr pBPF2;
+        public IntPtr _pHeap;
+        public uint _ownsHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -633,9 +894,35 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_bpf_get_latency(IntPtr pBPF);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_notch2_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double q;
+        public double frequency;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_notch_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double q;
+        public double frequency;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_notch_config ma_notch2_config_init(ma_format format, uint channels, uint sampleRate, double q, double frequency);
+    public static partial ma_notch2_config ma_notch2_config_init(ma_format format, uint channels, uint sampleRate, double q, double frequency);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_notch2
+    {
+        public ma_biquad bq;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -665,9 +952,37 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_notch2_get_latency(IntPtr pFilter);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_peak2_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double gainDB;
+        public double q;
+        public double frequency;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_peak_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double gainDB;
+        public double q;
+        public double frequency;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_peak_config ma_peak2_config_init(ma_format format, uint channels, uint sampleRate, double gainDB, double q, double frequency);
+    public static partial ma_peak2_config ma_peak2_config_init(ma_format format, uint channels, uint sampleRate, double gainDB, double q, double frequency);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_peak2
+    {
+        public ma_biquad bq;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -697,9 +1012,37 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_peak2_get_latency(IntPtr pFilter);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_loshelf2_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double gainDB;
+        public double shelfSlope;
+        public double frequency;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_loshelf_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double gainDB;
+        public double shelfSlope;
+        public double frequency;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_loshelf_config ma_loshelf2_config_init(ma_format format, uint channels, uint sampleRate, double gainDB, double shelfSlope, double frequency);
+    public static partial ma_loshelf2_config ma_loshelf2_config_init(ma_format format, uint channels, uint sampleRate, double gainDB, double shelfSlope, double frequency);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_loshelf2
+    {
+        public ma_biquad bq;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -729,9 +1072,37 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_loshelf2_get_latency(IntPtr pFilter);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_hishelf2_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double gainDB;
+        public double shelfSlope;
+        public double frequency;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_hishelf_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double gainDB;
+        public double shelfSlope;
+        public double frequency;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_hishelf_config ma_hishelf2_config_init(ma_format format, uint channels, uint sampleRate, double gainDB, double shelfSlope, double frequency);
+    public static partial ma_hishelf2_config ma_hishelf2_config_init(ma_format format, uint channels, uint sampleRate, double gainDB, double shelfSlope, double frequency);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_hishelf2
+    {
+        public ma_biquad bq;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -761,9 +1132,30 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_hishelf2_get_latency(IntPtr pFilter);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_delay_config
+    {
+        public uint channels;
+        public uint sampleRate;
+        public uint delayInFrames;
+        public uint delayStart;
+        public float wet;
+        public float dry;
+        public float decay;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_delay_config ma_delay_config_init(uint channels, uint sampleRate, uint delayInFrames, float decay);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_delay
+    {
+        public ma_delay_config config;
+        public uint cursor;
+        public uint bufferSizeInFrames;
+        public float* pBuffer;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -801,9 +1193,28 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial float ma_delay_get_decay(IntPtr pDelay);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_gainer_config
+    {
+        public uint channels;
+        public uint smoothTimeInFrames;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_gainer_config ma_gainer_config_init(uint channels, uint smoothTimeInFrames);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_gainer
+    {
+        public ma_gainer_config config;
+        public uint t;
+        public float masterVolume;
+        public float* pOldGains;
+        public float* pNewGains;
+        public IntPtr _pHeap;
+        public uint _ownsHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -847,9 +1258,27 @@ public static unsafe partial class Interop
         ma_pan_mode_pan = 1,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_panner_config
+    {
+        public ma_format format;
+        public uint channels;
+        public ma_pan_mode mode;
+        public float pan;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_panner_config ma_panner_config_init(ma_format format, uint channels);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_panner
+    {
+        public ma_format format;
+        public uint channels;
+        public ma_pan_mode mode;
+        public float pan;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -875,9 +1304,27 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial float ma_panner_get_pan(IntPtr pPanner);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_fader_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_fader_config ma_fader_config_init(ma_format format, uint channels, uint sampleRate);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_fader
+    {
+        public ma_fader_config config;
+        public float volumeBeg;
+        public float volumeEnd;
+        public ulong lengthInFrames;
+        public long cursorInFrames;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -903,6 +1350,21 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial float ma_fader_get_current_volume(IntPtr pFader);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_vec3f
+    {
+        public float x;
+        public float y;
+        public float z;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_atomic_vec3f
+    {
+        public ma_vec3f v;
+        public uint @lock;
+    }
+
     public enum ma_attenuation_model
     {
         ma_attenuation_model_none = 0,
@@ -923,9 +1385,34 @@ public static unsafe partial class Interop
         ma_handedness_left = 1,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_spatializer_listener_config
+    {
+        public uint channelsOut;
+        public IntPtr pChannelMapOut;
+        public ma_handedness handedness;
+        public float coneInnerAngleInRadians;
+        public float coneOuterAngleInRadians;
+        public float coneOuterGain;
+        public float speedOfSound;
+        public ma_vec3f worldUp;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_spatializer_listener_config ma_spatializer_listener_config_init(uint channelsOut);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_spatializer_listener
+    {
+        public ma_spatializer_listener_config config;
+        public ma_atomic_vec3f position;
+        public ma_atomic_vec3f direction;
+        public ma_atomic_vec3f velocity;
+        public uint isEnabled;
+        public uint _ownsHeap;
+        public IntPtr _pHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -997,15 +1484,69 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_listener_set_enabled(IntPtr pListener, ma_uint32 isEnabled);
+    public static partial void ma_spatializer_listener_set_enabled(IntPtr pListener, uint isEnabled);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_spatializer_listener_is_enabled(IntPtr pListener);
+    public static partial uint ma_spatializer_listener_is_enabled(IntPtr pListener);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_spatializer_config
+    {
+        public uint channelsIn;
+        public uint channelsOut;
+        public IntPtr pChannelMapIn;
+        public ma_attenuation_model attenuationModel;
+        public ma_positioning positioning;
+        public ma_handedness handedness;
+        public float minGain;
+        public float maxGain;
+        public float minDistance;
+        public float maxDistance;
+        public float rolloff;
+        public float coneInnerAngleInRadians;
+        public float coneOuterAngleInRadians;
+        public float coneOuterGain;
+        public float dopplerFactor;
+        public float directionalAttenuationFactor;
+        public float minSpatializationChannelGain;
+        public uint gainSmoothTimeInFrames;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_spatializer_config ma_spatializer_config_init(uint channelsIn, uint channelsOut);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_spatializer
+    {
+        public uint channelsIn;
+        public uint channelsOut;
+        public IntPtr pChannelMapIn;
+        public ma_attenuation_model attenuationModel;
+        public ma_positioning positioning;
+        public ma_handedness handedness;
+        public float minGain;
+        public float maxGain;
+        public float minDistance;
+        public float maxDistance;
+        public float rolloff;
+        public float coneInnerAngleInRadians;
+        public float coneOuterAngleInRadians;
+        public float coneOuterGain;
+        public float dopplerFactor;
+        public float directionalAttenuationFactor;
+        public uint gainSmoothTimeInFrames;
+        public ma_atomic_vec3f position;
+        public ma_atomic_vec3f direction;
+        public ma_atomic_vec3f velocity;
+        public float dopplerPitch;
+        public float minSpatializationChannelGain;
+        public ma_gainer gainer;
+        public float* pNewChannelGainsOut;
+        public IntPtr _pHeap;
+        public uint _ownsHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1151,9 +1692,33 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ma_spatializer_get_relative_position_and_direction(IntPtr pSpatializer, IntPtr pListener, IntPtr pRelativePos, IntPtr pRelativeDir);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_linear_resampler_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRateIn;
+        public uint sampleRateOut;
+        public uint lpfOrder;
+        public double lpfNyquistFactor;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_linear_resampler_config ma_linear_resampler_config_init(ma_format format, uint channels, uint sampleRateIn, uint sampleRateOut);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_linear_resampler
+    {
+        public ma_linear_resampler_config config;
+        public uint inAdvanceInt;
+        public uint inAdvanceFrac;
+        public uint inTimeInt;
+        public uint inTimeFrac;
+        public ma_lpf lpf;
+        public IntPtr _pHeap;
+        public uint _ownsHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1203,6 +1768,21 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_linear_resampler_reset(IntPtr pResampler);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_resampling_backend_vtable
+    {
+        public IntPtr onGetHeapSize; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onInit; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onUninit; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onProcess; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onSetRate; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onGetInputLatency; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onGetOutputLatency; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onGetRequiredInputFrameCount; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onGetExpectedOutputFrameCount; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onReset; // WARN_ANONYMOUS_FUNCTION_POINTER
+    }
+
     public enum ma_resample_algorithm
     {
         ma_resample_algorithm_linear = 0,
@@ -1231,6 +1811,20 @@ public static unsafe partial class Interop
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_resampler_config ma_resampler_config_init(ma_format format, uint channels, uint sampleRateIn, uint sampleRateOut, ma_resample_algorithm algorithm);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_resampler
+    {
+        public IntPtr pBackend;
+        public IntPtr pBackendVTable;
+        public IntPtr pBackendUserData;
+        public ma_format format;
+        public uint channels;
+        public uint sampleRateIn;
+        public uint sampleRateOut;
+        public IntPtr _pHeap;
+        public uint _ownsHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1298,9 +1892,37 @@ public static unsafe partial class Interop
         ma_mono_expansion_mode_default = 0,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_channel_converter_config
+    {
+        public ma_format format;
+        public uint channelsIn;
+        public uint channelsOut;
+        public IntPtr pChannelMapIn;
+        public IntPtr pChannelMapOut;
+        public ma_channel_mix_mode mixingMode;
+        public uint calculateLFEFromSpatialChannels;
+        public float** ppWeights;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_channel_converter_config ma_channel_converter_config_init(ma_format format, uint channelsIn, IntPtr pChannelMapIn, uint channelsOut, IntPtr pChannelMapOut, ma_channel_mix_mode mixingMode);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_channel_converter
+    {
+        public ma_format format;
+        public uint channelsIn;
+        public uint channelsOut;
+        public ma_channel_mix_mode mixingMode;
+        public ma_channel_conversion_path conversionPath;
+        public IntPtr pChannelMapIn;
+        public IntPtr pChannelMapOut;
+        public IntPtr pShuffleTable;
+        public IntPtr _pHeap;
+        public uint _ownsHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1330,6 +1952,25 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_channel_converter_get_output_channel_map(IntPtr pConverter, IntPtr pChannelMap, UIntPtr channelMapCap);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_data_converter_config
+    {
+        public ma_format formatIn;
+        public ma_format formatOut;
+        public uint channelsIn;
+        public uint channelsOut;
+        public uint sampleRateIn;
+        public uint sampleRateOut;
+        public IntPtr pChannelMapIn;
+        public IntPtr pChannelMapOut;
+        public ma_dither_mode ditherMode;
+        public ma_channel_mix_mode channelMixMode;
+        public uint calculateLFEFromSpatialChannels;
+        public float** ppChannelWeights;
+        public uint allowDynamicSampleRate;
+        public ma_resampler_config resampling;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_data_converter_config ma_data_converter_config_init_default();
@@ -1346,6 +1987,28 @@ public static unsafe partial class Interop
         ma_data_converter_execution_path_resample_only = 3,
         ma_data_converter_execution_path_resample_first = 4,
         ma_data_converter_execution_path_channels_first = 5,
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_data_converter
+    {
+        public ma_format formatIn;
+        public ma_format formatOut;
+        public uint channelsIn;
+        public uint channelsOut;
+        public uint sampleRateIn;
+        public uint sampleRateOut;
+        public ma_dither_mode ditherMode;
+        public ma_data_converter_execution_path executionPath;
+        public ma_channel_converter channelConverter;
+        public ma_resampler resampler;
+        public byte hasPreFormatConversion;
+        public byte hasPostFormatConversion;
+        public byte hasChannelConverter;
+        public byte hasResampler;
+        public byte isPassthrough;
+        public byte _ownsHeap;
+        public IntPtr _pHeap;
     }
 
     [LibraryImport(nativeLibName)]
@@ -1502,7 +2165,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint8 ma_channel_map_get_channel(IntPtr pChannelMap, uint channelCount, uint channelIndex);
+    public static partial byte ma_channel_map_get_channel(IntPtr pChannelMap, uint channelCount, uint channelIndex);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1522,23 +2185,23 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_channel_map_is_valid(IntPtr pChannelMap, uint channels);
+    public static partial uint ma_channel_map_is_valid(IntPtr pChannelMap, uint channels);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_channel_map_is_equal(IntPtr pChannelMapA, IntPtr pChannelMapB, uint channels);
+    public static partial uint ma_channel_map_is_equal(IntPtr pChannelMapA, IntPtr pChannelMapB, uint channels);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_channel_map_is_blank(IntPtr pChannelMap, uint channels);
+    public static partial uint ma_channel_map_is_blank(IntPtr pChannelMap, uint channels);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_channel_map_contains_channel_position(uint channels, IntPtr pChannelMap, ma_uint8 channelPosition);
+    public static partial uint ma_channel_map_contains_channel_position(uint channels, IntPtr pChannelMap, byte channelPosition);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_channel_map_find_channel_position(uint channels, IntPtr pChannelMap, ma_uint8 channelPosition, IntPtr pChannelIndex);
+    public static partial uint ma_channel_map_find_channel_position(uint channels, IntPtr pChannelMap, byte channelPosition, IntPtr pChannelIndex);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1546,7 +2209,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial byte* ma_channel_position_to_string(ma_uint8 channel); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial byte* ma_channel_position_to_string(byte channel); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1556,11 +2219,43 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ulong ma_convert_frames_ex(IntPtr pOut, ulong frameCountOut, IntPtr pIn, ulong frameCountIn, IntPtr pConfig);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_data_source_vtable
+    {
+        public IntPtr onRead; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onSeek; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onGetDataFormat; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onGetCursor; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onGetLength; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onSetLooping; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public uint flags;
+    }
+
     // public delegate WARN_PLACEHOLDER ma_data_source_get_next_proc();
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_data_source_config
+    {
+        public IntPtr vtable;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_data_source_config ma_data_source_config_init();
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_data_source_base
+    {
+        public IntPtr vtable;
+        public ulong rangeBegInFrames;
+        public ulong rangeEndInFrames;
+        public ulong loopBegInFrames;
+        public ulong loopEndInFrames;
+        public IntPtr pCurrent;
+        public IntPtr pNext;
+        public IntPtr onGetNext; // ma_data_source_get_next_proc
+        public uint isLooping;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1612,11 +2307,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_source_set_looping(IntPtr pDataSource, ma_uint32 isLooping);
+    public static partial ma_result ma_data_source_set_looping(IntPtr pDataSource, uint isLooping);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_data_source_is_looping(IntPtr pDataSource);
+    public static partial uint ma_data_source_is_looping(IntPtr pDataSource);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1658,6 +2353,18 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_data_source_get_next_proc ma_data_source_get_next_callback(IntPtr pDataSource);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_audio_buffer_ref
+    {
+        public ma_data_source_base ds;
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public ulong cursor;
+        public ulong sizeInFrames;
+        public IntPtr pData;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_audio_buffer_ref_init(ma_format format, uint channels, IntPtr pData, ulong sizeInFrames, IntPtr pAudioBufferRef);
@@ -1672,7 +2379,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ulong ma_audio_buffer_ref_read_pcm_frames(IntPtr pAudioBufferRef, IntPtr pFramesOut, ulong frameCount, ma_uint32 loop);
+    public static partial ulong ma_audio_buffer_ref_read_pcm_frames(IntPtr pAudioBufferRef, IntPtr pFramesOut, ulong frameCount, uint loop);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1688,7 +2395,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_audio_buffer_ref_at_end(IntPtr pAudioBufferRef);
+    public static partial uint ma_audio_buffer_ref_at_end(IntPtr pAudioBufferRef);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1702,9 +2409,29 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_audio_buffer_ref_get_available_frames(IntPtr pAudioBufferRef, IntPtr pAvailableFrames);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_audio_buffer_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public ulong sizeInFrames;
+        public IntPtr pData;
+        public ma_allocation_callbacks allocationCallbacks;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_audio_buffer_config ma_audio_buffer_config_init(ma_format format, uint channels, ulong sizeInFrames, IntPtr pData, IntPtr pAllocationCallbacks);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_audio_buffer
+    {
+        public ma_audio_buffer_ref @ref;
+        public ma_allocation_callbacks allocationCallbacks;
+        public uint ownsData;
+        public fixed byte _pExtraData[1];
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1728,7 +2455,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ulong ma_audio_buffer_read_pcm_frames(IntPtr pAudioBuffer, IntPtr pFramesOut, ulong frameCount, ma_uint32 loop);
+    public static partial ulong ma_audio_buffer_read_pcm_frames(IntPtr pAudioBuffer, IntPtr pFramesOut, ulong frameCount, uint loop);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1744,7 +2471,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_audio_buffer_at_end(IntPtr pAudioBuffer);
+    public static partial uint ma_audio_buffer_at_end(IntPtr pAudioBuffer);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1763,7 +2490,16 @@ public static unsafe partial class Interop
     {
         public ma_paged_audio_buffer_page* pNext;
         public ulong sizeInFrames;
-        public ma_uint8 pAudioData0;
+        public fixed byte pAudioData[1];
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_paged_audio_buffer_data
+    {
+        public ma_format format;
+        public uint channels;
+        public ma_paged_audio_buffer_page head;
+        public ma_paged_audio_buffer_page* pTail;
     }
 
     [LibraryImport(nativeLibName)]
@@ -1802,9 +2538,25 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_paged_audio_buffer_data_allocate_and_append_page(IntPtr pData, uint pageSizeInFrames, IntPtr pInitialData, IntPtr pAllocationCallbacks);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_paged_audio_buffer_config
+    {
+        public IntPtr pData;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_paged_audio_buffer_config ma_paged_audio_buffer_config_init(IntPtr pData);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_paged_audio_buffer
+    {
+        public ma_data_source_base ds;
+        public IntPtr pData;
+        public ma_paged_audio_buffer_page* pCurrent;
+        public ulong relativeCursor;
+        public ulong absoluteCursor;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1829,6 +2581,20 @@ public static unsafe partial class Interop
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_paged_audio_buffer_get_length_in_pcm_frames(IntPtr pPagedAudioBuffer, IntPtr pLength);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_rb
+    {
+        public IntPtr pBuffer;
+        public uint subbufferSizeInBytes;
+        public uint subbufferCount;
+        public uint subbufferStrideInBytes;
+        public uint encodedReadOffset;
+        public uint encodedWriteOffset;
+        public byte ownsBuffer;
+        public byte clearOnWriteAcquire;
+        public ma_allocation_callbacks allocationCallbacks;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1897,6 +2663,16 @@ public static unsafe partial class Interop
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial IntPtr ma_rb_get_subbuffer_ptr(IntPtr pRB, UIntPtr subbufferIndex, IntPtr pBuffer);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_pcm_rb
+    {
+        public ma_data_source_base ds;
+        public ma_rb rb;
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -1981,6 +2757,12 @@ public static unsafe partial class Interop
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ma_pcm_rb_set_sample_rate(IntPtr pRB, uint sampleRate);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_duplex_rb
+    {
+        public ma_pcm_rb rb;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2098,6 +2880,13 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_semaphore_release(IntPtr pSemaphore);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_fence
+    {
+        public ma_event e;
+        public uint counter;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_fence_init(IntPtr pFence);
@@ -2118,9 +2907,22 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_fence_wait(IntPtr pFence);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_async_notification_callbacks
+    {
+        public IntPtr onSignal; // WARN_ANONYMOUS_FUNCTION_POINTER
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_async_notification_signal(IntPtr pNotification);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_async_notification_poll
+    {
+        public ma_async_notification_callbacks cb;
+        public uint signalled;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2128,7 +2930,14 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_async_notification_poll_is_signalled(IntPtr pNotificationPoll);
+    public static partial uint ma_async_notification_poll_is_signalled(IntPtr pNotificationPoll);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_async_notification_event
+    {
+        public ma_async_notification_callbacks cb;
+        public ma_event e;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2146,9 +2955,32 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_async_notification_event_signal(IntPtr pNotificationEvent);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_slot_allocator_config
+    {
+        public uint capacity;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_slot_allocator_config ma_slot_allocator_config_init(uint capacity);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_slot_allocator_group
+    {
+        public uint bitfield;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_slot_allocator
+    {
+        public IntPtr pGroups;
+        public IntPtr pSlots;
+        public uint count;
+        public uint capacity;
+        public uint _ownsHeap;
+        public IntPtr _pHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2213,9 +3045,31 @@ public static unsafe partial class Interop
         MA_JOB_QUEUE_FLAG_NON_BLOCKING = 1,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_job_queue_config
+    {
+        public uint flags;
+        public uint capacity;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_job_queue_config ma_job_queue_config_init(uint flags, uint capacity);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_job_queue
+    {
+        public uint flags;
+        public uint capacity;
+        public ulong head;
+        public ulong tail;
+        public ma_semaphore sem;
+        public ma_slot_allocator allocator;
+        public ma_job* pJobs;
+        public uint @lock;
+        public IntPtr _pHeap;
+        public uint _ownsHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2250,6 +3104,12 @@ public static unsafe partial class Interop
         ma_device_state_stopping = 4,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_atomic_device_state
+    {
+        public ma_device_state value;
+    }
+
     public enum ma_backend
     {
         ma_backend_wasapi = 0,
@@ -2269,9 +3129,25 @@ public static unsafe partial class Interop
         ma_backend_null = 14,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_device_job_thread_config
+    {
+        public uint noThread;
+        public uint jobQueueCapacity;
+        public uint jobQueueFlags;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_device_job_thread_config ma_device_job_thread_config_init();
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_device_job_thread
+    {
+        public IntPtr thread;
+        public ma_job_queue jobQueue;
+        public uint _hasThread;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2297,6 +3173,13 @@ public static unsafe partial class Interop
         ma_device_notification_type_interruption_began = 3,
         ma_device_notification_type_interruption_ended = 4,
         ma_device_notification_type_unlocked = 5,
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_device_notification
+    {
+        public IntPtr pDevice;
+        public ma_device_notification_type type;
     }
 
     // public delegate WARN_PLACEHOLDER ma_device_notification_proc();
@@ -2421,7 +3304,89 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_device_id_equal(IntPtr pA, IntPtr pB);
+    public static partial uint ma_device_id_equal(IntPtr pA, IntPtr pB);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_device_info
+    {
+        public fixed byte name[256];
+        public uint isDefault;
+        public uint nativeDataFormatCount;
+        [StructLayout(LayoutKind.Sequential)]
+        public struct ma_nativeDataFormat
+        {
+            public ma_format format;
+            public uint channels;
+            public uint sampleRate;
+            public uint flags;
+        }
+
+
+        public ma_nativeDataFormat nativeDataFormats0;
+        public ma_nativeDataFormat nativeDataFormats1;
+        public ma_nativeDataFormat nativeDataFormats2;
+        public ma_nativeDataFormat nativeDataFormats3;
+        public ma_nativeDataFormat nativeDataFormats4;
+        public ma_nativeDataFormat nativeDataFormats5;
+        public ma_nativeDataFormat nativeDataFormats6;
+        public ma_nativeDataFormat nativeDataFormats7;
+        public ma_nativeDataFormat nativeDataFormats8;
+        public ma_nativeDataFormat nativeDataFormats9;
+        public ma_nativeDataFormat nativeDataFormats10;
+        public ma_nativeDataFormat nativeDataFormats11;
+        public ma_nativeDataFormat nativeDataFormats12;
+        public ma_nativeDataFormat nativeDataFormats13;
+        public ma_nativeDataFormat nativeDataFormats14;
+        public ma_nativeDataFormat nativeDataFormats15;
+        public ma_nativeDataFormat nativeDataFormats16;
+        public ma_nativeDataFormat nativeDataFormats17;
+        public ma_nativeDataFormat nativeDataFormats18;
+        public ma_nativeDataFormat nativeDataFormats19;
+        public ma_nativeDataFormat nativeDataFormats20;
+        public ma_nativeDataFormat nativeDataFormats21;
+        public ma_nativeDataFormat nativeDataFormats22;
+        public ma_nativeDataFormat nativeDataFormats23;
+        public ma_nativeDataFormat nativeDataFormats24;
+        public ma_nativeDataFormat nativeDataFormats25;
+        public ma_nativeDataFormat nativeDataFormats26;
+        public ma_nativeDataFormat nativeDataFormats27;
+        public ma_nativeDataFormat nativeDataFormats28;
+        public ma_nativeDataFormat nativeDataFormats29;
+        public ma_nativeDataFormat nativeDataFormats30;
+        public ma_nativeDataFormat nativeDataFormats31;
+        public ma_nativeDataFormat nativeDataFormats32;
+        public ma_nativeDataFormat nativeDataFormats33;
+        public ma_nativeDataFormat nativeDataFormats34;
+        public ma_nativeDataFormat nativeDataFormats35;
+        public ma_nativeDataFormat nativeDataFormats36;
+        public ma_nativeDataFormat nativeDataFormats37;
+        public ma_nativeDataFormat nativeDataFormats38;
+        public ma_nativeDataFormat nativeDataFormats39;
+        public ma_nativeDataFormat nativeDataFormats40;
+        public ma_nativeDataFormat nativeDataFormats41;
+        public ma_nativeDataFormat nativeDataFormats42;
+        public ma_nativeDataFormat nativeDataFormats43;
+        public ma_nativeDataFormat nativeDataFormats44;
+        public ma_nativeDataFormat nativeDataFormats45;
+        public ma_nativeDataFormat nativeDataFormats46;
+        public ma_nativeDataFormat nativeDataFormats47;
+        public ma_nativeDataFormat nativeDataFormats48;
+        public ma_nativeDataFormat nativeDataFormats49;
+        public ma_nativeDataFormat nativeDataFormats50;
+        public ma_nativeDataFormat nativeDataFormats51;
+        public ma_nativeDataFormat nativeDataFormats52;
+        public ma_nativeDataFormat nativeDataFormats53;
+        public ma_nativeDataFormat nativeDataFormats54;
+        public ma_nativeDataFormat nativeDataFormats55;
+        public ma_nativeDataFormat nativeDataFormats56;
+        public ma_nativeDataFormat nativeDataFormats57;
+        public ma_nativeDataFormat nativeDataFormats58;
+        public ma_nativeDataFormat nativeDataFormats59;
+        public ma_nativeDataFormat nativeDataFormats60;
+        public ma_nativeDataFormat nativeDataFormats61;
+        public ma_nativeDataFormat nativeDataFormats62;
+        public ma_nativeDataFormat nativeDataFormats63;
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_device_config
@@ -2432,10 +3397,10 @@ public static unsafe partial class Interop
         public uint periodSizeInMilliseconds;
         public uint periods;
         public ma_performance_profile performanceProfile;
-        public ma_uint8 noPreSilencedOutputBuffer;
-        public ma_uint8 noClip;
-        public ma_uint8 noDisableDenormals;
-        public ma_uint8 noFixedSizedCallback;
+        public byte noPreSilencedOutputBuffer;
+        public byte noClip;
+        public byte noDisableDenormals;
+        public byte noFixedSizedCallback;
         public IntPtr dataCallback; // ma_device_data_proc
         public IntPtr notificationCallback; // ma_device_notification_proc
         public IntPtr stopCallback; // ma_stop_proc
@@ -2449,7 +3414,7 @@ public static unsafe partial class Interop
             public uint channels;
             public IntPtr pChannelMap;
             public ma_channel_mix_mode channelMixMode;
-            public ma_uint32 calculateLFEFromSpatialChannels;
+            public uint calculateLFEFromSpatialChannels;
             public ma_share_mode shareMode;
         }
 
@@ -2462,7 +3427,7 @@ public static unsafe partial class Interop
             public uint channels;
             public IntPtr pChannelMap;
             public ma_channel_mix_mode channelMixMode;
-            public ma_uint32 calculateLFEFromSpatialChannels;
+            public uint calculateLFEFromSpatialChannels;
             public ma_share_mode shareMode;
         }
 
@@ -2471,22 +3436,22 @@ public static unsafe partial class Interop
         public struct wasapi
         {
             public ma_wasapi_usage usage;
-            public ma_uint8 noAutoConvertSRC;
-            public ma_uint8 noDefaultQualitySRC;
-            public ma_uint8 noAutoStreamRouting;
-            public ma_uint8 noHardwareOffloading;
+            public byte noAutoConvertSRC;
+            public byte noDefaultQualitySRC;
+            public byte noAutoStreamRouting;
+            public byte noHardwareOffloading;
             public uint loopbackProcessID;
-            public ma_uint8 loopbackProcessExclude;
+            public byte loopbackProcessExclude;
         }
 
 
         [StructLayout(LayoutKind.Sequential)]
         public struct alsa
         {
-            public ma_uint32 noMMap;
-            public ma_uint32 noAutoFormat;
-            public ma_uint32 noAutoChannels;
-            public ma_uint32 noAutoResample;
+            public uint noMMap;
+            public uint noAutoFormat;
+            public uint noAutoChannels;
+            public uint noAutoResample;
         }
 
 
@@ -2502,7 +3467,7 @@ public static unsafe partial class Interop
         [StructLayout(LayoutKind.Sequential)]
         public struct coreaudio
         {
-            public ma_uint32 allowNominalSampleRateChange;
+            public uint allowNominalSampleRateChange;
         }
 
 
@@ -2511,7 +3476,7 @@ public static unsafe partial class Interop
         {
             public ma_opensl_stream_type streamType;
             public ma_opensl_recording_preset recordingPreset;
-            public ma_uint32 enableCompatibilityWorkarounds;
+            public uint enableCompatibilityWorkarounds;
         }
 
 
@@ -2522,15 +3487,29 @@ public static unsafe partial class Interop
             public ma_aaudio_content_type contentType;
             public ma_aaudio_input_preset inputPreset;
             public ma_aaudio_allowed_capture_policy allowedCapturePolicy;
-            public ma_uint32 noAutoStartAfterReroute;
-            public ma_uint32 enableCompatibilityWorkarounds;
-            public ma_uint32 allowSetBufferCapacity;
+            public uint noAutoStartAfterReroute;
+            public uint enableCompatibilityWorkarounds;
+            public uint allowSetBufferCapacity;
         }
 
 
     }
 
     // public delegate WARN_PLACEHOLDER ma_enum_devices_callback_proc();
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_device_descriptor
+    {
+        public IntPtr pDeviceID;
+        public ma_share_mode shareMode;
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public fixed byte channelMap[254];
+        public uint periodSizeInFrames;
+        public uint periodSizeInMilliseconds;
+        public uint periodCount;
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_backend_callbacks
@@ -2568,7 +3547,7 @@ public static unsafe partial class Interop
         [StructLayout(LayoutKind.Sequential)]
         public struct alsa
         {
-            public ma_uint32 useVerboseDeviceEnumeration;
+            public uint useVerboseDeviceEnumeration;
         }
 
 
@@ -2577,7 +3556,7 @@ public static unsafe partial class Interop
         {
             public byte* pApplicationName;
             public byte* pServerName;
-            public ma_uint32 tryAutoSpawn;
+            public uint tryAutoSpawn;
         }
 
 
@@ -2586,8 +3565,8 @@ public static unsafe partial class Interop
         {
             public ma_ios_session_category sessionCategory;
             public uint sessionCategoryOptions;
-            public ma_uint32 noAudioSessionActivate;
-            public ma_uint32 noAudioSessionDeactivate;
+            public uint noAudioSessionActivate;
+            public uint noAudioSessionDeactivate;
         }
 
 
@@ -2595,11 +3574,18 @@ public static unsafe partial class Interop
         public struct jack
         {
             public byte* pClientName;
-            public ma_uint32 tryStartServer;
+            public uint tryStartServer;
         }
 
 
         public ma_backend_callbacks custom;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_context_command__wasapi
+    {
+        public int code;
+        public IntPtr pEvent;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -2613,8 +3599,8 @@ public static unsafe partial class Interop
         public UIntPtr threadStackSize;
         public IntPtr pUserData;
         public ma_allocation_callbacks allocationCallbacks;
-        public ma_pthread_mutex_t deviceEnumLock;
-        public ma_pthread_mutex_t deviceInfoLock;
+        public IntPtr deviceEnumLock;
+        public IntPtr deviceInfoLock;
         public uint deviceInfoCapacity;
         public uint playbackDeviceInfoCount;
         public uint captureDeviceInfoCount;
@@ -2632,17 +3618,17 @@ public static unsafe partial class Interop
         public IntPtr onNotification; // ma_device_notification_proc
         public IntPtr onStop; // ma_stop_proc
         public IntPtr pUserData;
-        public ma_pthread_mutex_t startStopLock;
+        public IntPtr startStopLock;
         public ma_event wakeupEvent;
         public ma_event startEvent;
         public ma_event stopEvent;
-        public ma_pthread_t thread;
+        public IntPtr thread;
         public ma_result workResult;
-        public ma_uint8 isOwnerOfContext;
-        public ma_uint8 noPreSilencedOutputBuffer;
-        public ma_uint8 noClip;
-        public ma_uint8 noDisableDenormals;
-        public ma_uint8 noFixedSizedCallback;
+        public byte isOwnerOfContext;
+        public byte noPreSilencedOutputBuffer;
+        public byte noClip;
+        public byte noDisableDenormals;
+        public byte noFixedSizedCallback;
         public ma_atomic_float masterVolumeFactor;
         public ma_duplex_rb duplexRB;
         [StructLayout(LayoutKind.Sequential)]
@@ -2669,521 +3655,15 @@ public static unsafe partial class Interop
             public ma_share_mode shareMode;
             public ma_format format;
             public uint channels;
-            public ma_channel channelMap0;
-            public ma_channel channelMap1;
-            public ma_channel channelMap2;
-            public ma_channel channelMap3;
-            public ma_channel channelMap4;
-            public ma_channel channelMap5;
-            public ma_channel channelMap6;
-            public ma_channel channelMap7;
-            public ma_channel channelMap8;
-            public ma_channel channelMap9;
-            public ma_channel channelMap10;
-            public ma_channel channelMap11;
-            public ma_channel channelMap12;
-            public ma_channel channelMap13;
-            public ma_channel channelMap14;
-            public ma_channel channelMap15;
-            public ma_channel channelMap16;
-            public ma_channel channelMap17;
-            public ma_channel channelMap18;
-            public ma_channel channelMap19;
-            public ma_channel channelMap20;
-            public ma_channel channelMap21;
-            public ma_channel channelMap22;
-            public ma_channel channelMap23;
-            public ma_channel channelMap24;
-            public ma_channel channelMap25;
-            public ma_channel channelMap26;
-            public ma_channel channelMap27;
-            public ma_channel channelMap28;
-            public ma_channel channelMap29;
-            public ma_channel channelMap30;
-            public ma_channel channelMap31;
-            public ma_channel channelMap32;
-            public ma_channel channelMap33;
-            public ma_channel channelMap34;
-            public ma_channel channelMap35;
-            public ma_channel channelMap36;
-            public ma_channel channelMap37;
-            public ma_channel channelMap38;
-            public ma_channel channelMap39;
-            public ma_channel channelMap40;
-            public ma_channel channelMap41;
-            public ma_channel channelMap42;
-            public ma_channel channelMap43;
-            public ma_channel channelMap44;
-            public ma_channel channelMap45;
-            public ma_channel channelMap46;
-            public ma_channel channelMap47;
-            public ma_channel channelMap48;
-            public ma_channel channelMap49;
-            public ma_channel channelMap50;
-            public ma_channel channelMap51;
-            public ma_channel channelMap52;
-            public ma_channel channelMap53;
-            public ma_channel channelMap54;
-            public ma_channel channelMap55;
-            public ma_channel channelMap56;
-            public ma_channel channelMap57;
-            public ma_channel channelMap58;
-            public ma_channel channelMap59;
-            public ma_channel channelMap60;
-            public ma_channel channelMap61;
-            public ma_channel channelMap62;
-            public ma_channel channelMap63;
-            public ma_channel channelMap64;
-            public ma_channel channelMap65;
-            public ma_channel channelMap66;
-            public ma_channel channelMap67;
-            public ma_channel channelMap68;
-            public ma_channel channelMap69;
-            public ma_channel channelMap70;
-            public ma_channel channelMap71;
-            public ma_channel channelMap72;
-            public ma_channel channelMap73;
-            public ma_channel channelMap74;
-            public ma_channel channelMap75;
-            public ma_channel channelMap76;
-            public ma_channel channelMap77;
-            public ma_channel channelMap78;
-            public ma_channel channelMap79;
-            public ma_channel channelMap80;
-            public ma_channel channelMap81;
-            public ma_channel channelMap82;
-            public ma_channel channelMap83;
-            public ma_channel channelMap84;
-            public ma_channel channelMap85;
-            public ma_channel channelMap86;
-            public ma_channel channelMap87;
-            public ma_channel channelMap88;
-            public ma_channel channelMap89;
-            public ma_channel channelMap90;
-            public ma_channel channelMap91;
-            public ma_channel channelMap92;
-            public ma_channel channelMap93;
-            public ma_channel channelMap94;
-            public ma_channel channelMap95;
-            public ma_channel channelMap96;
-            public ma_channel channelMap97;
-            public ma_channel channelMap98;
-            public ma_channel channelMap99;
-            public ma_channel channelMap100;
-            public ma_channel channelMap101;
-            public ma_channel channelMap102;
-            public ma_channel channelMap103;
-            public ma_channel channelMap104;
-            public ma_channel channelMap105;
-            public ma_channel channelMap106;
-            public ma_channel channelMap107;
-            public ma_channel channelMap108;
-            public ma_channel channelMap109;
-            public ma_channel channelMap110;
-            public ma_channel channelMap111;
-            public ma_channel channelMap112;
-            public ma_channel channelMap113;
-            public ma_channel channelMap114;
-            public ma_channel channelMap115;
-            public ma_channel channelMap116;
-            public ma_channel channelMap117;
-            public ma_channel channelMap118;
-            public ma_channel channelMap119;
-            public ma_channel channelMap120;
-            public ma_channel channelMap121;
-            public ma_channel channelMap122;
-            public ma_channel channelMap123;
-            public ma_channel channelMap124;
-            public ma_channel channelMap125;
-            public ma_channel channelMap126;
-            public ma_channel channelMap127;
-            public ma_channel channelMap128;
-            public ma_channel channelMap129;
-            public ma_channel channelMap130;
-            public ma_channel channelMap131;
-            public ma_channel channelMap132;
-            public ma_channel channelMap133;
-            public ma_channel channelMap134;
-            public ma_channel channelMap135;
-            public ma_channel channelMap136;
-            public ma_channel channelMap137;
-            public ma_channel channelMap138;
-            public ma_channel channelMap139;
-            public ma_channel channelMap140;
-            public ma_channel channelMap141;
-            public ma_channel channelMap142;
-            public ma_channel channelMap143;
-            public ma_channel channelMap144;
-            public ma_channel channelMap145;
-            public ma_channel channelMap146;
-            public ma_channel channelMap147;
-            public ma_channel channelMap148;
-            public ma_channel channelMap149;
-            public ma_channel channelMap150;
-            public ma_channel channelMap151;
-            public ma_channel channelMap152;
-            public ma_channel channelMap153;
-            public ma_channel channelMap154;
-            public ma_channel channelMap155;
-            public ma_channel channelMap156;
-            public ma_channel channelMap157;
-            public ma_channel channelMap158;
-            public ma_channel channelMap159;
-            public ma_channel channelMap160;
-            public ma_channel channelMap161;
-            public ma_channel channelMap162;
-            public ma_channel channelMap163;
-            public ma_channel channelMap164;
-            public ma_channel channelMap165;
-            public ma_channel channelMap166;
-            public ma_channel channelMap167;
-            public ma_channel channelMap168;
-            public ma_channel channelMap169;
-            public ma_channel channelMap170;
-            public ma_channel channelMap171;
-            public ma_channel channelMap172;
-            public ma_channel channelMap173;
-            public ma_channel channelMap174;
-            public ma_channel channelMap175;
-            public ma_channel channelMap176;
-            public ma_channel channelMap177;
-            public ma_channel channelMap178;
-            public ma_channel channelMap179;
-            public ma_channel channelMap180;
-            public ma_channel channelMap181;
-            public ma_channel channelMap182;
-            public ma_channel channelMap183;
-            public ma_channel channelMap184;
-            public ma_channel channelMap185;
-            public ma_channel channelMap186;
-            public ma_channel channelMap187;
-            public ma_channel channelMap188;
-            public ma_channel channelMap189;
-            public ma_channel channelMap190;
-            public ma_channel channelMap191;
-            public ma_channel channelMap192;
-            public ma_channel channelMap193;
-            public ma_channel channelMap194;
-            public ma_channel channelMap195;
-            public ma_channel channelMap196;
-            public ma_channel channelMap197;
-            public ma_channel channelMap198;
-            public ma_channel channelMap199;
-            public ma_channel channelMap200;
-            public ma_channel channelMap201;
-            public ma_channel channelMap202;
-            public ma_channel channelMap203;
-            public ma_channel channelMap204;
-            public ma_channel channelMap205;
-            public ma_channel channelMap206;
-            public ma_channel channelMap207;
-            public ma_channel channelMap208;
-            public ma_channel channelMap209;
-            public ma_channel channelMap210;
-            public ma_channel channelMap211;
-            public ma_channel channelMap212;
-            public ma_channel channelMap213;
-            public ma_channel channelMap214;
-            public ma_channel channelMap215;
-            public ma_channel channelMap216;
-            public ma_channel channelMap217;
-            public ma_channel channelMap218;
-            public ma_channel channelMap219;
-            public ma_channel channelMap220;
-            public ma_channel channelMap221;
-            public ma_channel channelMap222;
-            public ma_channel channelMap223;
-            public ma_channel channelMap224;
-            public ma_channel channelMap225;
-            public ma_channel channelMap226;
-            public ma_channel channelMap227;
-            public ma_channel channelMap228;
-            public ma_channel channelMap229;
-            public ma_channel channelMap230;
-            public ma_channel channelMap231;
-            public ma_channel channelMap232;
-            public ma_channel channelMap233;
-            public ma_channel channelMap234;
-            public ma_channel channelMap235;
-            public ma_channel channelMap236;
-            public ma_channel channelMap237;
-            public ma_channel channelMap238;
-            public ma_channel channelMap239;
-            public ma_channel channelMap240;
-            public ma_channel channelMap241;
-            public ma_channel channelMap242;
-            public ma_channel channelMap243;
-            public ma_channel channelMap244;
-            public ma_channel channelMap245;
-            public ma_channel channelMap246;
-            public ma_channel channelMap247;
-            public ma_channel channelMap248;
-            public ma_channel channelMap249;
-            public ma_channel channelMap250;
-            public ma_channel channelMap251;
-            public ma_channel channelMap252;
-            public ma_channel channelMap253;
+            public fixed byte channelMap[254];
             public ma_format internalFormat;
             public uint internalChannels;
             public uint internalSampleRate;
-            public ma_channel internalChannelMap0;
-            public ma_channel internalChannelMap1;
-            public ma_channel internalChannelMap2;
-            public ma_channel internalChannelMap3;
-            public ma_channel internalChannelMap4;
-            public ma_channel internalChannelMap5;
-            public ma_channel internalChannelMap6;
-            public ma_channel internalChannelMap7;
-            public ma_channel internalChannelMap8;
-            public ma_channel internalChannelMap9;
-            public ma_channel internalChannelMap10;
-            public ma_channel internalChannelMap11;
-            public ma_channel internalChannelMap12;
-            public ma_channel internalChannelMap13;
-            public ma_channel internalChannelMap14;
-            public ma_channel internalChannelMap15;
-            public ma_channel internalChannelMap16;
-            public ma_channel internalChannelMap17;
-            public ma_channel internalChannelMap18;
-            public ma_channel internalChannelMap19;
-            public ma_channel internalChannelMap20;
-            public ma_channel internalChannelMap21;
-            public ma_channel internalChannelMap22;
-            public ma_channel internalChannelMap23;
-            public ma_channel internalChannelMap24;
-            public ma_channel internalChannelMap25;
-            public ma_channel internalChannelMap26;
-            public ma_channel internalChannelMap27;
-            public ma_channel internalChannelMap28;
-            public ma_channel internalChannelMap29;
-            public ma_channel internalChannelMap30;
-            public ma_channel internalChannelMap31;
-            public ma_channel internalChannelMap32;
-            public ma_channel internalChannelMap33;
-            public ma_channel internalChannelMap34;
-            public ma_channel internalChannelMap35;
-            public ma_channel internalChannelMap36;
-            public ma_channel internalChannelMap37;
-            public ma_channel internalChannelMap38;
-            public ma_channel internalChannelMap39;
-            public ma_channel internalChannelMap40;
-            public ma_channel internalChannelMap41;
-            public ma_channel internalChannelMap42;
-            public ma_channel internalChannelMap43;
-            public ma_channel internalChannelMap44;
-            public ma_channel internalChannelMap45;
-            public ma_channel internalChannelMap46;
-            public ma_channel internalChannelMap47;
-            public ma_channel internalChannelMap48;
-            public ma_channel internalChannelMap49;
-            public ma_channel internalChannelMap50;
-            public ma_channel internalChannelMap51;
-            public ma_channel internalChannelMap52;
-            public ma_channel internalChannelMap53;
-            public ma_channel internalChannelMap54;
-            public ma_channel internalChannelMap55;
-            public ma_channel internalChannelMap56;
-            public ma_channel internalChannelMap57;
-            public ma_channel internalChannelMap58;
-            public ma_channel internalChannelMap59;
-            public ma_channel internalChannelMap60;
-            public ma_channel internalChannelMap61;
-            public ma_channel internalChannelMap62;
-            public ma_channel internalChannelMap63;
-            public ma_channel internalChannelMap64;
-            public ma_channel internalChannelMap65;
-            public ma_channel internalChannelMap66;
-            public ma_channel internalChannelMap67;
-            public ma_channel internalChannelMap68;
-            public ma_channel internalChannelMap69;
-            public ma_channel internalChannelMap70;
-            public ma_channel internalChannelMap71;
-            public ma_channel internalChannelMap72;
-            public ma_channel internalChannelMap73;
-            public ma_channel internalChannelMap74;
-            public ma_channel internalChannelMap75;
-            public ma_channel internalChannelMap76;
-            public ma_channel internalChannelMap77;
-            public ma_channel internalChannelMap78;
-            public ma_channel internalChannelMap79;
-            public ma_channel internalChannelMap80;
-            public ma_channel internalChannelMap81;
-            public ma_channel internalChannelMap82;
-            public ma_channel internalChannelMap83;
-            public ma_channel internalChannelMap84;
-            public ma_channel internalChannelMap85;
-            public ma_channel internalChannelMap86;
-            public ma_channel internalChannelMap87;
-            public ma_channel internalChannelMap88;
-            public ma_channel internalChannelMap89;
-            public ma_channel internalChannelMap90;
-            public ma_channel internalChannelMap91;
-            public ma_channel internalChannelMap92;
-            public ma_channel internalChannelMap93;
-            public ma_channel internalChannelMap94;
-            public ma_channel internalChannelMap95;
-            public ma_channel internalChannelMap96;
-            public ma_channel internalChannelMap97;
-            public ma_channel internalChannelMap98;
-            public ma_channel internalChannelMap99;
-            public ma_channel internalChannelMap100;
-            public ma_channel internalChannelMap101;
-            public ma_channel internalChannelMap102;
-            public ma_channel internalChannelMap103;
-            public ma_channel internalChannelMap104;
-            public ma_channel internalChannelMap105;
-            public ma_channel internalChannelMap106;
-            public ma_channel internalChannelMap107;
-            public ma_channel internalChannelMap108;
-            public ma_channel internalChannelMap109;
-            public ma_channel internalChannelMap110;
-            public ma_channel internalChannelMap111;
-            public ma_channel internalChannelMap112;
-            public ma_channel internalChannelMap113;
-            public ma_channel internalChannelMap114;
-            public ma_channel internalChannelMap115;
-            public ma_channel internalChannelMap116;
-            public ma_channel internalChannelMap117;
-            public ma_channel internalChannelMap118;
-            public ma_channel internalChannelMap119;
-            public ma_channel internalChannelMap120;
-            public ma_channel internalChannelMap121;
-            public ma_channel internalChannelMap122;
-            public ma_channel internalChannelMap123;
-            public ma_channel internalChannelMap124;
-            public ma_channel internalChannelMap125;
-            public ma_channel internalChannelMap126;
-            public ma_channel internalChannelMap127;
-            public ma_channel internalChannelMap128;
-            public ma_channel internalChannelMap129;
-            public ma_channel internalChannelMap130;
-            public ma_channel internalChannelMap131;
-            public ma_channel internalChannelMap132;
-            public ma_channel internalChannelMap133;
-            public ma_channel internalChannelMap134;
-            public ma_channel internalChannelMap135;
-            public ma_channel internalChannelMap136;
-            public ma_channel internalChannelMap137;
-            public ma_channel internalChannelMap138;
-            public ma_channel internalChannelMap139;
-            public ma_channel internalChannelMap140;
-            public ma_channel internalChannelMap141;
-            public ma_channel internalChannelMap142;
-            public ma_channel internalChannelMap143;
-            public ma_channel internalChannelMap144;
-            public ma_channel internalChannelMap145;
-            public ma_channel internalChannelMap146;
-            public ma_channel internalChannelMap147;
-            public ma_channel internalChannelMap148;
-            public ma_channel internalChannelMap149;
-            public ma_channel internalChannelMap150;
-            public ma_channel internalChannelMap151;
-            public ma_channel internalChannelMap152;
-            public ma_channel internalChannelMap153;
-            public ma_channel internalChannelMap154;
-            public ma_channel internalChannelMap155;
-            public ma_channel internalChannelMap156;
-            public ma_channel internalChannelMap157;
-            public ma_channel internalChannelMap158;
-            public ma_channel internalChannelMap159;
-            public ma_channel internalChannelMap160;
-            public ma_channel internalChannelMap161;
-            public ma_channel internalChannelMap162;
-            public ma_channel internalChannelMap163;
-            public ma_channel internalChannelMap164;
-            public ma_channel internalChannelMap165;
-            public ma_channel internalChannelMap166;
-            public ma_channel internalChannelMap167;
-            public ma_channel internalChannelMap168;
-            public ma_channel internalChannelMap169;
-            public ma_channel internalChannelMap170;
-            public ma_channel internalChannelMap171;
-            public ma_channel internalChannelMap172;
-            public ma_channel internalChannelMap173;
-            public ma_channel internalChannelMap174;
-            public ma_channel internalChannelMap175;
-            public ma_channel internalChannelMap176;
-            public ma_channel internalChannelMap177;
-            public ma_channel internalChannelMap178;
-            public ma_channel internalChannelMap179;
-            public ma_channel internalChannelMap180;
-            public ma_channel internalChannelMap181;
-            public ma_channel internalChannelMap182;
-            public ma_channel internalChannelMap183;
-            public ma_channel internalChannelMap184;
-            public ma_channel internalChannelMap185;
-            public ma_channel internalChannelMap186;
-            public ma_channel internalChannelMap187;
-            public ma_channel internalChannelMap188;
-            public ma_channel internalChannelMap189;
-            public ma_channel internalChannelMap190;
-            public ma_channel internalChannelMap191;
-            public ma_channel internalChannelMap192;
-            public ma_channel internalChannelMap193;
-            public ma_channel internalChannelMap194;
-            public ma_channel internalChannelMap195;
-            public ma_channel internalChannelMap196;
-            public ma_channel internalChannelMap197;
-            public ma_channel internalChannelMap198;
-            public ma_channel internalChannelMap199;
-            public ma_channel internalChannelMap200;
-            public ma_channel internalChannelMap201;
-            public ma_channel internalChannelMap202;
-            public ma_channel internalChannelMap203;
-            public ma_channel internalChannelMap204;
-            public ma_channel internalChannelMap205;
-            public ma_channel internalChannelMap206;
-            public ma_channel internalChannelMap207;
-            public ma_channel internalChannelMap208;
-            public ma_channel internalChannelMap209;
-            public ma_channel internalChannelMap210;
-            public ma_channel internalChannelMap211;
-            public ma_channel internalChannelMap212;
-            public ma_channel internalChannelMap213;
-            public ma_channel internalChannelMap214;
-            public ma_channel internalChannelMap215;
-            public ma_channel internalChannelMap216;
-            public ma_channel internalChannelMap217;
-            public ma_channel internalChannelMap218;
-            public ma_channel internalChannelMap219;
-            public ma_channel internalChannelMap220;
-            public ma_channel internalChannelMap221;
-            public ma_channel internalChannelMap222;
-            public ma_channel internalChannelMap223;
-            public ma_channel internalChannelMap224;
-            public ma_channel internalChannelMap225;
-            public ma_channel internalChannelMap226;
-            public ma_channel internalChannelMap227;
-            public ma_channel internalChannelMap228;
-            public ma_channel internalChannelMap229;
-            public ma_channel internalChannelMap230;
-            public ma_channel internalChannelMap231;
-            public ma_channel internalChannelMap232;
-            public ma_channel internalChannelMap233;
-            public ma_channel internalChannelMap234;
-            public ma_channel internalChannelMap235;
-            public ma_channel internalChannelMap236;
-            public ma_channel internalChannelMap237;
-            public ma_channel internalChannelMap238;
-            public ma_channel internalChannelMap239;
-            public ma_channel internalChannelMap240;
-            public ma_channel internalChannelMap241;
-            public ma_channel internalChannelMap242;
-            public ma_channel internalChannelMap243;
-            public ma_channel internalChannelMap244;
-            public ma_channel internalChannelMap245;
-            public ma_channel internalChannelMap246;
-            public ma_channel internalChannelMap247;
-            public ma_channel internalChannelMap248;
-            public ma_channel internalChannelMap249;
-            public ma_channel internalChannelMap250;
-            public ma_channel internalChannelMap251;
-            public ma_channel internalChannelMap252;
-            public ma_channel internalChannelMap253;
+            public fixed byte internalChannelMap[254];
             public uint internalPeriodSizeInFrames;
             public uint internalPeriods;
             public ma_channel_mix_mode channelMixMode;
-            public ma_uint32 calculateLFEFromSpatialChannels;
+            public uint calculateLFEFromSpatialChannels;
             public ma_data_converter converter;
             public IntPtr pIntermediaryBuffer;
             public uint intermediaryBufferCap;
@@ -3203,521 +3683,15 @@ public static unsafe partial class Interop
             public ma_share_mode shareMode;
             public ma_format format;
             public uint channels;
-            public ma_channel channelMap0;
-            public ma_channel channelMap1;
-            public ma_channel channelMap2;
-            public ma_channel channelMap3;
-            public ma_channel channelMap4;
-            public ma_channel channelMap5;
-            public ma_channel channelMap6;
-            public ma_channel channelMap7;
-            public ma_channel channelMap8;
-            public ma_channel channelMap9;
-            public ma_channel channelMap10;
-            public ma_channel channelMap11;
-            public ma_channel channelMap12;
-            public ma_channel channelMap13;
-            public ma_channel channelMap14;
-            public ma_channel channelMap15;
-            public ma_channel channelMap16;
-            public ma_channel channelMap17;
-            public ma_channel channelMap18;
-            public ma_channel channelMap19;
-            public ma_channel channelMap20;
-            public ma_channel channelMap21;
-            public ma_channel channelMap22;
-            public ma_channel channelMap23;
-            public ma_channel channelMap24;
-            public ma_channel channelMap25;
-            public ma_channel channelMap26;
-            public ma_channel channelMap27;
-            public ma_channel channelMap28;
-            public ma_channel channelMap29;
-            public ma_channel channelMap30;
-            public ma_channel channelMap31;
-            public ma_channel channelMap32;
-            public ma_channel channelMap33;
-            public ma_channel channelMap34;
-            public ma_channel channelMap35;
-            public ma_channel channelMap36;
-            public ma_channel channelMap37;
-            public ma_channel channelMap38;
-            public ma_channel channelMap39;
-            public ma_channel channelMap40;
-            public ma_channel channelMap41;
-            public ma_channel channelMap42;
-            public ma_channel channelMap43;
-            public ma_channel channelMap44;
-            public ma_channel channelMap45;
-            public ma_channel channelMap46;
-            public ma_channel channelMap47;
-            public ma_channel channelMap48;
-            public ma_channel channelMap49;
-            public ma_channel channelMap50;
-            public ma_channel channelMap51;
-            public ma_channel channelMap52;
-            public ma_channel channelMap53;
-            public ma_channel channelMap54;
-            public ma_channel channelMap55;
-            public ma_channel channelMap56;
-            public ma_channel channelMap57;
-            public ma_channel channelMap58;
-            public ma_channel channelMap59;
-            public ma_channel channelMap60;
-            public ma_channel channelMap61;
-            public ma_channel channelMap62;
-            public ma_channel channelMap63;
-            public ma_channel channelMap64;
-            public ma_channel channelMap65;
-            public ma_channel channelMap66;
-            public ma_channel channelMap67;
-            public ma_channel channelMap68;
-            public ma_channel channelMap69;
-            public ma_channel channelMap70;
-            public ma_channel channelMap71;
-            public ma_channel channelMap72;
-            public ma_channel channelMap73;
-            public ma_channel channelMap74;
-            public ma_channel channelMap75;
-            public ma_channel channelMap76;
-            public ma_channel channelMap77;
-            public ma_channel channelMap78;
-            public ma_channel channelMap79;
-            public ma_channel channelMap80;
-            public ma_channel channelMap81;
-            public ma_channel channelMap82;
-            public ma_channel channelMap83;
-            public ma_channel channelMap84;
-            public ma_channel channelMap85;
-            public ma_channel channelMap86;
-            public ma_channel channelMap87;
-            public ma_channel channelMap88;
-            public ma_channel channelMap89;
-            public ma_channel channelMap90;
-            public ma_channel channelMap91;
-            public ma_channel channelMap92;
-            public ma_channel channelMap93;
-            public ma_channel channelMap94;
-            public ma_channel channelMap95;
-            public ma_channel channelMap96;
-            public ma_channel channelMap97;
-            public ma_channel channelMap98;
-            public ma_channel channelMap99;
-            public ma_channel channelMap100;
-            public ma_channel channelMap101;
-            public ma_channel channelMap102;
-            public ma_channel channelMap103;
-            public ma_channel channelMap104;
-            public ma_channel channelMap105;
-            public ma_channel channelMap106;
-            public ma_channel channelMap107;
-            public ma_channel channelMap108;
-            public ma_channel channelMap109;
-            public ma_channel channelMap110;
-            public ma_channel channelMap111;
-            public ma_channel channelMap112;
-            public ma_channel channelMap113;
-            public ma_channel channelMap114;
-            public ma_channel channelMap115;
-            public ma_channel channelMap116;
-            public ma_channel channelMap117;
-            public ma_channel channelMap118;
-            public ma_channel channelMap119;
-            public ma_channel channelMap120;
-            public ma_channel channelMap121;
-            public ma_channel channelMap122;
-            public ma_channel channelMap123;
-            public ma_channel channelMap124;
-            public ma_channel channelMap125;
-            public ma_channel channelMap126;
-            public ma_channel channelMap127;
-            public ma_channel channelMap128;
-            public ma_channel channelMap129;
-            public ma_channel channelMap130;
-            public ma_channel channelMap131;
-            public ma_channel channelMap132;
-            public ma_channel channelMap133;
-            public ma_channel channelMap134;
-            public ma_channel channelMap135;
-            public ma_channel channelMap136;
-            public ma_channel channelMap137;
-            public ma_channel channelMap138;
-            public ma_channel channelMap139;
-            public ma_channel channelMap140;
-            public ma_channel channelMap141;
-            public ma_channel channelMap142;
-            public ma_channel channelMap143;
-            public ma_channel channelMap144;
-            public ma_channel channelMap145;
-            public ma_channel channelMap146;
-            public ma_channel channelMap147;
-            public ma_channel channelMap148;
-            public ma_channel channelMap149;
-            public ma_channel channelMap150;
-            public ma_channel channelMap151;
-            public ma_channel channelMap152;
-            public ma_channel channelMap153;
-            public ma_channel channelMap154;
-            public ma_channel channelMap155;
-            public ma_channel channelMap156;
-            public ma_channel channelMap157;
-            public ma_channel channelMap158;
-            public ma_channel channelMap159;
-            public ma_channel channelMap160;
-            public ma_channel channelMap161;
-            public ma_channel channelMap162;
-            public ma_channel channelMap163;
-            public ma_channel channelMap164;
-            public ma_channel channelMap165;
-            public ma_channel channelMap166;
-            public ma_channel channelMap167;
-            public ma_channel channelMap168;
-            public ma_channel channelMap169;
-            public ma_channel channelMap170;
-            public ma_channel channelMap171;
-            public ma_channel channelMap172;
-            public ma_channel channelMap173;
-            public ma_channel channelMap174;
-            public ma_channel channelMap175;
-            public ma_channel channelMap176;
-            public ma_channel channelMap177;
-            public ma_channel channelMap178;
-            public ma_channel channelMap179;
-            public ma_channel channelMap180;
-            public ma_channel channelMap181;
-            public ma_channel channelMap182;
-            public ma_channel channelMap183;
-            public ma_channel channelMap184;
-            public ma_channel channelMap185;
-            public ma_channel channelMap186;
-            public ma_channel channelMap187;
-            public ma_channel channelMap188;
-            public ma_channel channelMap189;
-            public ma_channel channelMap190;
-            public ma_channel channelMap191;
-            public ma_channel channelMap192;
-            public ma_channel channelMap193;
-            public ma_channel channelMap194;
-            public ma_channel channelMap195;
-            public ma_channel channelMap196;
-            public ma_channel channelMap197;
-            public ma_channel channelMap198;
-            public ma_channel channelMap199;
-            public ma_channel channelMap200;
-            public ma_channel channelMap201;
-            public ma_channel channelMap202;
-            public ma_channel channelMap203;
-            public ma_channel channelMap204;
-            public ma_channel channelMap205;
-            public ma_channel channelMap206;
-            public ma_channel channelMap207;
-            public ma_channel channelMap208;
-            public ma_channel channelMap209;
-            public ma_channel channelMap210;
-            public ma_channel channelMap211;
-            public ma_channel channelMap212;
-            public ma_channel channelMap213;
-            public ma_channel channelMap214;
-            public ma_channel channelMap215;
-            public ma_channel channelMap216;
-            public ma_channel channelMap217;
-            public ma_channel channelMap218;
-            public ma_channel channelMap219;
-            public ma_channel channelMap220;
-            public ma_channel channelMap221;
-            public ma_channel channelMap222;
-            public ma_channel channelMap223;
-            public ma_channel channelMap224;
-            public ma_channel channelMap225;
-            public ma_channel channelMap226;
-            public ma_channel channelMap227;
-            public ma_channel channelMap228;
-            public ma_channel channelMap229;
-            public ma_channel channelMap230;
-            public ma_channel channelMap231;
-            public ma_channel channelMap232;
-            public ma_channel channelMap233;
-            public ma_channel channelMap234;
-            public ma_channel channelMap235;
-            public ma_channel channelMap236;
-            public ma_channel channelMap237;
-            public ma_channel channelMap238;
-            public ma_channel channelMap239;
-            public ma_channel channelMap240;
-            public ma_channel channelMap241;
-            public ma_channel channelMap242;
-            public ma_channel channelMap243;
-            public ma_channel channelMap244;
-            public ma_channel channelMap245;
-            public ma_channel channelMap246;
-            public ma_channel channelMap247;
-            public ma_channel channelMap248;
-            public ma_channel channelMap249;
-            public ma_channel channelMap250;
-            public ma_channel channelMap251;
-            public ma_channel channelMap252;
-            public ma_channel channelMap253;
+            public fixed byte channelMap[254];
             public ma_format internalFormat;
             public uint internalChannels;
             public uint internalSampleRate;
-            public ma_channel internalChannelMap0;
-            public ma_channel internalChannelMap1;
-            public ma_channel internalChannelMap2;
-            public ma_channel internalChannelMap3;
-            public ma_channel internalChannelMap4;
-            public ma_channel internalChannelMap5;
-            public ma_channel internalChannelMap6;
-            public ma_channel internalChannelMap7;
-            public ma_channel internalChannelMap8;
-            public ma_channel internalChannelMap9;
-            public ma_channel internalChannelMap10;
-            public ma_channel internalChannelMap11;
-            public ma_channel internalChannelMap12;
-            public ma_channel internalChannelMap13;
-            public ma_channel internalChannelMap14;
-            public ma_channel internalChannelMap15;
-            public ma_channel internalChannelMap16;
-            public ma_channel internalChannelMap17;
-            public ma_channel internalChannelMap18;
-            public ma_channel internalChannelMap19;
-            public ma_channel internalChannelMap20;
-            public ma_channel internalChannelMap21;
-            public ma_channel internalChannelMap22;
-            public ma_channel internalChannelMap23;
-            public ma_channel internalChannelMap24;
-            public ma_channel internalChannelMap25;
-            public ma_channel internalChannelMap26;
-            public ma_channel internalChannelMap27;
-            public ma_channel internalChannelMap28;
-            public ma_channel internalChannelMap29;
-            public ma_channel internalChannelMap30;
-            public ma_channel internalChannelMap31;
-            public ma_channel internalChannelMap32;
-            public ma_channel internalChannelMap33;
-            public ma_channel internalChannelMap34;
-            public ma_channel internalChannelMap35;
-            public ma_channel internalChannelMap36;
-            public ma_channel internalChannelMap37;
-            public ma_channel internalChannelMap38;
-            public ma_channel internalChannelMap39;
-            public ma_channel internalChannelMap40;
-            public ma_channel internalChannelMap41;
-            public ma_channel internalChannelMap42;
-            public ma_channel internalChannelMap43;
-            public ma_channel internalChannelMap44;
-            public ma_channel internalChannelMap45;
-            public ma_channel internalChannelMap46;
-            public ma_channel internalChannelMap47;
-            public ma_channel internalChannelMap48;
-            public ma_channel internalChannelMap49;
-            public ma_channel internalChannelMap50;
-            public ma_channel internalChannelMap51;
-            public ma_channel internalChannelMap52;
-            public ma_channel internalChannelMap53;
-            public ma_channel internalChannelMap54;
-            public ma_channel internalChannelMap55;
-            public ma_channel internalChannelMap56;
-            public ma_channel internalChannelMap57;
-            public ma_channel internalChannelMap58;
-            public ma_channel internalChannelMap59;
-            public ma_channel internalChannelMap60;
-            public ma_channel internalChannelMap61;
-            public ma_channel internalChannelMap62;
-            public ma_channel internalChannelMap63;
-            public ma_channel internalChannelMap64;
-            public ma_channel internalChannelMap65;
-            public ma_channel internalChannelMap66;
-            public ma_channel internalChannelMap67;
-            public ma_channel internalChannelMap68;
-            public ma_channel internalChannelMap69;
-            public ma_channel internalChannelMap70;
-            public ma_channel internalChannelMap71;
-            public ma_channel internalChannelMap72;
-            public ma_channel internalChannelMap73;
-            public ma_channel internalChannelMap74;
-            public ma_channel internalChannelMap75;
-            public ma_channel internalChannelMap76;
-            public ma_channel internalChannelMap77;
-            public ma_channel internalChannelMap78;
-            public ma_channel internalChannelMap79;
-            public ma_channel internalChannelMap80;
-            public ma_channel internalChannelMap81;
-            public ma_channel internalChannelMap82;
-            public ma_channel internalChannelMap83;
-            public ma_channel internalChannelMap84;
-            public ma_channel internalChannelMap85;
-            public ma_channel internalChannelMap86;
-            public ma_channel internalChannelMap87;
-            public ma_channel internalChannelMap88;
-            public ma_channel internalChannelMap89;
-            public ma_channel internalChannelMap90;
-            public ma_channel internalChannelMap91;
-            public ma_channel internalChannelMap92;
-            public ma_channel internalChannelMap93;
-            public ma_channel internalChannelMap94;
-            public ma_channel internalChannelMap95;
-            public ma_channel internalChannelMap96;
-            public ma_channel internalChannelMap97;
-            public ma_channel internalChannelMap98;
-            public ma_channel internalChannelMap99;
-            public ma_channel internalChannelMap100;
-            public ma_channel internalChannelMap101;
-            public ma_channel internalChannelMap102;
-            public ma_channel internalChannelMap103;
-            public ma_channel internalChannelMap104;
-            public ma_channel internalChannelMap105;
-            public ma_channel internalChannelMap106;
-            public ma_channel internalChannelMap107;
-            public ma_channel internalChannelMap108;
-            public ma_channel internalChannelMap109;
-            public ma_channel internalChannelMap110;
-            public ma_channel internalChannelMap111;
-            public ma_channel internalChannelMap112;
-            public ma_channel internalChannelMap113;
-            public ma_channel internalChannelMap114;
-            public ma_channel internalChannelMap115;
-            public ma_channel internalChannelMap116;
-            public ma_channel internalChannelMap117;
-            public ma_channel internalChannelMap118;
-            public ma_channel internalChannelMap119;
-            public ma_channel internalChannelMap120;
-            public ma_channel internalChannelMap121;
-            public ma_channel internalChannelMap122;
-            public ma_channel internalChannelMap123;
-            public ma_channel internalChannelMap124;
-            public ma_channel internalChannelMap125;
-            public ma_channel internalChannelMap126;
-            public ma_channel internalChannelMap127;
-            public ma_channel internalChannelMap128;
-            public ma_channel internalChannelMap129;
-            public ma_channel internalChannelMap130;
-            public ma_channel internalChannelMap131;
-            public ma_channel internalChannelMap132;
-            public ma_channel internalChannelMap133;
-            public ma_channel internalChannelMap134;
-            public ma_channel internalChannelMap135;
-            public ma_channel internalChannelMap136;
-            public ma_channel internalChannelMap137;
-            public ma_channel internalChannelMap138;
-            public ma_channel internalChannelMap139;
-            public ma_channel internalChannelMap140;
-            public ma_channel internalChannelMap141;
-            public ma_channel internalChannelMap142;
-            public ma_channel internalChannelMap143;
-            public ma_channel internalChannelMap144;
-            public ma_channel internalChannelMap145;
-            public ma_channel internalChannelMap146;
-            public ma_channel internalChannelMap147;
-            public ma_channel internalChannelMap148;
-            public ma_channel internalChannelMap149;
-            public ma_channel internalChannelMap150;
-            public ma_channel internalChannelMap151;
-            public ma_channel internalChannelMap152;
-            public ma_channel internalChannelMap153;
-            public ma_channel internalChannelMap154;
-            public ma_channel internalChannelMap155;
-            public ma_channel internalChannelMap156;
-            public ma_channel internalChannelMap157;
-            public ma_channel internalChannelMap158;
-            public ma_channel internalChannelMap159;
-            public ma_channel internalChannelMap160;
-            public ma_channel internalChannelMap161;
-            public ma_channel internalChannelMap162;
-            public ma_channel internalChannelMap163;
-            public ma_channel internalChannelMap164;
-            public ma_channel internalChannelMap165;
-            public ma_channel internalChannelMap166;
-            public ma_channel internalChannelMap167;
-            public ma_channel internalChannelMap168;
-            public ma_channel internalChannelMap169;
-            public ma_channel internalChannelMap170;
-            public ma_channel internalChannelMap171;
-            public ma_channel internalChannelMap172;
-            public ma_channel internalChannelMap173;
-            public ma_channel internalChannelMap174;
-            public ma_channel internalChannelMap175;
-            public ma_channel internalChannelMap176;
-            public ma_channel internalChannelMap177;
-            public ma_channel internalChannelMap178;
-            public ma_channel internalChannelMap179;
-            public ma_channel internalChannelMap180;
-            public ma_channel internalChannelMap181;
-            public ma_channel internalChannelMap182;
-            public ma_channel internalChannelMap183;
-            public ma_channel internalChannelMap184;
-            public ma_channel internalChannelMap185;
-            public ma_channel internalChannelMap186;
-            public ma_channel internalChannelMap187;
-            public ma_channel internalChannelMap188;
-            public ma_channel internalChannelMap189;
-            public ma_channel internalChannelMap190;
-            public ma_channel internalChannelMap191;
-            public ma_channel internalChannelMap192;
-            public ma_channel internalChannelMap193;
-            public ma_channel internalChannelMap194;
-            public ma_channel internalChannelMap195;
-            public ma_channel internalChannelMap196;
-            public ma_channel internalChannelMap197;
-            public ma_channel internalChannelMap198;
-            public ma_channel internalChannelMap199;
-            public ma_channel internalChannelMap200;
-            public ma_channel internalChannelMap201;
-            public ma_channel internalChannelMap202;
-            public ma_channel internalChannelMap203;
-            public ma_channel internalChannelMap204;
-            public ma_channel internalChannelMap205;
-            public ma_channel internalChannelMap206;
-            public ma_channel internalChannelMap207;
-            public ma_channel internalChannelMap208;
-            public ma_channel internalChannelMap209;
-            public ma_channel internalChannelMap210;
-            public ma_channel internalChannelMap211;
-            public ma_channel internalChannelMap212;
-            public ma_channel internalChannelMap213;
-            public ma_channel internalChannelMap214;
-            public ma_channel internalChannelMap215;
-            public ma_channel internalChannelMap216;
-            public ma_channel internalChannelMap217;
-            public ma_channel internalChannelMap218;
-            public ma_channel internalChannelMap219;
-            public ma_channel internalChannelMap220;
-            public ma_channel internalChannelMap221;
-            public ma_channel internalChannelMap222;
-            public ma_channel internalChannelMap223;
-            public ma_channel internalChannelMap224;
-            public ma_channel internalChannelMap225;
-            public ma_channel internalChannelMap226;
-            public ma_channel internalChannelMap227;
-            public ma_channel internalChannelMap228;
-            public ma_channel internalChannelMap229;
-            public ma_channel internalChannelMap230;
-            public ma_channel internalChannelMap231;
-            public ma_channel internalChannelMap232;
-            public ma_channel internalChannelMap233;
-            public ma_channel internalChannelMap234;
-            public ma_channel internalChannelMap235;
-            public ma_channel internalChannelMap236;
-            public ma_channel internalChannelMap237;
-            public ma_channel internalChannelMap238;
-            public ma_channel internalChannelMap239;
-            public ma_channel internalChannelMap240;
-            public ma_channel internalChannelMap241;
-            public ma_channel internalChannelMap242;
-            public ma_channel internalChannelMap243;
-            public ma_channel internalChannelMap244;
-            public ma_channel internalChannelMap245;
-            public ma_channel internalChannelMap246;
-            public ma_channel internalChannelMap247;
-            public ma_channel internalChannelMap248;
-            public ma_channel internalChannelMap249;
-            public ma_channel internalChannelMap250;
-            public ma_channel internalChannelMap251;
-            public ma_channel internalChannelMap252;
-            public ma_channel internalChannelMap253;
+            public fixed byte internalChannelMap[254];
             public uint internalPeriodSizeInFrames;
             public uint internalPeriods;
             public ma_channel_mix_mode channelMixMode;
-            public ma_uint32 calculateLFEFromSpatialChannels;
+            public uint calculateLFEFromSpatialChannels;
             public ma_data_converter converter;
             public IntPtr pIntermediaryBuffer;
             public uint intermediaryBufferCap;
@@ -3761,7 +3735,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_context_is_loopback_supported(IntPtr pContext); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_context_is_loopback_supported(IntPtr pContext); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3805,7 +3779,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_device_is_started(IntPtr pDevice); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_device_is_started(IntPtr pDevice); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3849,7 +3823,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_is_backend_enabled(ma_backend backend);
+    public static partial uint ma_is_backend_enabled(ma_backend backend);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -3857,7 +3831,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_is_loopback_supported(ma_backend backend);
+    public static partial uint ma_is_loopback_supported(ma_backend backend);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4056,6 +4030,25 @@ public static unsafe partial class Interop
         ma_seek_origin_end = 2,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_file_info
+    {
+        public ulong sizeInBytes;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_vfs_callbacks
+    {
+        public IntPtr onOpen; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onOpenW; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onClose; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onRead; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onWrite; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onSeek; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onTell; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onInfo; // WARN_ANONYMOUS_FUNCTION_POINTER
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_vfs_open(IntPtr pVFS, ref byte pFilePath, uint openMode, IntPtr pFile); // WARN_UNKNOWN_POINTER_PARAMETER
@@ -4066,31 +4059,38 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_vfs_close(IntPtr pVFS, ma_handle file);
+    public static partial ma_result ma_vfs_close(IntPtr pVFS, IntPtr file);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_vfs_read(IntPtr pVFS, ma_handle file, IntPtr pDst, UIntPtr sizeInBytes, IntPtr pBytesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_vfs_read(IntPtr pVFS, IntPtr file, IntPtr pDst, UIntPtr sizeInBytes, IntPtr pBytesRead); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_vfs_write(IntPtr pVFS, ma_handle file, IntPtr pSrc, UIntPtr sizeInBytes, IntPtr pBytesWritten); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_vfs_write(IntPtr pVFS, IntPtr file, IntPtr pSrc, UIntPtr sizeInBytes, IntPtr pBytesWritten); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_vfs_seek(IntPtr pVFS, ma_handle file, long offset, ma_seek_origin origin);
+    public static partial ma_result ma_vfs_seek(IntPtr pVFS, IntPtr file, long offset, ma_seek_origin origin);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_vfs_tell(IntPtr pVFS, ma_handle file, IntPtr pCursor);
+    public static partial ma_result ma_vfs_tell(IntPtr pVFS, IntPtr file, IntPtr pCursor);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_vfs_info(IntPtr pVFS, ma_handle file, IntPtr pInfo);
+    public static partial ma_result ma_vfs_info(IntPtr pVFS, IntPtr file, IntPtr pInfo);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_vfs_open_and_read_file(IntPtr pVFS, ref byte pFilePath, IntPtr ppData, IntPtr pSize, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_default_vfs
+    {
+        public ma_vfs_callbacks cb;
+        public ma_allocation_callbacks allocationCallbacks;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4111,15 +4111,50 @@ public static unsafe partial class Interop
         ma_encoding_format_vorbis = 4,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_decoding_backend_config
+    {
+        public ma_format preferredFormat;
+        public uint seekPointCount;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_decoding_backend_config ma_decoding_backend_config_init(ma_format preferredFormat, uint seekPointCount);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_decoding_backend_vtable
+    {
+        public IntPtr onInit; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onInitFile; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onInitFileW; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onInitMemory; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onUninit; // WARN_ANONYMOUS_FUNCTION_POINTER
+    }
 
     // public delegate WARN_PLACEHOLDER ma_decoder_read_proc();
 
     // public delegate WARN_PLACEHOLDER ma_decoder_seek_proc();
 
     // public delegate WARN_PLACEHOLDER ma_decoder_tell_proc();
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_decoder_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public IntPtr pChannelMap;
+        public ma_channel_mix_mode channelMixMode;
+        public ma_dither_mode ditherMode;
+        public ma_resampler_config resampling;
+        public ma_allocation_callbacks allocationCallbacks;
+        public ma_encoding_format encodingFormat;
+        public uint seekPointCount;
+        public IntPtr* ppCustomBackendVTables;
+        public uint customBackendCount;
+        public IntPtr pCustomBackendUserData;
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_decoder
@@ -4226,6 +4261,16 @@ public static unsafe partial class Interop
 
     // public delegate WARN_PLACEHOLDER ma_encoder_write_pcm_frames_proc();
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_encoder_config
+    {
+        public ma_encoding_format encodingFormat;
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public ma_allocation_callbacks allocationCallbacks;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_encoder_config ma_encoder_config_init(ma_encoding_format encodingFormat, ma_format format, uint channels, uint sampleRate);
@@ -4279,9 +4324,29 @@ public static unsafe partial class Interop
         ma_waveform_type_sawtooth = 3,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_waveform_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public ma_waveform_type type;
+        public double amplitude;
+        public double frequency;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_waveform_config ma_waveform_config_init(ma_format format, uint channels, uint sampleRate, ma_waveform_type type, double amplitude, double frequency);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_waveform
+    {
+        public ma_data_source_base ds;
+        public ma_waveform_config config;
+        public double advance;
+        public double time;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4315,9 +4380,27 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_waveform_set_sample_rate(IntPtr pWaveform, uint sampleRate);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_pulsewave_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRate;
+        public double dutyCycle;
+        public double amplitude;
+        public double frequency;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_pulsewave_config ma_pulsewave_config_init(ma_format format, uint channels, uint sampleRate, double dutyCycle, double amplitude, double frequency);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_pulsewave
+    {
+        public ma_waveform waveform;
+        public ma_pulsewave_config config;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4358,9 +4441,30 @@ public static unsafe partial class Interop
         ma_noise_type_brownian = 2,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_noise_config
+    {
+        public ma_format format;
+        public uint channels;
+        public ma_noise_type type;
+        public int seed;
+        public double amplitude;
+        public uint duplicateChannels;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_noise_config ma_noise_config_init(ma_format format, uint channels, ma_noise_type type, int seed, double amplitude);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_noise
+    {
+        public ma_data_source_base ds;
+        public ma_noise_config config;
+        public ma_lcg lcg;
+        public IntPtr _pHeap;
+        public uint _ownsHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4404,6 +4508,20 @@ public static unsafe partial class Interop
         MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_LOOPING = 32,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_resource_manager_pipeline_stage_notification
+    {
+        public IntPtr pNotification;
+        public IntPtr pFence;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_resource_manager_pipeline_notifications
+    {
+        public ma_resource_manager_pipeline_stage_notification init;
+        public ma_resource_manager_pipeline_stage_notification done;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_resource_manager_pipeline_notifications ma_resource_manager_pipeline_notifications_init();
@@ -4412,6 +4530,21 @@ public static unsafe partial class Interop
     {
         MA_RESOURCE_MANAGER_FLAG_NON_BLOCKING = 1,
         MA_RESOURCE_MANAGER_FLAG_NO_THREADING = 2,
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_resource_manager_data_source_config
+    {
+        public byte* pFilePath;
+        public byte* pFilePathW;
+        public IntPtr pNotifications;
+        public ulong initialSeekPointInPCMFrames;
+        public ulong rangeBegInPCMFrames;
+        public ulong rangeEndInPCMFrames;
+        public ulong loopPointBegInPCMFrames;
+        public ulong loopPointEndInPCMFrames;
+        public uint flags;
+        public uint isLooping;
     }
 
     [LibraryImport(nativeLibName)]
@@ -4427,6 +4560,12 @@ public static unsafe partial class Interop
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    public struct ma_resource_manager_data_supply
+    {
+        public ma_resource_manager_data_supply_type type;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     public struct ma_resource_manager_data_buffer_node
     {
         public uint hashedName32;
@@ -4434,7 +4573,7 @@ public static unsafe partial class Interop
         public ma_result result;
         public uint executionCounter;
         public uint executionPointer;
-        public ma_uint32 isDataOwnedByResourceManager;
+        public uint isDataOwnedByResourceManager;
         public ma_resource_manager_data_supply data;
         public ma_resource_manager_data_buffer_node* pParent;
         public ma_resource_manager_data_buffer_node* pChildLo;
@@ -4451,9 +4590,9 @@ public static unsafe partial class Interop
         public uint executionCounter;
         public uint executionPointer;
         public ulong seekTargetInPCMFrames;
-        public ma_uint32 seekToCursorOnNextRead;
+        public uint seekToCursorOnNextRead;
         public ma_result result;
-        public ma_uint32 isLooping;
+        public uint isLooping;
         public ma_atomic_bool32 isConnectorInitialized;
     }
 
@@ -4464,22 +4603,20 @@ public static unsafe partial class Interop
         public IntPtr pResourceManager;
         public uint flags;
         public ma_decoder decoder;
-        public ma_uint32 isDecoderInitialized;
+        public uint isDecoderInitialized;
         public ulong totalLengthInPCMFrames;
         public uint relativeCursor;
         public ulong absoluteCursor;
         public uint currentPageIndex;
         public uint executionCounter;
         public uint executionPointer;
-        public ma_uint32 isLooping;
+        public uint isLooping;
         public IntPtr pPageData;
-        public ma_uint32 pageFrameCount0;
-        public ma_uint32 pageFrameCount1;
+        public fixed uint pageFrameCount[2];
         public ma_result result;
-        public ma_uint32 isDecoderAtEnd;
-        public ma_bool32 isPageValid0;
-        public ma_bool32 isPageValid1;
-        public ma_uint32 seekCounter;
+        public uint isDecoderAtEnd;
+        public fixed uint isPageValid[2];
+        public uint seekCounter;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -4488,6 +4625,25 @@ public static unsafe partial class Interop
         public uint flags;
         public uint executionCounter;
         public uint executionPointer;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_resource_manager_config
+    {
+        public ma_allocation_callbacks allocationCallbacks;
+        public IntPtr pLog;
+        public ma_format decodedFormat;
+        public uint decodedChannels;
+        public uint decodedSampleRate;
+        public uint jobThreadCount;
+        public UIntPtr jobThreadStackSize;
+        public uint jobQueueCapacity;
+        public uint flags;
+        public IntPtr pVFS;
+        public IntPtr* ppCustomDecodingBackendVTables;
+        public uint customDecodingBackendCount;
+        public IntPtr pCustomDecodingBackendUserData;
+        public ma_resampler_config resampling;
     }
 
     [LibraryImport(nativeLibName)]
@@ -4499,71 +4655,8 @@ public static unsafe partial class Interop
     {
         public ma_resource_manager_config config;
         public ma_resource_manager_data_buffer_node* pRootDataBufferNode;
-        public ma_pthread_mutex_t dataBufferBSTLock;
-        public ma_thread jobThreads0;
-        public ma_thread jobThreads1;
-        public ma_thread jobThreads2;
-        public ma_thread jobThreads3;
-        public ma_thread jobThreads4;
-        public ma_thread jobThreads5;
-        public ma_thread jobThreads6;
-        public ma_thread jobThreads7;
-        public ma_thread jobThreads8;
-        public ma_thread jobThreads9;
-        public ma_thread jobThreads10;
-        public ma_thread jobThreads11;
-        public ma_thread jobThreads12;
-        public ma_thread jobThreads13;
-        public ma_thread jobThreads14;
-        public ma_thread jobThreads15;
-        public ma_thread jobThreads16;
-        public ma_thread jobThreads17;
-        public ma_thread jobThreads18;
-        public ma_thread jobThreads19;
-        public ma_thread jobThreads20;
-        public ma_thread jobThreads21;
-        public ma_thread jobThreads22;
-        public ma_thread jobThreads23;
-        public ma_thread jobThreads24;
-        public ma_thread jobThreads25;
-        public ma_thread jobThreads26;
-        public ma_thread jobThreads27;
-        public ma_thread jobThreads28;
-        public ma_thread jobThreads29;
-        public ma_thread jobThreads30;
-        public ma_thread jobThreads31;
-        public ma_thread jobThreads32;
-        public ma_thread jobThreads33;
-        public ma_thread jobThreads34;
-        public ma_thread jobThreads35;
-        public ma_thread jobThreads36;
-        public ma_thread jobThreads37;
-        public ma_thread jobThreads38;
-        public ma_thread jobThreads39;
-        public ma_thread jobThreads40;
-        public ma_thread jobThreads41;
-        public ma_thread jobThreads42;
-        public ma_thread jobThreads43;
-        public ma_thread jobThreads44;
-        public ma_thread jobThreads45;
-        public ma_thread jobThreads46;
-        public ma_thread jobThreads47;
-        public ma_thread jobThreads48;
-        public ma_thread jobThreads49;
-        public ma_thread jobThreads50;
-        public ma_thread jobThreads51;
-        public ma_thread jobThreads52;
-        public ma_thread jobThreads53;
-        public ma_thread jobThreads54;
-        public ma_thread jobThreads55;
-        public ma_thread jobThreads56;
-        public ma_thread jobThreads57;
-        public ma_thread jobThreads58;
-        public ma_thread jobThreads59;
-        public ma_thread jobThreads60;
-        public ma_thread jobThreads61;
-        public ma_thread jobThreads62;
-        public ma_thread jobThreads63;
+        public IntPtr dataBufferBSTLock;
+        public fixed IntPtr jobThreads[64];
         public ma_job_queue jobQueue;
         public ma_default_vfs defaultVFS;
         public ma_log log;
@@ -4667,11 +4760,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_buffer_set_looping(IntPtr pDataBuffer, ma_uint32 isLooping); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_buffer_set_looping(IntPtr pDataBuffer, uint isLooping); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_resource_manager_data_buffer_is_looping(IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_resource_manager_data_buffer_is_looping(IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4719,11 +4812,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_stream_set_looping(IntPtr pDataStream, ma_uint32 isLooping); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_stream_set_looping(IntPtr pDataStream, uint isLooping); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_resource_manager_data_stream_is_looping(IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_resource_manager_data_stream_is_looping(IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4775,11 +4868,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_source_set_looping(IntPtr pDataSource, ma_uint32 isLooping); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_source_set_looping(IntPtr pDataSource, uint isLooping); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_resource_manager_data_source_is_looping(IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_resource_manager_data_source_is_looping(IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4805,6 +4898,14 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_resource_manager_process_next_job(IntPtr pResourceManager); // WARN_UNKNOWN_POINTER_PARAMETER
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_stack
+    {
+        public UIntPtr offset;
+        public UIntPtr sizeInBytes;
+        public fixed byte _data[1];
+    }
+
     public enum ma_node_flags
     {
         MA_NODE_FLAG_PASSTHROUGH = 1,
@@ -4820,6 +4921,27 @@ public static unsafe partial class Interop
         ma_node_state_stopped = 1,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_node_vtable
+    {
+        public IntPtr onProcess; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onGetRequiredInputFrameCount; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public byte inputBusCount;
+        public byte outputBusCount;
+        public uint flags;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_node_config
+    {
+        public IntPtr vtable;
+        public ma_node_state initialState;
+        public uint inputBusCount;
+        public uint outputBusCount;
+        public IntPtr pInputChannels;
+        public IntPtr pOutputChannels;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_node_config ma_node_config_init();
@@ -4833,8 +4955,8 @@ public static unsafe partial class Interop
         public byte inputNodeInputBusIndex;
         public uint flags;
         public uint refCount;
-        public ma_uint32 isAttached;
-        public ma_uint32 @lock;
+        public uint isAttached;
+        public uint @lock;
         public float volume;
         public ma_node_output_bus* pNext;
         public ma_node_output_bus* pPrev;
@@ -4846,7 +4968,7 @@ public static unsafe partial class Interop
     {
         public ma_node_output_bus head;
         public uint nextCounter;
-        public ma_uint32 @lock;
+        public uint @lock;
         public byte channels;
     }
 
@@ -4865,15 +4987,14 @@ public static unsafe partial class Interop
         public ushort cachedFrameCountIn;
         public ushort consumedFrameCountIn;
         public ma_node_state state;
-        public ma_uint64 stateTimes0;
-        public ma_uint64 stateTimes1;
+        public fixed ulong stateTimes[2];
         public ulong localTime;
         public ma_node_input_bus _inputBuses0;
         public ma_node_input_bus _inputBuses1;
         public ma_node_output_bus _outputBuses0;
         public ma_node_output_bus _outputBuses1;
         public IntPtr _pHeap;
-        public ma_uint32 _ownsHeap;
+        public uint _ownsHeap;
     }
 
     [LibraryImport(nativeLibName)]
@@ -4964,6 +5085,14 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_result ma_node_set_time(IntPtr pNode, ulong localTime);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_node_graph_config
+    {
+        public uint channels;
+        public uint processingSizeInFrames;
+        public UIntPtr preMixStackSizeInBytes;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_node_graph_config ma_node_graph_config_init(uint channels);
@@ -4976,7 +5105,7 @@ public static unsafe partial class Interop
         public float* pProcessingCache;
         public uint processingCacheFramesRemaining;
         public uint processingSizeInFrames;
-        public ma_uint32 isReading;
+        public uint isReading;
         public IntPtr pPreMixStack;
     }
 
@@ -5012,9 +5141,23 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial uint ma_node_graph_get_processing_size_in_frames(IntPtr pNodeGraph); // WARN_UNKNOWN_POINTER_PARAMETER
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_data_source_node_config
+    {
+        public ma_node_config nodeConfig;
+        public IntPtr pDataSource;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_data_source_node_config ma_data_source_node_config_init(IntPtr pDataSource);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_data_source_node
+    {
+        public ma_node_base @base;
+        public IntPtr pDataSource;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5026,15 +5169,29 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_source_node_set_looping(IntPtr pDataSourceNode, ma_uint32 isLooping);
+    public static partial ma_result ma_data_source_node_set_looping(IntPtr pDataSourceNode, uint isLooping);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_data_source_node_is_looping(IntPtr pDataSourceNode);
+    public static partial uint ma_data_source_node_is_looping(IntPtr pDataSourceNode);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_splitter_node_config
+    {
+        public ma_node_config nodeConfig;
+        public uint channels;
+        public uint outputBusCount;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_splitter_node_config ma_splitter_node_config_init(uint channels);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_splitter_node
+    {
+        public ma_node_base @base;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5044,9 +5201,23 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ma_splitter_node_uninit(IntPtr pSplitterNode, IntPtr pAllocationCallbacks);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_biquad_node_config
+    {
+        public ma_node_config nodeConfig;
+        public ma_biquad_config biquad;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_biquad_node_config ma_biquad_node_config_init(uint channels, float b0, float b1, float b2, float a0, float a1, float a2);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_biquad_node
+    {
+        public ma_node_base baseNode;
+        public ma_biquad biquad;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5060,9 +5231,23 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ma_biquad_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_lpf_node_config
+    {
+        public ma_node_config nodeConfig;
+        public ma_lpf_config lpf;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_lpf_node_config ma_lpf_node_config_init(uint channels, uint sampleRate, double cutoffFrequency, uint order);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_lpf_node
+    {
+        public ma_node_base baseNode;
+        public ma_lpf lpf;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5076,9 +5261,23 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ma_lpf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_hpf_node_config
+    {
+        public ma_node_config nodeConfig;
+        public ma_hpf_config hpf;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_hpf_node_config ma_hpf_node_config_init(uint channels, uint sampleRate, double cutoffFrequency, uint order);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_hpf_node
+    {
+        public ma_node_base baseNode;
+        public ma_hpf hpf;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5092,9 +5291,23 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ma_hpf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_bpf_node_config
+    {
+        public ma_node_config nodeConfig;
+        public ma_bpf_config bpf;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_bpf_node_config ma_bpf_node_config_init(uint channels, uint sampleRate, double cutoffFrequency, uint order);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_bpf_node
+    {
+        public ma_node_base baseNode;
+        public ma_bpf bpf;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5108,9 +5321,23 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ma_bpf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_notch_node_config
+    {
+        public ma_node_config nodeConfig;
+        public ma_notch2_config notch;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_notch_node_config ma_notch_node_config_init(uint channels, uint sampleRate, double q, double frequency);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_notch_node
+    {
+        public ma_node_base baseNode;
+        public ma_notch2 notch;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5124,9 +5351,23 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ma_notch_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_peak_node_config
+    {
+        public ma_node_config nodeConfig;
+        public ma_peak2_config peak;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_peak_node_config ma_peak_node_config_init(uint channels, uint sampleRate, double gainDB, double q, double frequency);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_peak_node
+    {
+        public ma_node_base baseNode;
+        public ma_peak2 peak;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5140,9 +5381,23 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ma_peak_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_loshelf_node_config
+    {
+        public ma_node_config nodeConfig;
+        public ma_loshelf2_config loshelf;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_loshelf_node_config ma_loshelf_node_config_init(uint channels, uint sampleRate, double gainDB, double q, double frequency);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_loshelf_node
+    {
+        public ma_node_base baseNode;
+        public ma_loshelf2 loshelf;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5156,9 +5411,23 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ma_loshelf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_hishelf_node_config
+    {
+        public ma_node_config nodeConfig;
+        public ma_hishelf2_config hishelf;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_hishelf_node_config ma_hishelf_node_config_init(uint channels, uint sampleRate, double gainDB, double q, double frequency);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_hishelf_node
+    {
+        public ma_node_base baseNode;
+        public ma_hishelf2 hishelf;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5172,9 +5441,23 @@ public static unsafe partial class Interop
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial void ma_hishelf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_delay_node_config
+    {
+        public ma_node_config nodeConfig;
+        public ma_delay_config delay;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_delay_node_config ma_delay_node_config_init(uint channels, uint sampleRate, uint delayInFrames, float decay);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_delay_node
+    {
+        public ma_node_base baseNode;
+        public ma_delay delay;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5227,9 +5510,59 @@ public static unsafe partial class Interop
         ma_engine_node_type_group = 1,
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_engine_node_config
+    {
+        public IntPtr pEngine;
+        public ma_engine_node_type type;
+        public uint channelsIn;
+        public uint channelsOut;
+        public uint sampleRate;
+        public uint volumeSmoothTimeInPCMFrames;
+        public ma_mono_expansion_mode monoExpansionMode;
+        public byte isPitchDisabled;
+        public byte isSpatializationDisabled;
+        public byte pinnedListenerIndex;
+        public ma_resampler_config resampling;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_engine_node_config ma_engine_node_config_init(IntPtr pEngine, ma_engine_node_type type, uint flags);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_engine_node
+    {
+        public ma_node_base baseNode;
+        public IntPtr pEngine;
+        public uint sampleRate;
+        public uint volumeSmoothTimeInPCMFrames;
+        public ma_mono_expansion_mode monoExpansionMode;
+        public ma_fader fader;
+        public ma_resampler resampler;
+        public ma_spatializer spatializer;
+        public ma_panner panner;
+        public ma_gainer volumeGainer;
+        public ma_atomic_float volume;
+        public float pitch;
+        public float oldPitch;
+        public float oldDopplerPitch;
+        public uint isPitchDisabled;
+        public uint isSpatializationDisabled;
+        public uint pinnedListenerIndex;
+        [StructLayout(LayoutKind.Sequential)]
+        public struct fadeSettings
+        {
+            public ma_atomic_float volumeBeg;
+            public ma_atomic_float volumeEnd;
+            public ma_atomic_uint64 fadeLengthInFrames;
+            public ma_atomic_uint64 absoluteGlobalTimeInFrames;
+        }
+
+
+        public byte _ownsHeap;
+        public IntPtr _pHeap;
+    }
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5249,6 +5582,32 @@ public static unsafe partial class Interop
 
     // public delegate WARN_PLACEHOLDER ma_sound_end_proc();
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_sound_config
+    {
+        public byte* pFilePath;
+        public byte* pFilePathW;
+        public IntPtr pDataSource;
+        public IntPtr pInitialAttachment;
+        public uint initialAttachmentInputBusIndex;
+        public uint channelsIn;
+        public uint channelsOut;
+        public ma_mono_expansion_mode monoExpansionMode;
+        public uint flags;
+        public uint volumeSmoothTimeInPCMFrames;
+        public ulong initialSeekPointInPCMFrames;
+        public ulong rangeBegInPCMFrames;
+        public ulong rangeEndInPCMFrames;
+        public ulong loopPointBegInPCMFrames;
+        public ulong loopPointEndInPCMFrames;
+        public IntPtr endCallback; // ma_sound_end_proc
+        public IntPtr pEndCallbackUserData;
+        public ma_resampler_config pitchResampling;
+        public ma_resource_manager_pipeline_notifications initNotifications;
+        public IntPtr pDoneFence;
+        public uint isLooping;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_sound_config ma_sound_config_init();
@@ -5263,13 +5622,13 @@ public static unsafe partial class Interop
         public ma_engine_node engineNode;
         public IntPtr pDataSource;
         public ulong seekTarget;
-        public ma_uint32 atEnd;
+        public uint atEnd;
         public IntPtr endCallback; // ma_sound_end_proc
         public IntPtr pEndCallbackUserData;
         public float* pProcessingCache;
         public uint processingCacheFramesRemaining;
         public uint processingCacheCap;
-        public ma_uint8 ownsDataSource;
+        public byte ownsDataSource;
         public ma_resource_manager_data_source* pResourceManagerDataSource;
     }
 
@@ -5291,6 +5650,36 @@ public static unsafe partial class Interop
 
     // public delegate WARN_PLACEHOLDER ma_engine_process_proc();
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_engine_config
+    {
+        public ma_resource_manager* pResourceManager;
+        public ma_context* pContext;
+        public ma_device* pDevice;
+        public IntPtr pPlaybackDeviceID;
+        public IntPtr dataCallback; // ma_device_data_proc
+        public IntPtr notificationCallback; // ma_device_notification_proc
+        public IntPtr pLog;
+        public uint listenerCount;
+        public uint channels;
+        public uint sampleRate;
+        public uint periodSizeInFrames;
+        public uint periodSizeInMilliseconds;
+        public uint gainSmoothTimeInFrames;
+        public uint gainSmoothTimeInMilliseconds;
+        public uint defaultVolumeSmoothTimeInPCMFrames;
+        public uint preMixStackSizeInBytes;
+        public ma_allocation_callbacks allocationCallbacks;
+        public uint noAutoStart;
+        public uint noDevice;
+        public ma_mono_expansion_mode monoExpansionMode;
+        public IntPtr pResourceManagerVFS;
+        public IntPtr onProcess; // ma_engine_process_proc
+        public IntPtr pProcessUserData;
+        public ma_resampler_config resourceManagerResampling;
+        public ma_resampler_config pitchResampling;
+    }
+
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
     public static partial ma_engine_config ma_engine_config_init();
@@ -5309,9 +5698,9 @@ public static unsafe partial class Interop
         public ma_spatializer_listener listeners2;
         public ma_spatializer_listener listeners3;
         public ma_allocation_callbacks allocationCallbacks;
-        public ma_uint8 ownsResourceManager;
-        public ma_uint8 ownsDevice;
-        public ma_uint32 inlinedSoundLock;
+        public byte ownsResourceManager;
+        public byte ownsDevice;
+        public uint inlinedSoundLock;
         public ma_sound_inlined* pInlinedSoundHead;
         public uint inlinedSoundCount;
         public uint gainSmoothTimeInFrames;
@@ -5460,11 +5849,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_engine_listener_set_enabled(IntPtr pEngine, uint listenerIndex, ma_uint32 isEnabled); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_engine_listener_set_enabled(IntPtr pEngine, uint listenerIndex, uint isEnabled); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_engine_listener_is_enabled(IntPtr pEngine, uint listenerIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_engine_listener_is_enabled(IntPtr pEngine, uint listenerIndex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5572,11 +5961,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_set_spatialization_enabled(IntPtr pSound, ma_uint32 enabled); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_set_spatialization_enabled(IntPtr pSound, uint enabled); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_sound_is_spatialization_enabled(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_sound_is_spatialization_enabled(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5744,7 +6133,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_sound_is_playing(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_sound_is_playing(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5756,15 +6145,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_set_looping(IntPtr pSound, ma_uint32 isLooping); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_set_looping(IntPtr pSound, uint isLooping); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_sound_is_looping(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_sound_is_looping(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_sound_at_end(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_sound_at_end(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5856,11 +6245,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_spatialization_enabled(IntPtr pGroup, ma_uint32 enabled);
+    public static partial void ma_sound_group_set_spatialization_enabled(IntPtr pGroup, uint enabled);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_sound_group_is_spatialization_enabled(IntPtr pGroup);
+    public static partial uint ma_sound_group_is_spatialization_enabled(IntPtr pGroup);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6012,7 +6401,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_uint32 ma_sound_group_is_playing(IntPtr pGroup);
+    public static partial uint ma_sound_group_is_playing(IntPtr pGroup);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

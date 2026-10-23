@@ -140,7 +140,18 @@ internal static partial class Program
 
                 if (entry.Type!.Tag == "struct" && entry.Type!.Name == "")
                 {
-                    AnonymousTypeIDMap[entry.Type.ID!.Value] = entry;
+                    if (AnonymousTypeIDMap.ContainsKey(entry.Type.ID!.Value))
+                    {
+                        // workaround for typedef to a typedef's anonymous struct
+                        if (entry.Fields != null)
+                        {
+                            AnonymousTypeIDMap[entry.Type.ID!.Value] = entry;
+                        }
+                    }
+                    else
+                    {
+                        AnonymousTypeIDMap[entry.Type.ID!.Value] = entry;
+                    }
                 }
             }
 
@@ -292,6 +303,18 @@ internal static partial class Program
                     }
 
                     definitions.Append("}\n\n");
+                }
+                else if (entry.Type!.Name == "" && entry.Type!.Tag == "struct")
+                {
+                    var type = entry.Type!;
+
+                    // workaround for typedef to typedef'd struct
+                    if (entry.Type.Fields == null)
+                    {
+                        type = AnonymousTypeIDMap[type.ID!.Value].Type!;
+                    }
+
+                    definitions.Append(ConstructStruct(entry.Name!, type));
                 }
             }
 
@@ -998,7 +1021,16 @@ public static unsafe class Interop
         return type;
     }
 
-    // FIXME: this type resolver is jank as hell
+    public static RawFFIEntry GetAnonymousTypedef(RawFFIEntry type)
+    {
+        if (AnonymousTypeIDMap.TryGetValue(type.ID!.Value, out var resolvedType))
+        {
+            return resolvedType;
+        }
+
+        return type;
+    }
+
     private static string CSharpTypeFromFFI(RawFFIEntry type, TypeContext context)
     {
         if ((type.Tag == "pointer") && IsDefinedType(type.Type!.Tag))
@@ -1016,6 +1048,13 @@ public static unsafe class Interop
                 TypeContext.StructField => $"{subtypeName}*",
                 _                       => "IntPtr",
             };
+        }
+
+        // try to resolve type
+        // FIXME: this is so jank
+        while (GetTypeFromTypedefMap(type) != type)
+        {
+            type = GetTypeFromTypedefMap(type);
         }
 
         return type.Tag switch
@@ -1052,7 +1091,7 @@ public static unsafe class Interop
             "pthread_mutex_t"  => "IntPtr",
             "function-pointer" => "FUNCTION_POINTER",
             "enum"             => type.Name!,
-            "struct"           => type.Name!,
+            "struct"           => GetAnonymousTypedef(type).Name!,
             "array"            => "INLINE_ARRAY",
             "union"            => type.Name!,
             _                  => type.Tag!
@@ -1069,6 +1108,7 @@ public static unsafe class Interop
             "base"     => "@base",
             "lock"     => "@lock",
             "string"   => "@string",
+            "ref"      => "@ref",
             ""         => "_",
             _          => unsanitizedName,
         };
@@ -1105,7 +1145,7 @@ public static unsafe class Interop
 
         //     definitions.Append("}\n\n");
         // }
-        // else 
+        // else
         if (structDefinition.ContainsBitfield)
         {
             definitions.Append("[StructLayout(LayoutKind.Sequential)]\n");
@@ -1220,6 +1260,18 @@ public static unsafe class Interop
             else if (fieldTypeName == "INLINE_ARRAY")
             {
                 var elementTypeName = CSharpTypeFromFFI(type: fieldTypedef.Type!, TypeContext.StructField);
+
+                // janky anonymous struct inline array support
+                if (elementTypeName == "" && fieldTypedef.Type!.Tag == "struct")
+                {
+                    elementTypeName = "ma_" + fieldName[..^1];
+                    // FIXME: this shouldn't have an offset...
+                    structDefinition.OffsetFields.Add((
+                        byteOffset + (uint) field.BitOffset! / 8,
+                        ConstructStruct(elementTypeName, fieldTypedef.Type!)
+                    ));
+                }
+
                 if (elementTypeName.StartsWith("ma")) // fixed buffers only work on primitives
                 {
                     var fieldType = GetTypeFromTypedefMap(fieldTypedef.Type!);
