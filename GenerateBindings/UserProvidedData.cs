@@ -416,6 +416,36 @@ internal static class UserProvidedData
         { ("ma_sound_group_get_cone", "pInnerAngleInRadians"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11515:13
         { ("ma_sound_group_get_cone", "pOuterAngleInRadians"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11515:13
         { ("ma_sound_group_get_cone", "pOuterGain"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11515:13
+        { ("ma_version_string", "__return"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:4513:20
+        { ("ma_log_post", "pMessage"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:4586:18
+        { ("ma_log_postf", "pFormat"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:4588:18
+        { ("ma_channel_map_to_string", "pBufferOut"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:5804:15
+        { ("ma_channel_position_to_string", "__return"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:5809:20
+        { ("ma_result_description", "__return"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:6120:20
+        { ("ma_get_format_name", "__return"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:6155:20
+        { ("ma_log_level_to_string", "__return"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:6176:20
+        { ("ma_device_get_name", "pName"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:9141:18
+        { ("ma_get_backend_name", "__return"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:9658:20
+        { ("ma_get_backend_from_name", "pBackendName"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:9663:18
+        { ("ma_vfs_open", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:9908:18
+        { ("ma_vfs_open_and_read_file", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:9916:18
+        { ("ma_decoder_init_vfs", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10039:18
+        { ("ma_decoder_init_file", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10041:18
+        { ("ma_decode_from_vfs", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10104:18
+        { ("ma_decode_file", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10105:18
+        { ("ma_encoder_init_vfs", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10160:18
+        { ("ma_encoder_init_file", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10162:18
+        { ("ma_resource_manager_register_file", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10547:18
+        { ("ma_resource_manager_register_decoded_data", "pName"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10549:18
+        { ("ma_resource_manager_register_encoded_data", "pName"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10551:18
+        { ("ma_resource_manager_unregister_file", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10553:18
+        { ("ma_resource_manager_unregister_data", "pName"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10555:18
+        { ("ma_resource_manager_data_buffer_init", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10560:18
+        { ("ma_resource_manager_data_stream_init", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10576:18
+        { ("ma_resource_manager_data_source_init", "pName"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10591:18
+        { ("ma_engine_play_sound_ex", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11386:18
+        { ("ma_engine_play_sound", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11387:18
+        { ("ma_sound_init_from_file", "pFilePath"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11391:18
     };
 
     internal static readonly Dictionary<string, string> ReturnedArrayCountParamNames = new()
@@ -449,7 +479,7 @@ internal static class UserProvidedData
 
     internal static readonly Dictionary<string, string[]> FlagEnumDefinitions = new()
     {
-        
+
     };
 
     internal static readonly HashSet<string> FlagTypes = [];

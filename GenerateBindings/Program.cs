@@ -20,6 +20,8 @@ internal static partial class Program
 
         public bool ContainsBitfield { get; set; }
         public string BitfieldType { get; set; } = "";
+
+        public int AnonymousTypeCounter = 0;
     }
 
     private class FunctionSignatureType
@@ -1237,10 +1239,15 @@ public static unsafe class Interop
             }
             else if ((fieldTypeName == "") && fieldTypedef.Tag == "union")
             {
-                // TODO UNION OUTPUT
+                var name = field.Name!;
+                if (name == "")
+                {
+                    name = "Anonymous" + structDefinition.AnonymousTypeCounter;
+                    structDefinition.AnonymousTypeCounter += 1;
+                }
                 structDefinition.OffsetFields.Add((
                     byteOffset + (uint) field.BitOffset! / 8,
-                    ConstructUnion(field.Name!, fieldTypedef)
+                    ConstructUnion(name, fieldTypedef)
                 ));
             }
             else if (fieldTypeName == "" && fieldTypedef.Tag == "enum" && fieldTypedef.ID.HasValue)

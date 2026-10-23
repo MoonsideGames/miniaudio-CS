@@ -358,7 +358,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial byte* ma_version_string(); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_version_string(); // WARN_UNKNOWN_POINTER_PARAMETER
 
     // public delegate WARN_PLACEHOLDER ma_log_callback_proc();
 
@@ -406,11 +406,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_log_post(IntPtr pLog, uint level, ref byte pMessage); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_log_post(IntPtr pLog, uint level, IntPtr pMessage); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_log_postf(IntPtr pLog, uint level, ref byte pFormat); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_log_postf(IntPtr pLog, uint level, IntPtr pFormat); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Explicit)]
     public struct ma_biquad_coefficient
@@ -2325,11 +2325,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial UIntPtr ma_channel_map_to_string(IntPtr pChannelMap, uint channels, ref byte pBufferOut, UIntPtr bufferCap); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial UIntPtr ma_channel_map_to_string(IntPtr pChannelMap, uint channels, IntPtr pBufferOut, UIntPtr bufferCap); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial byte* ma_channel_position_to_string(byte channel); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_channel_position_to_string(byte channel); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2894,7 +2894,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial byte* ma_result_description(ma_result result); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_result_description(ma_result result); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2922,7 +2922,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial byte* ma_get_format_name(ma_format format); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_get_format_name(ma_format format); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2938,7 +2938,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial byte* ma_log_level_to_string(uint logLevel); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_log_level_to_string(uint logLevel); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4014,7 +4014,7 @@ public static unsafe partial class Interop
         public uint captureDeviceInfoCount;
         public IntPtr pDeviceInfos;
         [StructLayout(LayoutKind.Explicit)]
-        public struct
+        public struct Anonymous0
         {
             [FieldOffset(0)]
             [StructLayout(LayoutKind.Sequential)]
@@ -4204,7 +4204,7 @@ public static unsafe partial class Interop
 
 
         [StructLayout(LayoutKind.Explicit)]
-        public struct
+        public struct Anonymous1
         {
             [FieldOffset(0)]
             [StructLayout(LayoutKind.Sequential)]
@@ -4408,7 +4408,7 @@ public static unsafe partial class Interop
 
 
         [StructLayout(LayoutKind.Explicit)]
-        public struct
+        public struct Anonymous0
         {
             [FieldOffset(0)]
             [StructLayout(LayoutKind.Sequential)]
@@ -4550,7 +4550,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_device_get_name(IntPtr pDevice, ma_device_type type, ref byte pName, UIntPtr nameCap, IntPtr pLengthNotIncludingNullTerminator); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_device_get_name(IntPtr pDevice, ma_device_type type, IntPtr pName, UIntPtr nameCap, IntPtr pLengthNotIncludingNullTerminator); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4598,11 +4598,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial byte* ma_get_backend_name(ma_backend backend); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_get_backend_name(ma_backend backend); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_get_backend_from_name(ref byte pBackendName, IntPtr pBackend); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_get_backend_from_name(IntPtr pBackendName, IntPtr pBackend); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4834,7 +4834,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_vfs_open(IntPtr pVFS, ref byte pFilePath, uint openMode, IntPtr pFile); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_vfs_open(IntPtr pVFS, IntPtr pFilePath, uint openMode, IntPtr pFile); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4866,7 +4866,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_vfs_open_and_read_file(IntPtr pVFS, ref byte pFilePath, IntPtr ppData, IntPtr pSize, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_vfs_open_and_read_file(IntPtr pVFS, IntPtr pFilePath, IntPtr ppData, IntPtr pSize, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_default_vfs
@@ -5005,7 +5005,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decoder_init_vfs(IntPtr pVFS, ref byte pFilePath, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decoder_init_vfs(IntPtr pVFS, IntPtr pFilePath, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5013,7 +5013,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decoder_init_file(ref byte pFilePath, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decoder_init_file(IntPtr pFilePath, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5049,11 +5049,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decode_from_vfs(IntPtr pVFS, ref byte pFilePath, IntPtr pConfig, IntPtr pFrameCountOut, IntPtr ppPCMFramesOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decode_from_vfs(IntPtr pVFS, IntPtr pFilePath, IntPtr pConfig, IntPtr pFrameCountOut, IntPtr ppPCMFramesOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decode_file(ref byte pFilePath, IntPtr pConfig, IntPtr pFrameCountOut, IntPtr ppPCMFramesOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decode_file(IntPtr pFilePath, IntPtr pConfig, IntPtr pFrameCountOut, IntPtr ppPCMFramesOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5117,7 +5117,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_encoder_init_vfs(IntPtr pVFS, ref byte pFilePath, IntPtr pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_encoder_init_vfs(IntPtr pVFS, IntPtr pFilePath, IntPtr pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5125,7 +5125,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_encoder_init_file(ref byte pFilePath, IntPtr pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_encoder_init_file(IntPtr pFilePath, IntPtr pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5583,7 +5583,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_register_file(IntPtr pResourceManager, ref byte pFilePath, uint flags); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_register_file(IntPtr pResourceManager, IntPtr pFilePath, uint flags); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5591,7 +5591,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_register_decoded_data(IntPtr pResourceManager, ref byte pName, IntPtr pData, ulong frameCount, ma_format format, uint channels, uint sampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_register_decoded_data(IntPtr pResourceManager, IntPtr pName, IntPtr pData, ulong frameCount, ma_format format, uint channels, uint sampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5599,7 +5599,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_register_encoded_data(IntPtr pResourceManager, ref byte pName, IntPtr pData, UIntPtr sizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_register_encoded_data(IntPtr pResourceManager, IntPtr pName, IntPtr pData, UIntPtr sizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5607,7 +5607,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_unregister_file(IntPtr pResourceManager, ref byte pFilePath); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_unregister_file(IntPtr pResourceManager, IntPtr pFilePath); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5615,7 +5615,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_unregister_data(IntPtr pResourceManager, ref byte pName); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_unregister_data(IntPtr pResourceManager, IntPtr pName); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5627,7 +5627,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_buffer_init(IntPtr pResourceManager, ref byte pFilePath, uint flags, IntPtr pNotifications, IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_buffer_init(IntPtr pResourceManager, IntPtr pFilePath, uint flags, IntPtr pNotifications, IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5683,7 +5683,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_stream_init(IntPtr pResourceManager, ref byte pFilePath, uint flags, IntPtr pNotifications, IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_stream_init(IntPtr pResourceManager, IntPtr pFilePath, uint flags, IntPtr pNotifications, IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5735,7 +5735,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_source_init(IntPtr pResourceManager, ref byte pName, uint flags, IntPtr pNotifications, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_source_init(IntPtr pResourceManager, IntPtr pName, uint flags, IntPtr pNotifications, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6777,15 +6777,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_engine_play_sound_ex(IntPtr pEngine, ref byte pFilePath, IntPtr pNode, uint nodeInputBusIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_engine_play_sound_ex(IntPtr pEngine, IntPtr pFilePath, IntPtr pNode, uint nodeInputBusIndex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_engine_play_sound(IntPtr pEngine, ref byte pFilePath, IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_engine_play_sound(IntPtr pEngine, IntPtr pFilePath, IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_sound_init_from_file(IntPtr pEngine, ref byte pFilePath, uint flags, IntPtr pGroup, IntPtr pDoneFence, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_sound_init_from_file(IntPtr pEngine, IntPtr pFilePath, uint flags, IntPtr pGroup, IntPtr pDoneFence, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
