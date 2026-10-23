@@ -1276,15 +1276,16 @@ public static unsafe class Interop
                 {
                     var fieldType = GetTypeFromTypedefMap(fieldTypedef.Type!);
                     var elementByteSize = GetTypeFromTypedefMap(fieldTypedef.Type!).BitSize ?? 0 / 8;
-                    for (var i = 0; i < fieldTypedef.Size; i++)
-                    {
-                        structDefinition.OffsetFields.Add(
-                            (
-                                byteOffset + (uint) (elementByteSize * i) + (uint) field.BitOffset! / 8,
-                                $"public {elementTypeName} {fieldName}{i};"
-                            )
-                        );
-                    }
+
+                    // FIXME: these shouldn't have offsets...
+                    structDefinition.OffsetFields.Add((
+                        uint.MaxValue,
+                        $"public {elementTypeName}__InlineArray {fieldName};"
+                    ));
+                    structDefinition.OffsetFields.Add((
+                        uint.MaxValue,
+                        $"[InlineArray({fieldTypedef.Size})]\npublic partial struct {elementTypeName}__InlineArray\n{{\npublic {elementTypeName} _value;\n}}\n"
+                    ));
                 }
                 else
                 {

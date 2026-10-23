@@ -376,10 +376,13 @@ public static unsafe partial class Interop
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_log
     {
-        public ma_log_callback callbacks0;
-        public ma_log_callback callbacks1;
-        public ma_log_callback callbacks2;
-        public ma_log_callback callbacks3;
+        public ma_log_callback__InlineArray callbacks;
+        [InlineArray(4)]
+        public partial struct ma_log_callback__InlineArray
+        {
+            public ma_log_callback _value;
+        }
+
         public uint callbackCount;
         public ma_allocation_callbacks allocationCallbacks;
         public IntPtr @lock;
@@ -3322,70 +3325,13 @@ public static unsafe partial class Interop
         }
 
 
-        public ma_nativeDataFormat nativeDataFormats0;
-        public ma_nativeDataFormat nativeDataFormats1;
-        public ma_nativeDataFormat nativeDataFormats2;
-        public ma_nativeDataFormat nativeDataFormats3;
-        public ma_nativeDataFormat nativeDataFormats4;
-        public ma_nativeDataFormat nativeDataFormats5;
-        public ma_nativeDataFormat nativeDataFormats6;
-        public ma_nativeDataFormat nativeDataFormats7;
-        public ma_nativeDataFormat nativeDataFormats8;
-        public ma_nativeDataFormat nativeDataFormats9;
-        public ma_nativeDataFormat nativeDataFormats10;
-        public ma_nativeDataFormat nativeDataFormats11;
-        public ma_nativeDataFormat nativeDataFormats12;
-        public ma_nativeDataFormat nativeDataFormats13;
-        public ma_nativeDataFormat nativeDataFormats14;
-        public ma_nativeDataFormat nativeDataFormats15;
-        public ma_nativeDataFormat nativeDataFormats16;
-        public ma_nativeDataFormat nativeDataFormats17;
-        public ma_nativeDataFormat nativeDataFormats18;
-        public ma_nativeDataFormat nativeDataFormats19;
-        public ma_nativeDataFormat nativeDataFormats20;
-        public ma_nativeDataFormat nativeDataFormats21;
-        public ma_nativeDataFormat nativeDataFormats22;
-        public ma_nativeDataFormat nativeDataFormats23;
-        public ma_nativeDataFormat nativeDataFormats24;
-        public ma_nativeDataFormat nativeDataFormats25;
-        public ma_nativeDataFormat nativeDataFormats26;
-        public ma_nativeDataFormat nativeDataFormats27;
-        public ma_nativeDataFormat nativeDataFormats28;
-        public ma_nativeDataFormat nativeDataFormats29;
-        public ma_nativeDataFormat nativeDataFormats30;
-        public ma_nativeDataFormat nativeDataFormats31;
-        public ma_nativeDataFormat nativeDataFormats32;
-        public ma_nativeDataFormat nativeDataFormats33;
-        public ma_nativeDataFormat nativeDataFormats34;
-        public ma_nativeDataFormat nativeDataFormats35;
-        public ma_nativeDataFormat nativeDataFormats36;
-        public ma_nativeDataFormat nativeDataFormats37;
-        public ma_nativeDataFormat nativeDataFormats38;
-        public ma_nativeDataFormat nativeDataFormats39;
-        public ma_nativeDataFormat nativeDataFormats40;
-        public ma_nativeDataFormat nativeDataFormats41;
-        public ma_nativeDataFormat nativeDataFormats42;
-        public ma_nativeDataFormat nativeDataFormats43;
-        public ma_nativeDataFormat nativeDataFormats44;
-        public ma_nativeDataFormat nativeDataFormats45;
-        public ma_nativeDataFormat nativeDataFormats46;
-        public ma_nativeDataFormat nativeDataFormats47;
-        public ma_nativeDataFormat nativeDataFormats48;
-        public ma_nativeDataFormat nativeDataFormats49;
-        public ma_nativeDataFormat nativeDataFormats50;
-        public ma_nativeDataFormat nativeDataFormats51;
-        public ma_nativeDataFormat nativeDataFormats52;
-        public ma_nativeDataFormat nativeDataFormats53;
-        public ma_nativeDataFormat nativeDataFormats54;
-        public ma_nativeDataFormat nativeDataFormats55;
-        public ma_nativeDataFormat nativeDataFormats56;
-        public ma_nativeDataFormat nativeDataFormats57;
-        public ma_nativeDataFormat nativeDataFormats58;
-        public ma_nativeDataFormat nativeDataFormats59;
-        public ma_nativeDataFormat nativeDataFormats60;
-        public ma_nativeDataFormat nativeDataFormats61;
-        public ma_nativeDataFormat nativeDataFormats62;
-        public ma_nativeDataFormat nativeDataFormats63;
+        public ma_nativeDataFormat__InlineArray nativeDataFormats;
+        [InlineArray(64)]
+        public partial struct ma_nativeDataFormat__InlineArray
+        {
+            public ma_nativeDataFormat _value;
+        }
+
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -4989,10 +4935,20 @@ public static unsafe partial class Interop
         public ma_node_state state;
         public fixed ulong stateTimes[2];
         public ulong localTime;
-        public ma_node_input_bus _inputBuses0;
-        public ma_node_input_bus _inputBuses1;
-        public ma_node_output_bus _outputBuses0;
-        public ma_node_output_bus _outputBuses1;
+        public ma_node_input_bus__InlineArray _inputBuses;
+        [InlineArray(2)]
+        public partial struct ma_node_input_bus__InlineArray
+        {
+            public ma_node_input_bus _value;
+        }
+
+        public ma_node_output_bus__InlineArray _outputBuses;
+        [InlineArray(2)]
+        public partial struct ma_node_output_bus__InlineArray
+        {
+            public ma_node_output_bus _value;
+        }
+
         public IntPtr _pHeap;
         public uint _ownsHeap;
     }
@@ -5693,10 +5649,13 @@ public static unsafe partial class Interop
         public IntPtr pLog;
         public uint sampleRate;
         public uint listenerCount;
-        public ma_spatializer_listener listeners0;
-        public ma_spatializer_listener listeners1;
-        public ma_spatializer_listener listeners2;
-        public ma_spatializer_listener listeners3;
+        public ma_spatializer_listener__InlineArray listeners;
+        [InlineArray(4)]
+        public partial struct ma_spatializer_listener__InlineArray
+        {
+            public ma_spatializer_listener _value;
+        }
+
         public ma_allocation_callbacks allocationCallbacks;
         public byte ownsResourceManager;
         public byte ownsDevice;
