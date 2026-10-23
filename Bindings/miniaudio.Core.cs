@@ -3978,7 +3978,7 @@ public static unsafe partial class Interop
                 public ma_device_type deviceType;
                 public IntPtr pAudioClient;
                 public IntPtr* ppAudioClientService;
-                public * pResult;
+                public ma_result* pResult;
             }
 
 

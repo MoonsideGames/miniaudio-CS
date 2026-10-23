@@ -1057,6 +1057,12 @@ public static unsafe class Interop
             var subtype = GetTypeFromTypedefMap(type.Type!);
             var subtypeName = CSharpTypeFromFFI(subtype, context);
 
+            if (subtypeName == "")
+            {
+                subtype = GetAnonymousTypedef(subtype);
+                subtypeName = subtype.Name!;
+            }
+
             if (subtypeName == "char")
             {
                 return context == TypeContext.StructField ? "byte*" : "UTF8_STRING";
