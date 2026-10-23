@@ -1,0 +1,6022 @@
+// NOTE: This file is auto-generated.
+using System;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.Marshalling;
+using System.Runtime.CompilerServices;
+using System.Text;
+
+namespace Miniaudio;
+
+public static unsafe partial class Interop
+{
+    // Custom marshaller for library-owned strings returned by the library.
+    [CustomMarshaller(typeof(string), MarshalMode.ManagedToUnmanagedOut, typeof(LibraryOwnedStringMarshaller))]
+    public static unsafe class LibraryOwnedStringMarshaller
+    {
+        /// <summary>
+        /// Converts an unmanaged string to a managed version.
+        /// </summary>
+        /// <returns>A managed string.</returns>
+        public static string ConvertToManaged(byte* unmanaged)
+            => Marshal.PtrToStringUTF8((IntPtr)unmanaged);
+    }
+
+    // Taken from https://github.com/ppy/SDL3-CS
+    // C# bools are not blittable, so we need this workaround
+    public readonly record struct NativeBool
+    {
+        private readonly byte value;
+
+        internal const byte FALSE_VALUE = 0;
+        internal const byte TRUE_VALUE = 1;
+
+        internal NativeBool(byte value)
+        {
+            this.value = value;
+        }
+
+        public static implicit operator bool(NativeBool b)
+        {
+            return b.value != FALSE_VALUE;
+        }
+
+        public static implicit operator NativeBool(bool b)
+        {
+            return new NativeBool(b ? TRUE_VALUE : FALSE_VALUE);
+        }
+
+        public bool Equals(NativeBool other)
+        {
+            return other.value == value;
+        }
+
+        public override int GetHashCode()
+        {
+            return value.GetHashCode();
+        }
+    }
+
+    private const string nativeLibName = "miniaudio";
+
+    // ../miniaudio/miniaudio.h
+
+    public enum ma_log_level
+    {
+        MA_LOG_LEVEL_DEBUG = 4,
+        MA_LOG_LEVEL_INFO = 3,
+        MA_LOG_LEVEL_WARNING = 2,
+        MA_LOG_LEVEL_ERROR = 1,
+    }
+
+    public enum _ma_channel_position
+    {
+        MA_CHANNEL_NONE = 0,
+        MA_CHANNEL_MONO = 1,
+        MA_CHANNEL_FRONT_LEFT = 2,
+        MA_CHANNEL_FRONT_RIGHT = 3,
+        MA_CHANNEL_FRONT_CENTER = 4,
+        MA_CHANNEL_LFE = 5,
+        MA_CHANNEL_BACK_LEFT = 6,
+        MA_CHANNEL_BACK_RIGHT = 7,
+        MA_CHANNEL_FRONT_LEFT_CENTER = 8,
+        MA_CHANNEL_FRONT_RIGHT_CENTER = 9,
+        MA_CHANNEL_BACK_CENTER = 10,
+        MA_CHANNEL_SIDE_LEFT = 11,
+        MA_CHANNEL_SIDE_RIGHT = 12,
+        MA_CHANNEL_TOP_CENTER = 13,
+        MA_CHANNEL_TOP_FRONT_LEFT = 14,
+        MA_CHANNEL_TOP_FRONT_CENTER = 15,
+        MA_CHANNEL_TOP_FRONT_RIGHT = 16,
+        MA_CHANNEL_TOP_BACK_LEFT = 17,
+        MA_CHANNEL_TOP_BACK_CENTER = 18,
+        MA_CHANNEL_TOP_BACK_RIGHT = 19,
+        MA_CHANNEL_AUX_0 = 20,
+        MA_CHANNEL_AUX_1 = 21,
+        MA_CHANNEL_AUX_2 = 22,
+        MA_CHANNEL_AUX_3 = 23,
+        MA_CHANNEL_AUX_4 = 24,
+        MA_CHANNEL_AUX_5 = 25,
+        MA_CHANNEL_AUX_6 = 26,
+        MA_CHANNEL_AUX_7 = 27,
+        MA_CHANNEL_AUX_8 = 28,
+        MA_CHANNEL_AUX_9 = 29,
+        MA_CHANNEL_AUX_10 = 30,
+        MA_CHANNEL_AUX_11 = 31,
+        MA_CHANNEL_AUX_12 = 32,
+        MA_CHANNEL_AUX_13 = 33,
+        MA_CHANNEL_AUX_14 = 34,
+        MA_CHANNEL_AUX_15 = 35,
+        MA_CHANNEL_AUX_16 = 36,
+        MA_CHANNEL_AUX_17 = 37,
+        MA_CHANNEL_AUX_18 = 38,
+        MA_CHANNEL_AUX_19 = 39,
+        MA_CHANNEL_AUX_20 = 40,
+        MA_CHANNEL_AUX_21 = 41,
+        MA_CHANNEL_AUX_22 = 42,
+        MA_CHANNEL_AUX_23 = 43,
+        MA_CHANNEL_AUX_24 = 44,
+        MA_CHANNEL_AUX_25 = 45,
+        MA_CHANNEL_AUX_26 = 46,
+        MA_CHANNEL_AUX_27 = 47,
+        MA_CHANNEL_AUX_28 = 48,
+        MA_CHANNEL_AUX_29 = 49,
+        MA_CHANNEL_AUX_30 = 50,
+        MA_CHANNEL_AUX_31 = 51,
+        MA_CHANNEL_POSITION_COUNT = 52,
+        MA_CHANNEL_LEFT = 2,
+        MA_CHANNEL_RIGHT = 3,
+    }
+
+    public enum ma_result
+    {
+        MA_SUCCESS = 0,
+        MA_ERROR = -1,
+        MA_INVALID_ARGS = -2,
+        MA_INVALID_OPERATION = -3,
+        MA_OUT_OF_MEMORY = -4,
+        MA_OUT_OF_RANGE = -5,
+        MA_ACCESS_DENIED = -6,
+        MA_DOES_NOT_EXIST = -7,
+        MA_ALREADY_EXISTS = -8,
+        MA_TOO_MANY_OPEN_FILES = -9,
+        MA_INVALID_FILE = -10,
+        MA_TOO_BIG = -11,
+        MA_PATH_TOO_LONG = -12,
+        MA_NAME_TOO_LONG = -13,
+        MA_NOT_DIRECTORY = -14,
+        MA_IS_DIRECTORY = -15,
+        MA_DIRECTORY_NOT_EMPTY = -16,
+        MA_AT_END = -17,
+        MA_NO_SPACE = -18,
+        MA_BUSY = -19,
+        MA_IO_ERROR = -20,
+        MA_INTERRUPT = -21,
+        MA_UNAVAILABLE = -22,
+        MA_ALREADY_IN_USE = -23,
+        MA_BAD_ADDRESS = -24,
+        MA_BAD_SEEK = -25,
+        MA_BAD_PIPE = -26,
+        MA_DEADLOCK = -27,
+        MA_TOO_MANY_LINKS = -28,
+        MA_NOT_IMPLEMENTED = -29,
+        MA_NO_MESSAGE = -30,
+        MA_BAD_MESSAGE = -31,
+        MA_NO_DATA_AVAILABLE = -32,
+        MA_INVALID_DATA = -33,
+        MA_TIMEOUT = -34,
+        MA_NO_NETWORK = -35,
+        MA_NOT_UNIQUE = -36,
+        MA_NOT_SOCKET = -37,
+        MA_NO_ADDRESS = -38,
+        MA_BAD_PROTOCOL = -39,
+        MA_PROTOCOL_UNAVAILABLE = -40,
+        MA_PROTOCOL_NOT_SUPPORTED = -41,
+        MA_PROTOCOL_FAMILY_NOT_SUPPORTED = -42,
+        MA_ADDRESS_FAMILY_NOT_SUPPORTED = -43,
+        MA_SOCKET_NOT_SUPPORTED = -44,
+        MA_CONNECTION_RESET = -45,
+        MA_ALREADY_CONNECTED = -46,
+        MA_NOT_CONNECTED = -47,
+        MA_CONNECTION_REFUSED = -48,
+        MA_NO_HOST = -49,
+        MA_IN_PROGRESS = -50,
+        MA_CANCELLED = -51,
+        MA_MEMORY_ALREADY_MAPPED = -52,
+        MA_CRC_MISMATCH = -100,
+        MA_FORMAT_NOT_SUPPORTED = -200,
+        MA_DEVICE_TYPE_NOT_SUPPORTED = -201,
+        MA_SHARE_MODE_NOT_SUPPORTED = -202,
+        MA_NO_BACKEND = -203,
+        MA_NO_DEVICE = -204,
+        MA_API_NOT_FOUND = -205,
+        MA_INVALID_DEVICE_CONFIG = -206,
+        MA_LOOP = -207,
+        MA_BACKEND_NOT_ENABLED = -208,
+        MA_DEVICE_NOT_INITIALIZED = -300,
+        MA_DEVICE_ALREADY_INITIALIZED = -301,
+        MA_DEVICE_NOT_STARTED = -302,
+        MA_DEVICE_NOT_STOPPED = -303,
+        MA_FAILED_TO_INIT_BACKEND = -400,
+        MA_FAILED_TO_OPEN_BACKEND_DEVICE = -401,
+        MA_FAILED_TO_START_BACKEND_DEVICE = -402,
+        MA_FAILED_TO_STOP_BACKEND_DEVICE = -403,
+    }
+
+    public enum ma_stream_format
+    {
+        ma_stream_format_pcm = 0,
+    }
+
+    public enum ma_stream_layout
+    {
+        ma_stream_layout_interleaved = 0,
+        ma_stream_layout_deinterleaved = 1,
+    }
+
+    public enum ma_dither_mode
+    {
+        ma_dither_mode_none = 0,
+        ma_dither_mode_rectangle = 1,
+        ma_dither_mode_triangle = 2,
+    }
+
+    public enum ma_format
+    {
+        ma_format_unknown = 0,
+        ma_format_u8 = 1,
+        ma_format_s16 = 2,
+        ma_format_s24 = 3,
+        ma_format_s32 = 4,
+        ma_format_f32 = 5,
+        ma_format_count = 6,
+    }
+
+    public enum ma_standard_sample_rate
+    {
+        ma_standard_sample_rate_48000 = 48000,
+        ma_standard_sample_rate_44100 = 44100,
+        ma_standard_sample_rate_32000 = 32000,
+        ma_standard_sample_rate_24000 = 24000,
+        ma_standard_sample_rate_22050 = 22050,
+        ma_standard_sample_rate_88200 = 88200,
+        ma_standard_sample_rate_96000 = 96000,
+        ma_standard_sample_rate_176400 = 176400,
+        ma_standard_sample_rate_192000 = 192000,
+        ma_standard_sample_rate_16000 = 16000,
+        ma_standard_sample_rate_11025 = 11025,
+        ma_standard_sample_rate_8000 = 8000,
+        ma_standard_sample_rate_352800 = 352800,
+        ma_standard_sample_rate_384000 = 384000,
+        ma_standard_sample_rate_min = 8000,
+        ma_standard_sample_rate_max = 384000,
+        ma_standard_sample_rate_count = 14,
+    }
+
+    public enum ma_channel_mix_mode
+    {
+        ma_channel_mix_mode_rectangular = 0,
+        ma_channel_mix_mode_simple = 1,
+        ma_channel_mix_mode_custom_weights = 2,
+        ma_channel_mix_mode_default = 0,
+    }
+
+    public enum ma_standard_channel_map
+    {
+        ma_standard_channel_map_microsoft = 0,
+        ma_standard_channel_map_alsa = 1,
+        ma_standard_channel_map_rfc3551 = 2,
+        ma_standard_channel_map_flac = 3,
+        ma_standard_channel_map_vorbis = 4,
+        ma_standard_channel_map_sound4 = 5,
+        ma_standard_channel_map_sndio = 6,
+        ma_standard_channel_map_webaudio = 3,
+        ma_standard_channel_map_default = 0,
+    }
+
+    public enum ma_performance_profile
+    {
+        ma_performance_profile_low_latency = 0,
+        ma_performance_profile_conservative = 1,
+    }
+
+    public enum ma_thread_priority
+    {
+        ma_thread_priority_idle = -5,
+        ma_thread_priority_lowest = -4,
+        ma_thread_priority_low = -3,
+        ma_thread_priority_normal = -2,
+        ma_thread_priority_high = -1,
+        ma_thread_priority_highest = 0,
+        ma_thread_priority_realtime = 1,
+        ma_thread_priority_default = 0,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_version(IntPtr pMajor, IntPtr pMinor, IntPtr pRevision);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial byte* ma_version_string(); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    // public delegate WARN_PLACEHOLDER ma_log_callback_proc();
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_log_callback ma_log_callback_init(ma_log_callback_proc onLog, IntPtr pUserData);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_log_init(IntPtr pAllocationCallbacks, IntPtr pLog);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_log_uninit(IntPtr pLog);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_log_register_callback(IntPtr pLog, ma_log_callback callback);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_log_unregister_callback(IntPtr pLog, ma_log_callback callback);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_log_post(IntPtr pLog, uint level, ref byte pMessage); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_log_postf(IntPtr pLog, uint level, ref byte pFormat); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_biquad_config ma_biquad_config_init(ma_format format, uint channels, double b0, double b1, double b2, double a0, double a1, double a2);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_biquad_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_biquad_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pBQ);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_biquad_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pBQ);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_biquad_uninit(IntPtr pBQ, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_biquad_reinit(IntPtr pConfig, IntPtr pBQ);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_biquad_clear_cache(IntPtr pBQ);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_biquad_process_pcm_frames(IntPtr pBQ, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_biquad_get_latency(IntPtr pBQ);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_lpf2_config ma_lpf1_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_lpf2_config ma_lpf2_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency, double q);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf1_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf1_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf1_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_lpf1_uninit(IntPtr pLPF, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf1_reinit(IntPtr pConfig, IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf1_clear_cache(IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf1_process_pcm_frames(IntPtr pLPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_lpf1_get_latency(IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf2_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pHPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf2_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_lpf2_uninit(IntPtr pLPF, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf2_reinit(IntPtr pConfig, IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf2_clear_cache(IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf2_process_pcm_frames(IntPtr pLPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_lpf2_get_latency(IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_lpf_config ma_lpf_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency, uint order);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_lpf_uninit(IntPtr pLPF, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf_reinit(IntPtr pConfig, IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf_clear_cache(IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf_process_pcm_frames(IntPtr pLPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_lpf_get_latency(IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_hpf2_config ma_hpf1_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_hpf2_config ma_hpf2_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency, double q);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf1_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf1_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf1_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pHPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_hpf1_uninit(IntPtr pHPF, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf1_reinit(IntPtr pConfig, IntPtr pHPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf1_process_pcm_frames(IntPtr pHPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_hpf1_get_latency(IntPtr pHPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf2_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pHPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf2_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pHPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_hpf2_uninit(IntPtr pHPF, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf2_reinit(IntPtr pConfig, IntPtr pHPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf2_process_pcm_frames(IntPtr pHPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_hpf2_get_latency(IntPtr pHPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_hpf_config ma_hpf_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency, uint order);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pLPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pHPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_hpf_uninit(IntPtr pHPF, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf_reinit(IntPtr pConfig, IntPtr pHPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf_process_pcm_frames(IntPtr pHPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_hpf_get_latency(IntPtr pHPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_bpf2_config ma_bpf2_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency, double q);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_bpf2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_bpf2_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pBPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_bpf2_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pBPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_bpf2_uninit(IntPtr pBPF, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_bpf2_reinit(IntPtr pConfig, IntPtr pBPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_bpf2_process_pcm_frames(IntPtr pBPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_bpf2_get_latency(IntPtr pBPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_bpf_config ma_bpf_config_init(ma_format format, uint channels, uint sampleRate, double cutoffFrequency, uint order);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_bpf_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_bpf_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pBPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_bpf_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pBPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_bpf_uninit(IntPtr pBPF, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_bpf_reinit(IntPtr pConfig, IntPtr pBPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_bpf_process_pcm_frames(IntPtr pBPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_bpf_get_latency(IntPtr pBPF);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_notch_config ma_notch2_config_init(ma_format format, uint channels, uint sampleRate, double q, double frequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_notch2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_notch2_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_notch2_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_notch2_uninit(IntPtr pFilter, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_notch2_reinit(IntPtr pConfig, IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_notch2_process_pcm_frames(IntPtr pFilter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_notch2_get_latency(IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_peak_config ma_peak2_config_init(ma_format format, uint channels, uint sampleRate, double gainDB, double q, double frequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_peak2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_peak2_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_peak2_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_peak2_uninit(IntPtr pFilter, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_peak2_reinit(IntPtr pConfig, IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_peak2_process_pcm_frames(IntPtr pFilter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_peak2_get_latency(IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_loshelf_config ma_loshelf2_config_init(ma_format format, uint channels, uint sampleRate, double gainDB, double shelfSlope, double frequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_loshelf2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_loshelf2_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_loshelf2_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_loshelf2_uninit(IntPtr pFilter, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_loshelf2_reinit(IntPtr pConfig, IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_loshelf2_process_pcm_frames(IntPtr pFilter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_loshelf2_get_latency(IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_hishelf_config ma_hishelf2_config_init(ma_format format, uint channels, uint sampleRate, double gainDB, double shelfSlope, double frequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hishelf2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hishelf2_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hishelf2_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_hishelf2_uninit(IntPtr pFilter, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hishelf2_reinit(IntPtr pConfig, IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hishelf2_process_pcm_frames(IntPtr pFilter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_hishelf2_get_latency(IntPtr pFilter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_delay_config ma_delay_config_init(uint channels, uint sampleRate, uint delayInFrames, float decay);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_delay_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pDelay);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_delay_uninit(IntPtr pDelay, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_delay_process_pcm_frames(IntPtr pDelay, IntPtr pFramesOut, IntPtr pFramesIn, uint frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_delay_set_wet(IntPtr pDelay, float value);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_delay_get_wet(IntPtr pDelay);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_delay_set_dry(IntPtr pDelay, float value);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_delay_get_dry(IntPtr pDelay);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_delay_set_decay(IntPtr pDelay, float value);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_delay_get_decay(IntPtr pDelay);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_gainer_config ma_gainer_config_init(uint channels, uint smoothTimeInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_gainer_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_gainer_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pGainer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_gainer_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pGainer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_gainer_uninit(IntPtr pGainer, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_gainer_process_pcm_frames(IntPtr pGainer, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_gainer_set_gain(IntPtr pGainer, float newGain);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_gainer_set_gains(IntPtr pGainer, IntPtr pNewGains); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_gainer_set_master_volume(IntPtr pGainer, float volume);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_gainer_get_master_volume(IntPtr pGainer, IntPtr pVolume); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    public enum ma_pan_mode
+    {
+        ma_pan_mode_balance = 0,
+        ma_pan_mode_pan = 1,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_panner_config ma_panner_config_init(ma_format format, uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_panner_init(IntPtr pConfig, IntPtr pPanner);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_panner_process_pcm_frames(IntPtr pPanner, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_panner_set_mode(IntPtr pPanner, ma_pan_mode mode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_pan_mode ma_panner_get_mode(IntPtr pPanner);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_panner_set_pan(IntPtr pPanner, float pan);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_panner_get_pan(IntPtr pPanner);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_fader_config ma_fader_config_init(ma_format format, uint channels, uint sampleRate);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_fader_init(IntPtr pConfig, IntPtr pFader);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_fader_process_pcm_frames(IntPtr pFader, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_fader_get_data_format(IntPtr pFader, IntPtr pFormat, IntPtr pChannels, IntPtr pSampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_fader_set_fade(IntPtr pFader, float volumeBeg, float volumeEnd, ulong lengthInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_fader_set_fade_ex(IntPtr pFader, float volumeBeg, float volumeEnd, ulong lengthInFrames, long startOffsetInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_fader_get_current_volume(IntPtr pFader);
+
+    public enum ma_attenuation_model
+    {
+        ma_attenuation_model_none = 0,
+        ma_attenuation_model_inverse = 1,
+        ma_attenuation_model_linear = 2,
+        ma_attenuation_model_exponential = 3,
+    }
+
+    public enum ma_positioning
+    {
+        ma_positioning_absolute = 0,
+        ma_positioning_relative = 1,
+    }
+
+    public enum ma_handedness
+    {
+        ma_handedness_right = 0,
+        ma_handedness_left = 1,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_spatializer_listener_config ma_spatializer_listener_config_init(uint channelsOut);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_spatializer_listener_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_spatializer_listener_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pListener);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_spatializer_listener_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pListener);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_listener_uninit(IntPtr pListener, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_spatializer_listener_get_channel_map(IntPtr pListener);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_listener_set_cone(IntPtr pListener, float innerAngleInRadians, float outerAngleInRadians, float outerGain);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_listener_get_cone(IntPtr pListener, IntPtr pInnerAngleInRadians, IntPtr pOuterAngleInRadians, IntPtr pOuterGain); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_listener_set_position(IntPtr pListener, float x, float y, float z);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_spatializer_listener_get_position(IntPtr pListener);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_listener_set_direction(IntPtr pListener, float x, float y, float z);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_spatializer_listener_get_direction(IntPtr pListener);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_listener_set_velocity(IntPtr pListener, float x, float y, float z);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_spatializer_listener_get_velocity(IntPtr pListener);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_listener_set_speed_of_sound(IntPtr pListener, float speedOfSound);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_spatializer_listener_get_speed_of_sound(IntPtr pListener);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_listener_set_world_up(IntPtr pListener, float x, float y, float z);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_spatializer_listener_get_world_up(IntPtr pListener);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_listener_set_enabled(IntPtr pListener, ma_uint32 isEnabled);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_spatializer_listener_is_enabled(IntPtr pListener);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_spatializer_config ma_spatializer_config_init(uint channelsIn, uint channelsOut);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_spatializer_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_spatializer_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_spatializer_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_uninit(IntPtr pSpatializer, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_spatializer_process_pcm_frames(IntPtr pSpatializer, IntPtr pListener, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_spatializer_set_master_volume(IntPtr pSpatializer, float volume);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_spatializer_get_master_volume(IntPtr pSpatializer, IntPtr pVolume); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_spatializer_get_input_channels(IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_spatializer_get_output_channels(IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_set_attenuation_model(IntPtr pSpatializer, ma_attenuation_model attenuationModel);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_attenuation_model ma_spatializer_get_attenuation_model(IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_set_positioning(IntPtr pSpatializer, ma_positioning positioning);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_positioning ma_spatializer_get_positioning(IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_set_rolloff(IntPtr pSpatializer, float rolloff);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_spatializer_get_rolloff(IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_set_min_gain(IntPtr pSpatializer, float minGain);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_spatializer_get_min_gain(IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_set_max_gain(IntPtr pSpatializer, float maxGain);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_spatializer_get_max_gain(IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_set_min_distance(IntPtr pSpatializer, float minDistance);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_spatializer_get_min_distance(IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_set_max_distance(IntPtr pSpatializer, float maxDistance);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_spatializer_get_max_distance(IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_set_cone(IntPtr pSpatializer, float innerAngleInRadians, float outerAngleInRadians, float outerGain);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_get_cone(IntPtr pSpatializer, IntPtr pInnerAngleInRadians, IntPtr pOuterAngleInRadians, IntPtr pOuterGain); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_set_doppler_factor(IntPtr pSpatializer, float dopplerFactor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_spatializer_get_doppler_factor(IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_set_directional_attenuation_factor(IntPtr pSpatializer, float directionalAttenuationFactor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_spatializer_get_directional_attenuation_factor(IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_set_position(IntPtr pSpatializer, float x, float y, float z);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_spatializer_get_position(IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_set_direction(IntPtr pSpatializer, float x, float y, float z);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_spatializer_get_direction(IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_set_velocity(IntPtr pSpatializer, float x, float y, float z);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_spatializer_get_velocity(IntPtr pSpatializer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_spatializer_get_relative_position_and_direction(IntPtr pSpatializer, IntPtr pListener, IntPtr pRelativePos, IntPtr pRelativeDir);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_linear_resampler_config ma_linear_resampler_config_init(ma_format format, uint channels, uint sampleRateIn, uint sampleRateOut);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_linear_resampler_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_linear_resampler_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pResampler);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_linear_resampler_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pResampler);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_linear_resampler_uninit(IntPtr pResampler, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_linear_resampler_process_pcm_frames(IntPtr pResampler, IntPtr pFramesIn, IntPtr pFrameCountIn, IntPtr pFramesOut, IntPtr pFrameCountOut);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_linear_resampler_set_rate(IntPtr pResampler, uint sampleRateIn, uint sampleRateOut);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_linear_resampler_set_rate_ratio(IntPtr pResampler, float ratioInOut);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_linear_resampler_get_input_latency(IntPtr pResampler);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_linear_resampler_get_output_latency(IntPtr pResampler);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_linear_resampler_get_required_input_frame_count(IntPtr pResampler, ulong outputFrameCount, IntPtr pInputFrameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_linear_resampler_get_expected_output_frame_count(IntPtr pResampler, ulong inputFrameCount, IntPtr pOutputFrameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_linear_resampler_reset(IntPtr pResampler);
+
+    public enum ma_resample_algorithm
+    {
+        ma_resample_algorithm_linear = 0,
+        ma_resample_algorithm_custom = 1,
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_resampler_config
+    {
+        public ma_format format;
+        public uint channels;
+        public uint sampleRateIn;
+        public uint sampleRateOut;
+        public ma_resample_algorithm algorithm;
+        public IntPtr pBackendVTable;
+        public IntPtr pBackendUserData;
+        [StructLayout(LayoutKind.Sequential)]
+        public struct linear
+        {
+            public uint lpfOrder;
+        }
+
+
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_resampler_config ma_resampler_config_init(ma_format format, uint channels, uint sampleRateIn, uint sampleRateOut, ma_resample_algorithm algorithm);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resampler_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resampler_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resampler_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_resampler_uninit(IntPtr pResampler, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resampler_process_pcm_frames(IntPtr pResampler, IntPtr pFramesIn, IntPtr pFrameCountIn, IntPtr pFramesOut, IntPtr pFrameCountOut);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resampler_set_rate(IntPtr pResampler, uint sampleRateIn, uint sampleRateOut);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resampler_set_rate_ratio(IntPtr pResampler, float ratio);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_resampler_get_input_latency(IntPtr pResampler);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_resampler_get_output_latency(IntPtr pResampler);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resampler_get_required_input_frame_count(IntPtr pResampler, ulong outputFrameCount, IntPtr pInputFrameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resampler_get_expected_output_frame_count(IntPtr pResampler, ulong inputFrameCount, IntPtr pOutputFrameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resampler_reset(IntPtr pResampler);
+
+    public enum ma_channel_conversion_path
+    {
+        ma_channel_conversion_path_unknown = 0,
+        ma_channel_conversion_path_passthrough = 1,
+        ma_channel_conversion_path_mono_out = 2,
+        ma_channel_conversion_path_mono_in = 3,
+        ma_channel_conversion_path_shuffle = 4,
+        ma_channel_conversion_path_weights = 5,
+    }
+
+    public enum ma_mono_expansion_mode
+    {
+        ma_mono_expansion_mode_duplicate = 0,
+        ma_mono_expansion_mode_average = 1,
+        ma_mono_expansion_mode_stereo_only = 2,
+        ma_mono_expansion_mode_default = 0,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_channel_converter_config ma_channel_converter_config_init(ma_format format, uint channelsIn, IntPtr pChannelMapIn, uint channelsOut, IntPtr pChannelMapOut, ma_channel_mix_mode mixingMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_channel_converter_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_channel_converter_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pConverter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_channel_converter_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pConverter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_channel_converter_uninit(IntPtr pConverter, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_channel_converter_process_pcm_frames(IntPtr pConverter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_channel_converter_get_input_channel_map(IntPtr pConverter, IntPtr pChannelMap, UIntPtr channelMapCap);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_channel_converter_get_output_channel_map(IntPtr pConverter, IntPtr pChannelMap, UIntPtr channelMapCap);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_data_converter_config ma_data_converter_config_init_default();
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_data_converter_config ma_data_converter_config_init(ma_format formatIn, ma_format formatOut, uint channelsIn, uint channelsOut, uint sampleRateIn, uint sampleRateOut);
+
+    public enum ma_data_converter_execution_path
+    {
+        ma_data_converter_execution_path_passthrough = 0,
+        ma_data_converter_execution_path_format_only = 1,
+        ma_data_converter_execution_path_channels_only = 2,
+        ma_data_converter_execution_path_resample_only = 3,
+        ma_data_converter_execution_path_resample_first = 4,
+        ma_data_converter_execution_path_channels_first = 5,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_converter_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_converter_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pConverter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_converter_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pConverter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_data_converter_uninit(IntPtr pConverter, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_converter_process_pcm_frames(IntPtr pConverter, IntPtr pFramesIn, IntPtr pFrameCountIn, IntPtr pFramesOut, IntPtr pFrameCountOut);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_converter_set_rate(IntPtr pConverter, uint sampleRateIn, uint sampleRateOut);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_converter_set_rate_ratio(IntPtr pConverter, float ratioInOut);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_data_converter_get_input_latency(IntPtr pConverter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_data_converter_get_output_latency(IntPtr pConverter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_converter_get_required_input_frame_count(IntPtr pConverter, ulong outputFrameCount, IntPtr pInputFrameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_converter_get_expected_output_frame_count(IntPtr pConverter, ulong inputFrameCount, IntPtr pOutputFrameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_converter_get_input_channel_map(IntPtr pConverter, IntPtr pChannelMap, UIntPtr channelMapCap);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_converter_get_output_channel_map(IntPtr pConverter, IntPtr pChannelMap, UIntPtr channelMapCap);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_converter_reset(IntPtr pConverter);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_u8_to_s16(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_u8_to_s24(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_u8_to_s32(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_u8_to_f32(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_s16_to_u8(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_s16_to_s24(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_s16_to_s32(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_s16_to_f32(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_s24_to_u8(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_s24_to_s16(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_s24_to_s32(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_s24_to_f32(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_s32_to_u8(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_s32_to_s16(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_s32_to_s24(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_s32_to_f32(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_f32_to_u8(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_f32_to_s16(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_f32_to_s24(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_f32_to_s32(IntPtr pOut, IntPtr pIn, ulong count, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_convert(IntPtr pOut, ma_format formatOut, IntPtr pIn, ma_format formatIn, ulong sampleCount, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_convert_pcm_frames_format(IntPtr pOut, ma_format formatOut, IntPtr pIn, ma_format formatIn, ulong frameCount, uint channels, ma_dither_mode ditherMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_deinterleave_pcm_frames(ma_format format, uint channels, ulong frameCount, IntPtr pInterleavedPCMFrames, IntPtr ppDeinterleavedPCMFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_interleave_pcm_frames(ma_format format, uint channels, ulong frameCount, IntPtr ppDeinterleavedPCMFrames, IntPtr pInterleavedPCMFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint8 ma_channel_map_get_channel(IntPtr pChannelMap, uint channelCount, uint channelIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_channel_map_init_blank(IntPtr pChannelMap, uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_channel_map_init_standard(ma_standard_channel_map standardChannelMap, IntPtr pChannelMap, UIntPtr channelMapCap, uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_channel_map_copy(IntPtr pOut, IntPtr pIn, uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_channel_map_copy_or_default(IntPtr pOut, UIntPtr channelMapCapOut, IntPtr pIn, uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_channel_map_is_valid(IntPtr pChannelMap, uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_channel_map_is_equal(IntPtr pChannelMapA, IntPtr pChannelMapB, uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_channel_map_is_blank(IntPtr pChannelMap, uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_channel_map_contains_channel_position(uint channels, IntPtr pChannelMap, ma_uint8 channelPosition);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_channel_map_find_channel_position(uint channels, IntPtr pChannelMap, ma_uint8 channelPosition, IntPtr pChannelIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial UIntPtr ma_channel_map_to_string(IntPtr pChannelMap, uint channels, ref byte pBufferOut, UIntPtr bufferCap); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial byte* ma_channel_position_to_string(ma_uint8 channel); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_convert_frames(IntPtr pOut, ulong frameCountOut, ma_format formatOut, uint channelsOut, uint sampleRateOut, IntPtr pIn, ulong frameCountIn, ma_format formatIn, uint channelsIn, uint sampleRateIn);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_convert_frames_ex(IntPtr pOut, ulong frameCountOut, IntPtr pIn, ulong frameCountIn, IntPtr pConfig);
+
+    // public delegate WARN_PLACEHOLDER ma_data_source_get_next_proc();
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_data_source_config ma_data_source_config_init();
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_init(IntPtr pConfig, IntPtr pDataSource);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_data_source_uninit(IntPtr pDataSource);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_read_pcm_frames(IntPtr pDataSource, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_seek_pcm_frames(IntPtr pDataSource, ulong frameCount, IntPtr pFramesSeeked);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_seek_to_pcm_frame(IntPtr pDataSource, ulong frameIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_seek_seconds(IntPtr pDataSource, float secondCount, IntPtr pSecondsSeeked); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_seek_to_second(IntPtr pDataSource, float seekPointInSeconds);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_get_data_format(IntPtr pDataSource, IntPtr pFormat, IntPtr pChannels, IntPtr pSampleRate, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_get_cursor_in_pcm_frames(IntPtr pDataSource, IntPtr pCursor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_get_length_in_pcm_frames(IntPtr pDataSource, IntPtr pLength);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_get_cursor_in_seconds(IntPtr pDataSource, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_get_length_in_seconds(IntPtr pDataSource, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_set_looping(IntPtr pDataSource, ma_uint32 isLooping);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_data_source_is_looping(IntPtr pDataSource);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_set_range_in_pcm_frames(IntPtr pDataSource, ulong rangeBegInFrames, ulong rangeEndInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_data_source_get_range_in_pcm_frames(IntPtr pDataSource, IntPtr pRangeBegInFrames, IntPtr pRangeEndInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_set_loop_point_in_pcm_frames(IntPtr pDataSource, ulong loopBegInFrames, ulong loopEndInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_data_source_get_loop_point_in_pcm_frames(IntPtr pDataSource, IntPtr pLoopBegInFrames, IntPtr pLoopEndInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_set_current(IntPtr pDataSource, IntPtr pCurrentDataSource);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_data_source_get_current(IntPtr pDataSource);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_set_next(IntPtr pDataSource, IntPtr pNextDataSource);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_data_source_get_next(IntPtr pDataSource);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_set_next_callback(IntPtr pDataSource, ma_data_source_get_next_proc onGetNext);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_data_source_get_next_proc ma_data_source_get_next_callback(IntPtr pDataSource);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_ref_init(ma_format format, uint channels, IntPtr pData, ulong sizeInFrames, IntPtr pAudioBufferRef);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_audio_buffer_ref_uninit(IntPtr pAudioBufferRef);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_ref_set_data(IntPtr pAudioBufferRef, IntPtr pData, ulong sizeInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_audio_buffer_ref_read_pcm_frames(IntPtr pAudioBufferRef, IntPtr pFramesOut, ulong frameCount, ma_uint32 loop);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_ref_seek_to_pcm_frame(IntPtr pAudioBufferRef, ulong frameIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_ref_map(IntPtr pAudioBufferRef, IntPtr ppFramesOut, IntPtr pFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_ref_unmap(IntPtr pAudioBufferRef, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_audio_buffer_ref_at_end(IntPtr pAudioBufferRef);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_ref_get_cursor_in_pcm_frames(IntPtr pAudioBufferRef, IntPtr pCursor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_ref_get_length_in_pcm_frames(IntPtr pAudioBufferRef, IntPtr pLength);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_ref_get_available_frames(IntPtr pAudioBufferRef, IntPtr pAvailableFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_audio_buffer_config ma_audio_buffer_config_init(ma_format format, uint channels, ulong sizeInFrames, IntPtr pData, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_init(IntPtr pConfig, IntPtr pAudioBuffer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_init_copy(IntPtr pConfig, IntPtr pAudioBuffer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_alloc_and_init(IntPtr pConfig, IntPtr ppAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_audio_buffer_uninit(IntPtr pAudioBuffer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_audio_buffer_uninit_and_free(IntPtr pAudioBuffer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_audio_buffer_read_pcm_frames(IntPtr pAudioBuffer, IntPtr pFramesOut, ulong frameCount, ma_uint32 loop);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_seek_to_pcm_frame(IntPtr pAudioBuffer, ulong frameIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_map(IntPtr pAudioBuffer, IntPtr ppFramesOut, IntPtr pFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_unmap(IntPtr pAudioBuffer, ulong frameCount);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_audio_buffer_at_end(IntPtr pAudioBuffer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_get_cursor_in_pcm_frames(IntPtr pAudioBuffer, IntPtr pCursor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_get_length_in_pcm_frames(IntPtr pAudioBuffer, IntPtr pLength);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_audio_buffer_get_available_frames(IntPtr pAudioBuffer, IntPtr pAvailableFrames);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_paged_audio_buffer_page
+    {
+        public ma_paged_audio_buffer_page* pNext;
+        public ulong sizeInFrames;
+        public ma_uint8 pAudioData0;
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_paged_audio_buffer_data_init(ma_format format, uint channels, IntPtr pData);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_paged_audio_buffer_data_uninit(IntPtr pData, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_paged_audio_buffer_data_get_head(IntPtr pData); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_paged_audio_buffer_data_get_tail(IntPtr pData); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_paged_audio_buffer_data_get_length_in_pcm_frames(IntPtr pData, IntPtr pLength);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_paged_audio_buffer_data_allocate_page(IntPtr pData, ulong pageSizeInFrames, IntPtr pInitialData, IntPtr pAllocationCallbacks, IntPtr ppPage); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_paged_audio_buffer_data_free_page(IntPtr pData, IntPtr pPage, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_paged_audio_buffer_data_append_page(IntPtr pData, IntPtr pPage); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_paged_audio_buffer_data_allocate_and_append_page(IntPtr pData, uint pageSizeInFrames, IntPtr pInitialData, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_paged_audio_buffer_config ma_paged_audio_buffer_config_init(IntPtr pData);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_paged_audio_buffer_init(IntPtr pConfig, IntPtr pPagedAudioBuffer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_paged_audio_buffer_uninit(IntPtr pPagedAudioBuffer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_paged_audio_buffer_read_pcm_frames(IntPtr pPagedAudioBuffer, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_paged_audio_buffer_seek_to_pcm_frame(IntPtr pPagedAudioBuffer, ulong frameIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_paged_audio_buffer_get_cursor_in_pcm_frames(IntPtr pPagedAudioBuffer, IntPtr pCursor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_paged_audio_buffer_get_length_in_pcm_frames(IntPtr pPagedAudioBuffer, IntPtr pLength);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_rb_init_ex(UIntPtr subbufferSizeInBytes, UIntPtr subbufferCount, UIntPtr subbufferStrideInBytes, IntPtr pOptionalPreallocatedBuffer, IntPtr pAllocationCallbacks, IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_rb_init(UIntPtr bufferSizeInBytes, IntPtr pOptionalPreallocatedBuffer, IntPtr pAllocationCallbacks, IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_rb_uninit(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_rb_reset(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_rb_acquire_read(IntPtr pRB, IntPtr pSizeInBytes, IntPtr ppBufferOut); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_rb_commit_read(IntPtr pRB, UIntPtr sizeInBytes);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_rb_acquire_write(IntPtr pRB, IntPtr pSizeInBytes, IntPtr ppBufferOut); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_rb_commit_write(IntPtr pRB, UIntPtr sizeInBytes);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_rb_seek_read(IntPtr pRB, UIntPtr offsetInBytes);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_rb_seek_write(IntPtr pRB, UIntPtr offsetInBytes);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial int ma_rb_pointer_distance(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_rb_available_read(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_rb_available_write(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial UIntPtr ma_rb_get_subbuffer_size(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial UIntPtr ma_rb_get_subbuffer_stride(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial UIntPtr ma_rb_get_subbuffer_offset(IntPtr pRB, UIntPtr subbufferIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_rb_get_subbuffer_ptr(IntPtr pRB, UIntPtr subbufferIndex, IntPtr pBuffer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pcm_rb_init_ex(ma_format format, uint channels, uint subbufferSizeInFrames, uint subbufferCount, uint subbufferStrideInFrames, IntPtr pOptionalPreallocatedBuffer, IntPtr pAllocationCallbacks, IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pcm_rb_init(ma_format format, uint channels, uint bufferSizeInFrames, IntPtr pOptionalPreallocatedBuffer, IntPtr pAllocationCallbacks, IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_rb_uninit(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_rb_reset(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pcm_rb_acquire_read(IntPtr pRB, IntPtr pSizeInFrames, IntPtr ppBufferOut); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pcm_rb_commit_read(IntPtr pRB, uint sizeInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pcm_rb_acquire_write(IntPtr pRB, IntPtr pSizeInFrames, IntPtr ppBufferOut); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pcm_rb_commit_write(IntPtr pRB, uint sizeInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pcm_rb_seek_read(IntPtr pRB, uint offsetInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pcm_rb_seek_write(IntPtr pRB, uint offsetInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial int ma_pcm_rb_pointer_distance(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_pcm_rb_available_read(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_pcm_rb_available_write(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_pcm_rb_get_subbuffer_size(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_pcm_rb_get_subbuffer_stride(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_pcm_rb_get_subbuffer_offset(IntPtr pRB, uint subbufferIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_pcm_rb_get_subbuffer_ptr(IntPtr pRB, uint subbufferIndex, IntPtr pBuffer);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_format ma_pcm_rb_get_format(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_pcm_rb_get_channels(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_pcm_rb_get_sample_rate(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pcm_rb_set_sample_rate(IntPtr pRB, uint sampleRate);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_duplex_rb_init(ma_format captureFormat, uint captureChannels, uint sampleRate, uint captureInternalSampleRate, uint captureInternalPeriodSizeInFrames, IntPtr pAllocationCallbacks, IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_duplex_rb_uninit(IntPtr pRB);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial byte* ma_result_description(ma_result result); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_malloc(UIntPtr sz, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_calloc(UIntPtr sz, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_realloc(IntPtr p, UIntPtr sz, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_free(IntPtr p, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_aligned_malloc(UIntPtr sz, UIntPtr alignment, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_aligned_free(IntPtr p, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial byte* ma_get_format_name(ma_format format); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_blend_f32(IntPtr pOut, IntPtr pInA, IntPtr pInB, float factor, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_get_bytes_per_sample(ma_format format);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_get_bytes_per_frame(ma_format format, uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial byte* ma_log_level_to_string(uint logLevel); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_spinlock_lock(IntPtr pSpinlock);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_spinlock_lock_noyield(IntPtr pSpinlock);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_spinlock_unlock(IntPtr pSpinlock);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_mutex_init(IntPtr pMutex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_mutex_uninit(IntPtr pMutex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_mutex_lock(IntPtr pMutex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_mutex_unlock(IntPtr pMutex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_event_init(IntPtr pEvent);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_event_uninit(IntPtr pEvent);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_event_wait(IntPtr pEvent);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_event_signal(IntPtr pEvent);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_semaphore_init(int initialValue, IntPtr pSemaphore);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_semaphore_uninit(IntPtr pSemaphore);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_semaphore_wait(IntPtr pSemaphore);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_semaphore_release(IntPtr pSemaphore);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_fence_init(IntPtr pFence);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_fence_uninit(IntPtr pFence);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_fence_acquire(IntPtr pFence);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_fence_release(IntPtr pFence);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_fence_wait(IntPtr pFence);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_async_notification_signal(IntPtr pNotification);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_async_notification_poll_init(IntPtr pNotificationPoll);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_async_notification_poll_is_signalled(IntPtr pNotificationPoll);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_async_notification_event_init(IntPtr pNotificationEvent);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_async_notification_event_uninit(IntPtr pNotificationEvent);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_async_notification_event_wait(IntPtr pNotificationEvent);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_async_notification_event_signal(IntPtr pNotificationEvent);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_slot_allocator_config ma_slot_allocator_config_init(uint capacity);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_slot_allocator_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_slot_allocator_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pAllocator);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_slot_allocator_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pAllocator);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_slot_allocator_uninit(IntPtr pAllocator, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_slot_allocator_alloc(IntPtr pAllocator, IntPtr pSlot);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_slot_allocator_free(IntPtr pAllocator, ulong slot);
+
+    // public delegate WARN_PLACEHOLDER ma_job_proc();
+
+    public enum ma_job_type
+    {
+        MA_JOB_TYPE_QUIT = 0,
+        MA_JOB_TYPE_CUSTOM = 1,
+        MA_JOB_TYPE_RESOURCE_MANAGER_LOAD_DATA_BUFFER_NODE = 2,
+        MA_JOB_TYPE_RESOURCE_MANAGER_FREE_DATA_BUFFER_NODE = 3,
+        MA_JOB_TYPE_RESOURCE_MANAGER_PAGE_DATA_BUFFER_NODE = 4,
+        MA_JOB_TYPE_RESOURCE_MANAGER_LOAD_DATA_BUFFER = 5,
+        MA_JOB_TYPE_RESOURCE_MANAGER_FREE_DATA_BUFFER = 6,
+        MA_JOB_TYPE_RESOURCE_MANAGER_LOAD_DATA_STREAM = 7,
+        MA_JOB_TYPE_RESOURCE_MANAGER_FREE_DATA_STREAM = 8,
+        MA_JOB_TYPE_RESOURCE_MANAGER_PAGE_DATA_STREAM = 9,
+        MA_JOB_TYPE_RESOURCE_MANAGER_SEEK_DATA_STREAM = 10,
+        MA_JOB_TYPE_DEVICE_AAUDIO_REROUTE = 11,
+        MA_JOB_TYPE_COUNT = 12,
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_job
+    {
+        public ulong next;
+        public uint order;
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_job ma_job_init(ushort code);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_job_process(IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    public enum ma_job_queue_flags
+    {
+        MA_JOB_QUEUE_FLAG_NON_BLOCKING = 1,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_job_queue_config ma_job_queue_config_init(uint flags, uint capacity);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_job_queue_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_job_queue_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pQueue);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_job_queue_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pQueue);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_job_queue_uninit(IntPtr pQueue, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_job_queue_post(IntPtr pQueue, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_job_queue_next(IntPtr pQueue, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    public enum ma_device_state
+    {
+        ma_device_state_uninitialized = 0,
+        ma_device_state_stopped = 1,
+        ma_device_state_started = 2,
+        ma_device_state_starting = 3,
+        ma_device_state_stopping = 4,
+    }
+
+    public enum ma_backend
+    {
+        ma_backend_wasapi = 0,
+        ma_backend_dsound = 1,
+        ma_backend_winmm = 2,
+        ma_backend_coreaudio = 3,
+        ma_backend_sndio = 4,
+        ma_backend_audio4 = 5,
+        ma_backend_oss = 6,
+        ma_backend_pulseaudio = 7,
+        ma_backend_alsa = 8,
+        ma_backend_jack = 9,
+        ma_backend_aaudio = 10,
+        ma_backend_opensl = 11,
+        ma_backend_webaudio = 12,
+        ma_backend_custom = 13,
+        ma_backend_null = 14,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_device_job_thread_config ma_device_job_thread_config_init();
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_job_thread_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pJobThread);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_device_job_thread_uninit(IntPtr pJobThread, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_job_thread_post(IntPtr pJobThread, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_job_thread_next(IntPtr pJobThread, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    public enum ma_device_notification_type
+    {
+        ma_device_notification_type_started = 0,
+        ma_device_notification_type_stopped = 1,
+        ma_device_notification_type_rerouted = 2,
+        ma_device_notification_type_interruption_began = 3,
+        ma_device_notification_type_interruption_ended = 4,
+        ma_device_notification_type_unlocked = 5,
+    }
+
+    // public delegate WARN_PLACEHOLDER ma_device_notification_proc();
+
+    // public delegate WARN_PLACEHOLDER ma_device_data_proc();
+
+    // public delegate WARN_PLACEHOLDER ma_stop_proc();
+
+    public enum ma_device_type
+    {
+        ma_device_type_playback = 1,
+        ma_device_type_capture = 2,
+        ma_device_type_duplex = 3,
+        ma_device_type_loopback = 4,
+    }
+
+    public enum ma_share_mode
+    {
+        ma_share_mode_shared = 0,
+        ma_share_mode_exclusive = 1,
+    }
+
+    public enum ma_ios_session_category
+    {
+        ma_ios_session_category_default = 0,
+        ma_ios_session_category_none = 1,
+        ma_ios_session_category_ambient = 2,
+        ma_ios_session_category_solo_ambient = 3,
+        ma_ios_session_category_playback = 4,
+        ma_ios_session_category_record = 5,
+        ma_ios_session_category_play_and_record = 6,
+        ma_ios_session_category_multi_route = 7,
+    }
+
+    public enum ma_ios_session_category_option
+    {
+        ma_ios_session_category_option_mix_with_others = 1,
+        ma_ios_session_category_option_duck_others = 2,
+        ma_ios_session_category_option_allow_bluetooth = 4,
+        ma_ios_session_category_option_default_to_speaker = 8,
+        ma_ios_session_category_option_interrupt_spoken_audio_and_mix_with_others = 17,
+        ma_ios_session_category_option_allow_bluetooth_a2dp = 32,
+        ma_ios_session_category_option_allow_air_play = 64,
+    }
+
+    public enum ma_opensl_stream_type
+    {
+        ma_opensl_stream_type_default = 0,
+        ma_opensl_stream_type_voice = 1,
+        ma_opensl_stream_type_system = 2,
+        ma_opensl_stream_type_ring = 3,
+        ma_opensl_stream_type_media = 4,
+        ma_opensl_stream_type_alarm = 5,
+        ma_opensl_stream_type_notification = 6,
+    }
+
+    public enum ma_opensl_recording_preset
+    {
+        ma_opensl_recording_preset_default = 0,
+        ma_opensl_recording_preset_generic = 1,
+        ma_opensl_recording_preset_camcorder = 2,
+        ma_opensl_recording_preset_voice_recognition = 3,
+        ma_opensl_recording_preset_voice_communication = 4,
+        ma_opensl_recording_preset_voice_unprocessed = 5,
+    }
+
+    public enum ma_wasapi_usage
+    {
+        ma_wasapi_usage_default = 0,
+        ma_wasapi_usage_games = 1,
+        ma_wasapi_usage_pro_audio = 2,
+    }
+
+    public enum ma_aaudio_usage
+    {
+        ma_aaudio_usage_default = 0,
+        ma_aaudio_usage_media = 1,
+        ma_aaudio_usage_voice_communication = 2,
+        ma_aaudio_usage_voice_communication_signalling = 3,
+        ma_aaudio_usage_alarm = 4,
+        ma_aaudio_usage_notification = 5,
+        ma_aaudio_usage_notification_ringtone = 6,
+        ma_aaudio_usage_notification_event = 7,
+        ma_aaudio_usage_assistance_accessibility = 8,
+        ma_aaudio_usage_assistance_navigation_guidance = 9,
+        ma_aaudio_usage_assistance_sonification = 10,
+        ma_aaudio_usage_game = 11,
+        ma_aaudio_usage_assitant = 12,
+        ma_aaudio_usage_emergency = 13,
+        ma_aaudio_usage_safety = 14,
+        ma_aaudio_usage_vehicle_status = 15,
+        ma_aaudio_usage_announcement = 16,
+    }
+
+    public enum ma_aaudio_content_type
+    {
+        ma_aaudio_content_type_default = 0,
+        ma_aaudio_content_type_speech = 1,
+        ma_aaudio_content_type_music = 2,
+        ma_aaudio_content_type_movie = 3,
+        ma_aaudio_content_type_sonification = 4,
+    }
+
+    public enum ma_aaudio_input_preset
+    {
+        ma_aaudio_input_preset_default = 0,
+        ma_aaudio_input_preset_generic = 1,
+        ma_aaudio_input_preset_camcorder = 2,
+        ma_aaudio_input_preset_voice_recognition = 3,
+        ma_aaudio_input_preset_voice_communication = 4,
+        ma_aaudio_input_preset_unprocessed = 5,
+        ma_aaudio_input_preset_voice_performance = 6,
+    }
+
+    public enum ma_aaudio_allowed_capture_policy
+    {
+        ma_aaudio_allow_capture_default = 0,
+        ma_aaudio_allow_capture_by_all = 1,
+        ma_aaudio_allow_capture_by_system = 2,
+        ma_aaudio_allow_capture_by_none = 3,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_device_id_equal(IntPtr pA, IntPtr pB);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_device_config
+    {
+        public ma_device_type deviceType;
+        public uint sampleRate;
+        public uint periodSizeInFrames;
+        public uint periodSizeInMilliseconds;
+        public uint periods;
+        public ma_performance_profile performanceProfile;
+        public ma_uint8 noPreSilencedOutputBuffer;
+        public ma_uint8 noClip;
+        public ma_uint8 noDisableDenormals;
+        public ma_uint8 noFixedSizedCallback;
+        public IntPtr dataCallback; // ma_device_data_proc
+        public IntPtr notificationCallback; // ma_device_notification_proc
+        public IntPtr stopCallback; // ma_stop_proc
+        public IntPtr pUserData;
+        public ma_resampler_config resampling;
+        [StructLayout(LayoutKind.Sequential)]
+        public struct playback
+        {
+            public IntPtr pDeviceID;
+            public ma_format format;
+            public uint channels;
+            public IntPtr pChannelMap;
+            public ma_channel_mix_mode channelMixMode;
+            public ma_uint32 calculateLFEFromSpatialChannels;
+            public ma_share_mode shareMode;
+        }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct capture
+        {
+            public IntPtr pDeviceID;
+            public ma_format format;
+            public uint channels;
+            public IntPtr pChannelMap;
+            public ma_channel_mix_mode channelMixMode;
+            public ma_uint32 calculateLFEFromSpatialChannels;
+            public ma_share_mode shareMode;
+        }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct wasapi
+        {
+            public ma_wasapi_usage usage;
+            public ma_uint8 noAutoConvertSRC;
+            public ma_uint8 noDefaultQualitySRC;
+            public ma_uint8 noAutoStreamRouting;
+            public ma_uint8 noHardwareOffloading;
+            public uint loopbackProcessID;
+            public ma_uint8 loopbackProcessExclude;
+        }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct alsa
+        {
+            public ma_uint32 noMMap;
+            public ma_uint32 noAutoFormat;
+            public ma_uint32 noAutoChannels;
+            public ma_uint32 noAutoResample;
+        }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct pulse
+        {
+            public byte* pStreamNamePlayback;
+            public byte* pStreamNameCapture;
+            public int channelMap;
+        }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct coreaudio
+        {
+            public ma_uint32 allowNominalSampleRateChange;
+        }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct opensl
+        {
+            public ma_opensl_stream_type streamType;
+            public ma_opensl_recording_preset recordingPreset;
+            public ma_uint32 enableCompatibilityWorkarounds;
+        }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct aaudio
+        {
+            public ma_aaudio_usage usage;
+            public ma_aaudio_content_type contentType;
+            public ma_aaudio_input_preset inputPreset;
+            public ma_aaudio_allowed_capture_policy allowedCapturePolicy;
+            public ma_uint32 noAutoStartAfterReroute;
+            public ma_uint32 enableCompatibilityWorkarounds;
+            public ma_uint32 allowSetBufferCapacity;
+        }
+
+
+    }
+
+    // public delegate WARN_PLACEHOLDER ma_enum_devices_callback_proc();
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_backend_callbacks
+    {
+        public IntPtr onContextInit; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onContextUninit; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onContextEnumerateDevices; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onContextGetDeviceInfo; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onDeviceInit; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onDeviceUninit; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onDeviceStart; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onDeviceStop; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onDeviceRead; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onDeviceWrite; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onDeviceDataLoop; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onDeviceDataLoopWakeup; // WARN_ANONYMOUS_FUNCTION_POINTER
+        public IntPtr onDeviceGetInfo; // WARN_ANONYMOUS_FUNCTION_POINTER
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_context_config
+    {
+        public IntPtr pLog;
+        public ma_thread_priority threadPriority;
+        public UIntPtr threadStackSize;
+        public IntPtr pUserData;
+        public ma_allocation_callbacks allocationCallbacks;
+        [StructLayout(LayoutKind.Sequential)]
+        public struct dsound
+        {
+            public IntPtr hWnd;
+        }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct alsa
+        {
+            public ma_uint32 useVerboseDeviceEnumeration;
+        }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct pulse
+        {
+            public byte* pApplicationName;
+            public byte* pServerName;
+            public ma_uint32 tryAutoSpawn;
+        }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct coreaudio
+        {
+            public ma_ios_session_category sessionCategory;
+            public uint sessionCategoryOptions;
+            public ma_uint32 noAudioSessionActivate;
+            public ma_uint32 noAudioSessionDeactivate;
+        }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct jack
+        {
+            public byte* pClientName;
+            public ma_uint32 tryStartServer;
+        }
+
+
+        public ma_backend_callbacks custom;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_context
+    {
+        public ma_backend_callbacks callbacks;
+        public ma_backend backend;
+        public IntPtr pLog;
+        public ma_log log;
+        public ma_thread_priority threadPriority;
+        public UIntPtr threadStackSize;
+        public IntPtr pUserData;
+        public ma_allocation_callbacks allocationCallbacks;
+        public ma_pthread_mutex_t deviceEnumLock;
+        public ma_pthread_mutex_t deviceInfoLock;
+        public uint deviceInfoCapacity;
+        public uint playbackDeviceInfoCount;
+        public uint captureDeviceInfoCount;
+        public IntPtr pDeviceInfos;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_device
+    {
+        public ma_context* pContext;
+        public ma_device_type type;
+        public uint sampleRate;
+        public ma_atomic_device_state state;
+        public IntPtr onData; // ma_device_data_proc
+        public IntPtr onNotification; // ma_device_notification_proc
+        public IntPtr onStop; // ma_stop_proc
+        public IntPtr pUserData;
+        public ma_pthread_mutex_t startStopLock;
+        public ma_event wakeupEvent;
+        public ma_event startEvent;
+        public ma_event stopEvent;
+        public ma_pthread_t thread;
+        public ma_result workResult;
+        public ma_uint8 isOwnerOfContext;
+        public ma_uint8 noPreSilencedOutputBuffer;
+        public ma_uint8 noClip;
+        public ma_uint8 noDisableDenormals;
+        public ma_uint8 noFixedSizedCallback;
+        public ma_atomic_float masterVolumeFactor;
+        public ma_duplex_rb duplexRB;
+        [StructLayout(LayoutKind.Sequential)]
+        public struct resampling
+        {
+            public ma_resample_algorithm algorithm;
+            public IntPtr pBackendVTable;
+            public IntPtr pBackendUserData;
+            [StructLayout(LayoutKind.Sequential)]
+            public struct linear
+            {
+                public uint lpfOrder;
+            }
+
+
+        }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct playback
+        {
+            public IntPtr pID;
+            public fixed byte name[256];
+            public ma_share_mode shareMode;
+            public ma_format format;
+            public uint channels;
+            public ma_channel channelMap0;
+            public ma_channel channelMap1;
+            public ma_channel channelMap2;
+            public ma_channel channelMap3;
+            public ma_channel channelMap4;
+            public ma_channel channelMap5;
+            public ma_channel channelMap6;
+            public ma_channel channelMap7;
+            public ma_channel channelMap8;
+            public ma_channel channelMap9;
+            public ma_channel channelMap10;
+            public ma_channel channelMap11;
+            public ma_channel channelMap12;
+            public ma_channel channelMap13;
+            public ma_channel channelMap14;
+            public ma_channel channelMap15;
+            public ma_channel channelMap16;
+            public ma_channel channelMap17;
+            public ma_channel channelMap18;
+            public ma_channel channelMap19;
+            public ma_channel channelMap20;
+            public ma_channel channelMap21;
+            public ma_channel channelMap22;
+            public ma_channel channelMap23;
+            public ma_channel channelMap24;
+            public ma_channel channelMap25;
+            public ma_channel channelMap26;
+            public ma_channel channelMap27;
+            public ma_channel channelMap28;
+            public ma_channel channelMap29;
+            public ma_channel channelMap30;
+            public ma_channel channelMap31;
+            public ma_channel channelMap32;
+            public ma_channel channelMap33;
+            public ma_channel channelMap34;
+            public ma_channel channelMap35;
+            public ma_channel channelMap36;
+            public ma_channel channelMap37;
+            public ma_channel channelMap38;
+            public ma_channel channelMap39;
+            public ma_channel channelMap40;
+            public ma_channel channelMap41;
+            public ma_channel channelMap42;
+            public ma_channel channelMap43;
+            public ma_channel channelMap44;
+            public ma_channel channelMap45;
+            public ma_channel channelMap46;
+            public ma_channel channelMap47;
+            public ma_channel channelMap48;
+            public ma_channel channelMap49;
+            public ma_channel channelMap50;
+            public ma_channel channelMap51;
+            public ma_channel channelMap52;
+            public ma_channel channelMap53;
+            public ma_channel channelMap54;
+            public ma_channel channelMap55;
+            public ma_channel channelMap56;
+            public ma_channel channelMap57;
+            public ma_channel channelMap58;
+            public ma_channel channelMap59;
+            public ma_channel channelMap60;
+            public ma_channel channelMap61;
+            public ma_channel channelMap62;
+            public ma_channel channelMap63;
+            public ma_channel channelMap64;
+            public ma_channel channelMap65;
+            public ma_channel channelMap66;
+            public ma_channel channelMap67;
+            public ma_channel channelMap68;
+            public ma_channel channelMap69;
+            public ma_channel channelMap70;
+            public ma_channel channelMap71;
+            public ma_channel channelMap72;
+            public ma_channel channelMap73;
+            public ma_channel channelMap74;
+            public ma_channel channelMap75;
+            public ma_channel channelMap76;
+            public ma_channel channelMap77;
+            public ma_channel channelMap78;
+            public ma_channel channelMap79;
+            public ma_channel channelMap80;
+            public ma_channel channelMap81;
+            public ma_channel channelMap82;
+            public ma_channel channelMap83;
+            public ma_channel channelMap84;
+            public ma_channel channelMap85;
+            public ma_channel channelMap86;
+            public ma_channel channelMap87;
+            public ma_channel channelMap88;
+            public ma_channel channelMap89;
+            public ma_channel channelMap90;
+            public ma_channel channelMap91;
+            public ma_channel channelMap92;
+            public ma_channel channelMap93;
+            public ma_channel channelMap94;
+            public ma_channel channelMap95;
+            public ma_channel channelMap96;
+            public ma_channel channelMap97;
+            public ma_channel channelMap98;
+            public ma_channel channelMap99;
+            public ma_channel channelMap100;
+            public ma_channel channelMap101;
+            public ma_channel channelMap102;
+            public ma_channel channelMap103;
+            public ma_channel channelMap104;
+            public ma_channel channelMap105;
+            public ma_channel channelMap106;
+            public ma_channel channelMap107;
+            public ma_channel channelMap108;
+            public ma_channel channelMap109;
+            public ma_channel channelMap110;
+            public ma_channel channelMap111;
+            public ma_channel channelMap112;
+            public ma_channel channelMap113;
+            public ma_channel channelMap114;
+            public ma_channel channelMap115;
+            public ma_channel channelMap116;
+            public ma_channel channelMap117;
+            public ma_channel channelMap118;
+            public ma_channel channelMap119;
+            public ma_channel channelMap120;
+            public ma_channel channelMap121;
+            public ma_channel channelMap122;
+            public ma_channel channelMap123;
+            public ma_channel channelMap124;
+            public ma_channel channelMap125;
+            public ma_channel channelMap126;
+            public ma_channel channelMap127;
+            public ma_channel channelMap128;
+            public ma_channel channelMap129;
+            public ma_channel channelMap130;
+            public ma_channel channelMap131;
+            public ma_channel channelMap132;
+            public ma_channel channelMap133;
+            public ma_channel channelMap134;
+            public ma_channel channelMap135;
+            public ma_channel channelMap136;
+            public ma_channel channelMap137;
+            public ma_channel channelMap138;
+            public ma_channel channelMap139;
+            public ma_channel channelMap140;
+            public ma_channel channelMap141;
+            public ma_channel channelMap142;
+            public ma_channel channelMap143;
+            public ma_channel channelMap144;
+            public ma_channel channelMap145;
+            public ma_channel channelMap146;
+            public ma_channel channelMap147;
+            public ma_channel channelMap148;
+            public ma_channel channelMap149;
+            public ma_channel channelMap150;
+            public ma_channel channelMap151;
+            public ma_channel channelMap152;
+            public ma_channel channelMap153;
+            public ma_channel channelMap154;
+            public ma_channel channelMap155;
+            public ma_channel channelMap156;
+            public ma_channel channelMap157;
+            public ma_channel channelMap158;
+            public ma_channel channelMap159;
+            public ma_channel channelMap160;
+            public ma_channel channelMap161;
+            public ma_channel channelMap162;
+            public ma_channel channelMap163;
+            public ma_channel channelMap164;
+            public ma_channel channelMap165;
+            public ma_channel channelMap166;
+            public ma_channel channelMap167;
+            public ma_channel channelMap168;
+            public ma_channel channelMap169;
+            public ma_channel channelMap170;
+            public ma_channel channelMap171;
+            public ma_channel channelMap172;
+            public ma_channel channelMap173;
+            public ma_channel channelMap174;
+            public ma_channel channelMap175;
+            public ma_channel channelMap176;
+            public ma_channel channelMap177;
+            public ma_channel channelMap178;
+            public ma_channel channelMap179;
+            public ma_channel channelMap180;
+            public ma_channel channelMap181;
+            public ma_channel channelMap182;
+            public ma_channel channelMap183;
+            public ma_channel channelMap184;
+            public ma_channel channelMap185;
+            public ma_channel channelMap186;
+            public ma_channel channelMap187;
+            public ma_channel channelMap188;
+            public ma_channel channelMap189;
+            public ma_channel channelMap190;
+            public ma_channel channelMap191;
+            public ma_channel channelMap192;
+            public ma_channel channelMap193;
+            public ma_channel channelMap194;
+            public ma_channel channelMap195;
+            public ma_channel channelMap196;
+            public ma_channel channelMap197;
+            public ma_channel channelMap198;
+            public ma_channel channelMap199;
+            public ma_channel channelMap200;
+            public ma_channel channelMap201;
+            public ma_channel channelMap202;
+            public ma_channel channelMap203;
+            public ma_channel channelMap204;
+            public ma_channel channelMap205;
+            public ma_channel channelMap206;
+            public ma_channel channelMap207;
+            public ma_channel channelMap208;
+            public ma_channel channelMap209;
+            public ma_channel channelMap210;
+            public ma_channel channelMap211;
+            public ma_channel channelMap212;
+            public ma_channel channelMap213;
+            public ma_channel channelMap214;
+            public ma_channel channelMap215;
+            public ma_channel channelMap216;
+            public ma_channel channelMap217;
+            public ma_channel channelMap218;
+            public ma_channel channelMap219;
+            public ma_channel channelMap220;
+            public ma_channel channelMap221;
+            public ma_channel channelMap222;
+            public ma_channel channelMap223;
+            public ma_channel channelMap224;
+            public ma_channel channelMap225;
+            public ma_channel channelMap226;
+            public ma_channel channelMap227;
+            public ma_channel channelMap228;
+            public ma_channel channelMap229;
+            public ma_channel channelMap230;
+            public ma_channel channelMap231;
+            public ma_channel channelMap232;
+            public ma_channel channelMap233;
+            public ma_channel channelMap234;
+            public ma_channel channelMap235;
+            public ma_channel channelMap236;
+            public ma_channel channelMap237;
+            public ma_channel channelMap238;
+            public ma_channel channelMap239;
+            public ma_channel channelMap240;
+            public ma_channel channelMap241;
+            public ma_channel channelMap242;
+            public ma_channel channelMap243;
+            public ma_channel channelMap244;
+            public ma_channel channelMap245;
+            public ma_channel channelMap246;
+            public ma_channel channelMap247;
+            public ma_channel channelMap248;
+            public ma_channel channelMap249;
+            public ma_channel channelMap250;
+            public ma_channel channelMap251;
+            public ma_channel channelMap252;
+            public ma_channel channelMap253;
+            public ma_format internalFormat;
+            public uint internalChannels;
+            public uint internalSampleRate;
+            public ma_channel internalChannelMap0;
+            public ma_channel internalChannelMap1;
+            public ma_channel internalChannelMap2;
+            public ma_channel internalChannelMap3;
+            public ma_channel internalChannelMap4;
+            public ma_channel internalChannelMap5;
+            public ma_channel internalChannelMap6;
+            public ma_channel internalChannelMap7;
+            public ma_channel internalChannelMap8;
+            public ma_channel internalChannelMap9;
+            public ma_channel internalChannelMap10;
+            public ma_channel internalChannelMap11;
+            public ma_channel internalChannelMap12;
+            public ma_channel internalChannelMap13;
+            public ma_channel internalChannelMap14;
+            public ma_channel internalChannelMap15;
+            public ma_channel internalChannelMap16;
+            public ma_channel internalChannelMap17;
+            public ma_channel internalChannelMap18;
+            public ma_channel internalChannelMap19;
+            public ma_channel internalChannelMap20;
+            public ma_channel internalChannelMap21;
+            public ma_channel internalChannelMap22;
+            public ma_channel internalChannelMap23;
+            public ma_channel internalChannelMap24;
+            public ma_channel internalChannelMap25;
+            public ma_channel internalChannelMap26;
+            public ma_channel internalChannelMap27;
+            public ma_channel internalChannelMap28;
+            public ma_channel internalChannelMap29;
+            public ma_channel internalChannelMap30;
+            public ma_channel internalChannelMap31;
+            public ma_channel internalChannelMap32;
+            public ma_channel internalChannelMap33;
+            public ma_channel internalChannelMap34;
+            public ma_channel internalChannelMap35;
+            public ma_channel internalChannelMap36;
+            public ma_channel internalChannelMap37;
+            public ma_channel internalChannelMap38;
+            public ma_channel internalChannelMap39;
+            public ma_channel internalChannelMap40;
+            public ma_channel internalChannelMap41;
+            public ma_channel internalChannelMap42;
+            public ma_channel internalChannelMap43;
+            public ma_channel internalChannelMap44;
+            public ma_channel internalChannelMap45;
+            public ma_channel internalChannelMap46;
+            public ma_channel internalChannelMap47;
+            public ma_channel internalChannelMap48;
+            public ma_channel internalChannelMap49;
+            public ma_channel internalChannelMap50;
+            public ma_channel internalChannelMap51;
+            public ma_channel internalChannelMap52;
+            public ma_channel internalChannelMap53;
+            public ma_channel internalChannelMap54;
+            public ma_channel internalChannelMap55;
+            public ma_channel internalChannelMap56;
+            public ma_channel internalChannelMap57;
+            public ma_channel internalChannelMap58;
+            public ma_channel internalChannelMap59;
+            public ma_channel internalChannelMap60;
+            public ma_channel internalChannelMap61;
+            public ma_channel internalChannelMap62;
+            public ma_channel internalChannelMap63;
+            public ma_channel internalChannelMap64;
+            public ma_channel internalChannelMap65;
+            public ma_channel internalChannelMap66;
+            public ma_channel internalChannelMap67;
+            public ma_channel internalChannelMap68;
+            public ma_channel internalChannelMap69;
+            public ma_channel internalChannelMap70;
+            public ma_channel internalChannelMap71;
+            public ma_channel internalChannelMap72;
+            public ma_channel internalChannelMap73;
+            public ma_channel internalChannelMap74;
+            public ma_channel internalChannelMap75;
+            public ma_channel internalChannelMap76;
+            public ma_channel internalChannelMap77;
+            public ma_channel internalChannelMap78;
+            public ma_channel internalChannelMap79;
+            public ma_channel internalChannelMap80;
+            public ma_channel internalChannelMap81;
+            public ma_channel internalChannelMap82;
+            public ma_channel internalChannelMap83;
+            public ma_channel internalChannelMap84;
+            public ma_channel internalChannelMap85;
+            public ma_channel internalChannelMap86;
+            public ma_channel internalChannelMap87;
+            public ma_channel internalChannelMap88;
+            public ma_channel internalChannelMap89;
+            public ma_channel internalChannelMap90;
+            public ma_channel internalChannelMap91;
+            public ma_channel internalChannelMap92;
+            public ma_channel internalChannelMap93;
+            public ma_channel internalChannelMap94;
+            public ma_channel internalChannelMap95;
+            public ma_channel internalChannelMap96;
+            public ma_channel internalChannelMap97;
+            public ma_channel internalChannelMap98;
+            public ma_channel internalChannelMap99;
+            public ma_channel internalChannelMap100;
+            public ma_channel internalChannelMap101;
+            public ma_channel internalChannelMap102;
+            public ma_channel internalChannelMap103;
+            public ma_channel internalChannelMap104;
+            public ma_channel internalChannelMap105;
+            public ma_channel internalChannelMap106;
+            public ma_channel internalChannelMap107;
+            public ma_channel internalChannelMap108;
+            public ma_channel internalChannelMap109;
+            public ma_channel internalChannelMap110;
+            public ma_channel internalChannelMap111;
+            public ma_channel internalChannelMap112;
+            public ma_channel internalChannelMap113;
+            public ma_channel internalChannelMap114;
+            public ma_channel internalChannelMap115;
+            public ma_channel internalChannelMap116;
+            public ma_channel internalChannelMap117;
+            public ma_channel internalChannelMap118;
+            public ma_channel internalChannelMap119;
+            public ma_channel internalChannelMap120;
+            public ma_channel internalChannelMap121;
+            public ma_channel internalChannelMap122;
+            public ma_channel internalChannelMap123;
+            public ma_channel internalChannelMap124;
+            public ma_channel internalChannelMap125;
+            public ma_channel internalChannelMap126;
+            public ma_channel internalChannelMap127;
+            public ma_channel internalChannelMap128;
+            public ma_channel internalChannelMap129;
+            public ma_channel internalChannelMap130;
+            public ma_channel internalChannelMap131;
+            public ma_channel internalChannelMap132;
+            public ma_channel internalChannelMap133;
+            public ma_channel internalChannelMap134;
+            public ma_channel internalChannelMap135;
+            public ma_channel internalChannelMap136;
+            public ma_channel internalChannelMap137;
+            public ma_channel internalChannelMap138;
+            public ma_channel internalChannelMap139;
+            public ma_channel internalChannelMap140;
+            public ma_channel internalChannelMap141;
+            public ma_channel internalChannelMap142;
+            public ma_channel internalChannelMap143;
+            public ma_channel internalChannelMap144;
+            public ma_channel internalChannelMap145;
+            public ma_channel internalChannelMap146;
+            public ma_channel internalChannelMap147;
+            public ma_channel internalChannelMap148;
+            public ma_channel internalChannelMap149;
+            public ma_channel internalChannelMap150;
+            public ma_channel internalChannelMap151;
+            public ma_channel internalChannelMap152;
+            public ma_channel internalChannelMap153;
+            public ma_channel internalChannelMap154;
+            public ma_channel internalChannelMap155;
+            public ma_channel internalChannelMap156;
+            public ma_channel internalChannelMap157;
+            public ma_channel internalChannelMap158;
+            public ma_channel internalChannelMap159;
+            public ma_channel internalChannelMap160;
+            public ma_channel internalChannelMap161;
+            public ma_channel internalChannelMap162;
+            public ma_channel internalChannelMap163;
+            public ma_channel internalChannelMap164;
+            public ma_channel internalChannelMap165;
+            public ma_channel internalChannelMap166;
+            public ma_channel internalChannelMap167;
+            public ma_channel internalChannelMap168;
+            public ma_channel internalChannelMap169;
+            public ma_channel internalChannelMap170;
+            public ma_channel internalChannelMap171;
+            public ma_channel internalChannelMap172;
+            public ma_channel internalChannelMap173;
+            public ma_channel internalChannelMap174;
+            public ma_channel internalChannelMap175;
+            public ma_channel internalChannelMap176;
+            public ma_channel internalChannelMap177;
+            public ma_channel internalChannelMap178;
+            public ma_channel internalChannelMap179;
+            public ma_channel internalChannelMap180;
+            public ma_channel internalChannelMap181;
+            public ma_channel internalChannelMap182;
+            public ma_channel internalChannelMap183;
+            public ma_channel internalChannelMap184;
+            public ma_channel internalChannelMap185;
+            public ma_channel internalChannelMap186;
+            public ma_channel internalChannelMap187;
+            public ma_channel internalChannelMap188;
+            public ma_channel internalChannelMap189;
+            public ma_channel internalChannelMap190;
+            public ma_channel internalChannelMap191;
+            public ma_channel internalChannelMap192;
+            public ma_channel internalChannelMap193;
+            public ma_channel internalChannelMap194;
+            public ma_channel internalChannelMap195;
+            public ma_channel internalChannelMap196;
+            public ma_channel internalChannelMap197;
+            public ma_channel internalChannelMap198;
+            public ma_channel internalChannelMap199;
+            public ma_channel internalChannelMap200;
+            public ma_channel internalChannelMap201;
+            public ma_channel internalChannelMap202;
+            public ma_channel internalChannelMap203;
+            public ma_channel internalChannelMap204;
+            public ma_channel internalChannelMap205;
+            public ma_channel internalChannelMap206;
+            public ma_channel internalChannelMap207;
+            public ma_channel internalChannelMap208;
+            public ma_channel internalChannelMap209;
+            public ma_channel internalChannelMap210;
+            public ma_channel internalChannelMap211;
+            public ma_channel internalChannelMap212;
+            public ma_channel internalChannelMap213;
+            public ma_channel internalChannelMap214;
+            public ma_channel internalChannelMap215;
+            public ma_channel internalChannelMap216;
+            public ma_channel internalChannelMap217;
+            public ma_channel internalChannelMap218;
+            public ma_channel internalChannelMap219;
+            public ma_channel internalChannelMap220;
+            public ma_channel internalChannelMap221;
+            public ma_channel internalChannelMap222;
+            public ma_channel internalChannelMap223;
+            public ma_channel internalChannelMap224;
+            public ma_channel internalChannelMap225;
+            public ma_channel internalChannelMap226;
+            public ma_channel internalChannelMap227;
+            public ma_channel internalChannelMap228;
+            public ma_channel internalChannelMap229;
+            public ma_channel internalChannelMap230;
+            public ma_channel internalChannelMap231;
+            public ma_channel internalChannelMap232;
+            public ma_channel internalChannelMap233;
+            public ma_channel internalChannelMap234;
+            public ma_channel internalChannelMap235;
+            public ma_channel internalChannelMap236;
+            public ma_channel internalChannelMap237;
+            public ma_channel internalChannelMap238;
+            public ma_channel internalChannelMap239;
+            public ma_channel internalChannelMap240;
+            public ma_channel internalChannelMap241;
+            public ma_channel internalChannelMap242;
+            public ma_channel internalChannelMap243;
+            public ma_channel internalChannelMap244;
+            public ma_channel internalChannelMap245;
+            public ma_channel internalChannelMap246;
+            public ma_channel internalChannelMap247;
+            public ma_channel internalChannelMap248;
+            public ma_channel internalChannelMap249;
+            public ma_channel internalChannelMap250;
+            public ma_channel internalChannelMap251;
+            public ma_channel internalChannelMap252;
+            public ma_channel internalChannelMap253;
+            public uint internalPeriodSizeInFrames;
+            public uint internalPeriods;
+            public ma_channel_mix_mode channelMixMode;
+            public ma_uint32 calculateLFEFromSpatialChannels;
+            public ma_data_converter converter;
+            public IntPtr pIntermediaryBuffer;
+            public uint intermediaryBufferCap;
+            public uint intermediaryBufferLen;
+            public IntPtr pInputCache;
+            public ulong inputCacheCap;
+            public ulong inputCacheConsumed;
+            public ulong inputCacheRemaining;
+        }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct capture
+        {
+            public IntPtr pID;
+            public fixed byte name[256];
+            public ma_share_mode shareMode;
+            public ma_format format;
+            public uint channels;
+            public ma_channel channelMap0;
+            public ma_channel channelMap1;
+            public ma_channel channelMap2;
+            public ma_channel channelMap3;
+            public ma_channel channelMap4;
+            public ma_channel channelMap5;
+            public ma_channel channelMap6;
+            public ma_channel channelMap7;
+            public ma_channel channelMap8;
+            public ma_channel channelMap9;
+            public ma_channel channelMap10;
+            public ma_channel channelMap11;
+            public ma_channel channelMap12;
+            public ma_channel channelMap13;
+            public ma_channel channelMap14;
+            public ma_channel channelMap15;
+            public ma_channel channelMap16;
+            public ma_channel channelMap17;
+            public ma_channel channelMap18;
+            public ma_channel channelMap19;
+            public ma_channel channelMap20;
+            public ma_channel channelMap21;
+            public ma_channel channelMap22;
+            public ma_channel channelMap23;
+            public ma_channel channelMap24;
+            public ma_channel channelMap25;
+            public ma_channel channelMap26;
+            public ma_channel channelMap27;
+            public ma_channel channelMap28;
+            public ma_channel channelMap29;
+            public ma_channel channelMap30;
+            public ma_channel channelMap31;
+            public ma_channel channelMap32;
+            public ma_channel channelMap33;
+            public ma_channel channelMap34;
+            public ma_channel channelMap35;
+            public ma_channel channelMap36;
+            public ma_channel channelMap37;
+            public ma_channel channelMap38;
+            public ma_channel channelMap39;
+            public ma_channel channelMap40;
+            public ma_channel channelMap41;
+            public ma_channel channelMap42;
+            public ma_channel channelMap43;
+            public ma_channel channelMap44;
+            public ma_channel channelMap45;
+            public ma_channel channelMap46;
+            public ma_channel channelMap47;
+            public ma_channel channelMap48;
+            public ma_channel channelMap49;
+            public ma_channel channelMap50;
+            public ma_channel channelMap51;
+            public ma_channel channelMap52;
+            public ma_channel channelMap53;
+            public ma_channel channelMap54;
+            public ma_channel channelMap55;
+            public ma_channel channelMap56;
+            public ma_channel channelMap57;
+            public ma_channel channelMap58;
+            public ma_channel channelMap59;
+            public ma_channel channelMap60;
+            public ma_channel channelMap61;
+            public ma_channel channelMap62;
+            public ma_channel channelMap63;
+            public ma_channel channelMap64;
+            public ma_channel channelMap65;
+            public ma_channel channelMap66;
+            public ma_channel channelMap67;
+            public ma_channel channelMap68;
+            public ma_channel channelMap69;
+            public ma_channel channelMap70;
+            public ma_channel channelMap71;
+            public ma_channel channelMap72;
+            public ma_channel channelMap73;
+            public ma_channel channelMap74;
+            public ma_channel channelMap75;
+            public ma_channel channelMap76;
+            public ma_channel channelMap77;
+            public ma_channel channelMap78;
+            public ma_channel channelMap79;
+            public ma_channel channelMap80;
+            public ma_channel channelMap81;
+            public ma_channel channelMap82;
+            public ma_channel channelMap83;
+            public ma_channel channelMap84;
+            public ma_channel channelMap85;
+            public ma_channel channelMap86;
+            public ma_channel channelMap87;
+            public ma_channel channelMap88;
+            public ma_channel channelMap89;
+            public ma_channel channelMap90;
+            public ma_channel channelMap91;
+            public ma_channel channelMap92;
+            public ma_channel channelMap93;
+            public ma_channel channelMap94;
+            public ma_channel channelMap95;
+            public ma_channel channelMap96;
+            public ma_channel channelMap97;
+            public ma_channel channelMap98;
+            public ma_channel channelMap99;
+            public ma_channel channelMap100;
+            public ma_channel channelMap101;
+            public ma_channel channelMap102;
+            public ma_channel channelMap103;
+            public ma_channel channelMap104;
+            public ma_channel channelMap105;
+            public ma_channel channelMap106;
+            public ma_channel channelMap107;
+            public ma_channel channelMap108;
+            public ma_channel channelMap109;
+            public ma_channel channelMap110;
+            public ma_channel channelMap111;
+            public ma_channel channelMap112;
+            public ma_channel channelMap113;
+            public ma_channel channelMap114;
+            public ma_channel channelMap115;
+            public ma_channel channelMap116;
+            public ma_channel channelMap117;
+            public ma_channel channelMap118;
+            public ma_channel channelMap119;
+            public ma_channel channelMap120;
+            public ma_channel channelMap121;
+            public ma_channel channelMap122;
+            public ma_channel channelMap123;
+            public ma_channel channelMap124;
+            public ma_channel channelMap125;
+            public ma_channel channelMap126;
+            public ma_channel channelMap127;
+            public ma_channel channelMap128;
+            public ma_channel channelMap129;
+            public ma_channel channelMap130;
+            public ma_channel channelMap131;
+            public ma_channel channelMap132;
+            public ma_channel channelMap133;
+            public ma_channel channelMap134;
+            public ma_channel channelMap135;
+            public ma_channel channelMap136;
+            public ma_channel channelMap137;
+            public ma_channel channelMap138;
+            public ma_channel channelMap139;
+            public ma_channel channelMap140;
+            public ma_channel channelMap141;
+            public ma_channel channelMap142;
+            public ma_channel channelMap143;
+            public ma_channel channelMap144;
+            public ma_channel channelMap145;
+            public ma_channel channelMap146;
+            public ma_channel channelMap147;
+            public ma_channel channelMap148;
+            public ma_channel channelMap149;
+            public ma_channel channelMap150;
+            public ma_channel channelMap151;
+            public ma_channel channelMap152;
+            public ma_channel channelMap153;
+            public ma_channel channelMap154;
+            public ma_channel channelMap155;
+            public ma_channel channelMap156;
+            public ma_channel channelMap157;
+            public ma_channel channelMap158;
+            public ma_channel channelMap159;
+            public ma_channel channelMap160;
+            public ma_channel channelMap161;
+            public ma_channel channelMap162;
+            public ma_channel channelMap163;
+            public ma_channel channelMap164;
+            public ma_channel channelMap165;
+            public ma_channel channelMap166;
+            public ma_channel channelMap167;
+            public ma_channel channelMap168;
+            public ma_channel channelMap169;
+            public ma_channel channelMap170;
+            public ma_channel channelMap171;
+            public ma_channel channelMap172;
+            public ma_channel channelMap173;
+            public ma_channel channelMap174;
+            public ma_channel channelMap175;
+            public ma_channel channelMap176;
+            public ma_channel channelMap177;
+            public ma_channel channelMap178;
+            public ma_channel channelMap179;
+            public ma_channel channelMap180;
+            public ma_channel channelMap181;
+            public ma_channel channelMap182;
+            public ma_channel channelMap183;
+            public ma_channel channelMap184;
+            public ma_channel channelMap185;
+            public ma_channel channelMap186;
+            public ma_channel channelMap187;
+            public ma_channel channelMap188;
+            public ma_channel channelMap189;
+            public ma_channel channelMap190;
+            public ma_channel channelMap191;
+            public ma_channel channelMap192;
+            public ma_channel channelMap193;
+            public ma_channel channelMap194;
+            public ma_channel channelMap195;
+            public ma_channel channelMap196;
+            public ma_channel channelMap197;
+            public ma_channel channelMap198;
+            public ma_channel channelMap199;
+            public ma_channel channelMap200;
+            public ma_channel channelMap201;
+            public ma_channel channelMap202;
+            public ma_channel channelMap203;
+            public ma_channel channelMap204;
+            public ma_channel channelMap205;
+            public ma_channel channelMap206;
+            public ma_channel channelMap207;
+            public ma_channel channelMap208;
+            public ma_channel channelMap209;
+            public ma_channel channelMap210;
+            public ma_channel channelMap211;
+            public ma_channel channelMap212;
+            public ma_channel channelMap213;
+            public ma_channel channelMap214;
+            public ma_channel channelMap215;
+            public ma_channel channelMap216;
+            public ma_channel channelMap217;
+            public ma_channel channelMap218;
+            public ma_channel channelMap219;
+            public ma_channel channelMap220;
+            public ma_channel channelMap221;
+            public ma_channel channelMap222;
+            public ma_channel channelMap223;
+            public ma_channel channelMap224;
+            public ma_channel channelMap225;
+            public ma_channel channelMap226;
+            public ma_channel channelMap227;
+            public ma_channel channelMap228;
+            public ma_channel channelMap229;
+            public ma_channel channelMap230;
+            public ma_channel channelMap231;
+            public ma_channel channelMap232;
+            public ma_channel channelMap233;
+            public ma_channel channelMap234;
+            public ma_channel channelMap235;
+            public ma_channel channelMap236;
+            public ma_channel channelMap237;
+            public ma_channel channelMap238;
+            public ma_channel channelMap239;
+            public ma_channel channelMap240;
+            public ma_channel channelMap241;
+            public ma_channel channelMap242;
+            public ma_channel channelMap243;
+            public ma_channel channelMap244;
+            public ma_channel channelMap245;
+            public ma_channel channelMap246;
+            public ma_channel channelMap247;
+            public ma_channel channelMap248;
+            public ma_channel channelMap249;
+            public ma_channel channelMap250;
+            public ma_channel channelMap251;
+            public ma_channel channelMap252;
+            public ma_channel channelMap253;
+            public ma_format internalFormat;
+            public uint internalChannels;
+            public uint internalSampleRate;
+            public ma_channel internalChannelMap0;
+            public ma_channel internalChannelMap1;
+            public ma_channel internalChannelMap2;
+            public ma_channel internalChannelMap3;
+            public ma_channel internalChannelMap4;
+            public ma_channel internalChannelMap5;
+            public ma_channel internalChannelMap6;
+            public ma_channel internalChannelMap7;
+            public ma_channel internalChannelMap8;
+            public ma_channel internalChannelMap9;
+            public ma_channel internalChannelMap10;
+            public ma_channel internalChannelMap11;
+            public ma_channel internalChannelMap12;
+            public ma_channel internalChannelMap13;
+            public ma_channel internalChannelMap14;
+            public ma_channel internalChannelMap15;
+            public ma_channel internalChannelMap16;
+            public ma_channel internalChannelMap17;
+            public ma_channel internalChannelMap18;
+            public ma_channel internalChannelMap19;
+            public ma_channel internalChannelMap20;
+            public ma_channel internalChannelMap21;
+            public ma_channel internalChannelMap22;
+            public ma_channel internalChannelMap23;
+            public ma_channel internalChannelMap24;
+            public ma_channel internalChannelMap25;
+            public ma_channel internalChannelMap26;
+            public ma_channel internalChannelMap27;
+            public ma_channel internalChannelMap28;
+            public ma_channel internalChannelMap29;
+            public ma_channel internalChannelMap30;
+            public ma_channel internalChannelMap31;
+            public ma_channel internalChannelMap32;
+            public ma_channel internalChannelMap33;
+            public ma_channel internalChannelMap34;
+            public ma_channel internalChannelMap35;
+            public ma_channel internalChannelMap36;
+            public ma_channel internalChannelMap37;
+            public ma_channel internalChannelMap38;
+            public ma_channel internalChannelMap39;
+            public ma_channel internalChannelMap40;
+            public ma_channel internalChannelMap41;
+            public ma_channel internalChannelMap42;
+            public ma_channel internalChannelMap43;
+            public ma_channel internalChannelMap44;
+            public ma_channel internalChannelMap45;
+            public ma_channel internalChannelMap46;
+            public ma_channel internalChannelMap47;
+            public ma_channel internalChannelMap48;
+            public ma_channel internalChannelMap49;
+            public ma_channel internalChannelMap50;
+            public ma_channel internalChannelMap51;
+            public ma_channel internalChannelMap52;
+            public ma_channel internalChannelMap53;
+            public ma_channel internalChannelMap54;
+            public ma_channel internalChannelMap55;
+            public ma_channel internalChannelMap56;
+            public ma_channel internalChannelMap57;
+            public ma_channel internalChannelMap58;
+            public ma_channel internalChannelMap59;
+            public ma_channel internalChannelMap60;
+            public ma_channel internalChannelMap61;
+            public ma_channel internalChannelMap62;
+            public ma_channel internalChannelMap63;
+            public ma_channel internalChannelMap64;
+            public ma_channel internalChannelMap65;
+            public ma_channel internalChannelMap66;
+            public ma_channel internalChannelMap67;
+            public ma_channel internalChannelMap68;
+            public ma_channel internalChannelMap69;
+            public ma_channel internalChannelMap70;
+            public ma_channel internalChannelMap71;
+            public ma_channel internalChannelMap72;
+            public ma_channel internalChannelMap73;
+            public ma_channel internalChannelMap74;
+            public ma_channel internalChannelMap75;
+            public ma_channel internalChannelMap76;
+            public ma_channel internalChannelMap77;
+            public ma_channel internalChannelMap78;
+            public ma_channel internalChannelMap79;
+            public ma_channel internalChannelMap80;
+            public ma_channel internalChannelMap81;
+            public ma_channel internalChannelMap82;
+            public ma_channel internalChannelMap83;
+            public ma_channel internalChannelMap84;
+            public ma_channel internalChannelMap85;
+            public ma_channel internalChannelMap86;
+            public ma_channel internalChannelMap87;
+            public ma_channel internalChannelMap88;
+            public ma_channel internalChannelMap89;
+            public ma_channel internalChannelMap90;
+            public ma_channel internalChannelMap91;
+            public ma_channel internalChannelMap92;
+            public ma_channel internalChannelMap93;
+            public ma_channel internalChannelMap94;
+            public ma_channel internalChannelMap95;
+            public ma_channel internalChannelMap96;
+            public ma_channel internalChannelMap97;
+            public ma_channel internalChannelMap98;
+            public ma_channel internalChannelMap99;
+            public ma_channel internalChannelMap100;
+            public ma_channel internalChannelMap101;
+            public ma_channel internalChannelMap102;
+            public ma_channel internalChannelMap103;
+            public ma_channel internalChannelMap104;
+            public ma_channel internalChannelMap105;
+            public ma_channel internalChannelMap106;
+            public ma_channel internalChannelMap107;
+            public ma_channel internalChannelMap108;
+            public ma_channel internalChannelMap109;
+            public ma_channel internalChannelMap110;
+            public ma_channel internalChannelMap111;
+            public ma_channel internalChannelMap112;
+            public ma_channel internalChannelMap113;
+            public ma_channel internalChannelMap114;
+            public ma_channel internalChannelMap115;
+            public ma_channel internalChannelMap116;
+            public ma_channel internalChannelMap117;
+            public ma_channel internalChannelMap118;
+            public ma_channel internalChannelMap119;
+            public ma_channel internalChannelMap120;
+            public ma_channel internalChannelMap121;
+            public ma_channel internalChannelMap122;
+            public ma_channel internalChannelMap123;
+            public ma_channel internalChannelMap124;
+            public ma_channel internalChannelMap125;
+            public ma_channel internalChannelMap126;
+            public ma_channel internalChannelMap127;
+            public ma_channel internalChannelMap128;
+            public ma_channel internalChannelMap129;
+            public ma_channel internalChannelMap130;
+            public ma_channel internalChannelMap131;
+            public ma_channel internalChannelMap132;
+            public ma_channel internalChannelMap133;
+            public ma_channel internalChannelMap134;
+            public ma_channel internalChannelMap135;
+            public ma_channel internalChannelMap136;
+            public ma_channel internalChannelMap137;
+            public ma_channel internalChannelMap138;
+            public ma_channel internalChannelMap139;
+            public ma_channel internalChannelMap140;
+            public ma_channel internalChannelMap141;
+            public ma_channel internalChannelMap142;
+            public ma_channel internalChannelMap143;
+            public ma_channel internalChannelMap144;
+            public ma_channel internalChannelMap145;
+            public ma_channel internalChannelMap146;
+            public ma_channel internalChannelMap147;
+            public ma_channel internalChannelMap148;
+            public ma_channel internalChannelMap149;
+            public ma_channel internalChannelMap150;
+            public ma_channel internalChannelMap151;
+            public ma_channel internalChannelMap152;
+            public ma_channel internalChannelMap153;
+            public ma_channel internalChannelMap154;
+            public ma_channel internalChannelMap155;
+            public ma_channel internalChannelMap156;
+            public ma_channel internalChannelMap157;
+            public ma_channel internalChannelMap158;
+            public ma_channel internalChannelMap159;
+            public ma_channel internalChannelMap160;
+            public ma_channel internalChannelMap161;
+            public ma_channel internalChannelMap162;
+            public ma_channel internalChannelMap163;
+            public ma_channel internalChannelMap164;
+            public ma_channel internalChannelMap165;
+            public ma_channel internalChannelMap166;
+            public ma_channel internalChannelMap167;
+            public ma_channel internalChannelMap168;
+            public ma_channel internalChannelMap169;
+            public ma_channel internalChannelMap170;
+            public ma_channel internalChannelMap171;
+            public ma_channel internalChannelMap172;
+            public ma_channel internalChannelMap173;
+            public ma_channel internalChannelMap174;
+            public ma_channel internalChannelMap175;
+            public ma_channel internalChannelMap176;
+            public ma_channel internalChannelMap177;
+            public ma_channel internalChannelMap178;
+            public ma_channel internalChannelMap179;
+            public ma_channel internalChannelMap180;
+            public ma_channel internalChannelMap181;
+            public ma_channel internalChannelMap182;
+            public ma_channel internalChannelMap183;
+            public ma_channel internalChannelMap184;
+            public ma_channel internalChannelMap185;
+            public ma_channel internalChannelMap186;
+            public ma_channel internalChannelMap187;
+            public ma_channel internalChannelMap188;
+            public ma_channel internalChannelMap189;
+            public ma_channel internalChannelMap190;
+            public ma_channel internalChannelMap191;
+            public ma_channel internalChannelMap192;
+            public ma_channel internalChannelMap193;
+            public ma_channel internalChannelMap194;
+            public ma_channel internalChannelMap195;
+            public ma_channel internalChannelMap196;
+            public ma_channel internalChannelMap197;
+            public ma_channel internalChannelMap198;
+            public ma_channel internalChannelMap199;
+            public ma_channel internalChannelMap200;
+            public ma_channel internalChannelMap201;
+            public ma_channel internalChannelMap202;
+            public ma_channel internalChannelMap203;
+            public ma_channel internalChannelMap204;
+            public ma_channel internalChannelMap205;
+            public ma_channel internalChannelMap206;
+            public ma_channel internalChannelMap207;
+            public ma_channel internalChannelMap208;
+            public ma_channel internalChannelMap209;
+            public ma_channel internalChannelMap210;
+            public ma_channel internalChannelMap211;
+            public ma_channel internalChannelMap212;
+            public ma_channel internalChannelMap213;
+            public ma_channel internalChannelMap214;
+            public ma_channel internalChannelMap215;
+            public ma_channel internalChannelMap216;
+            public ma_channel internalChannelMap217;
+            public ma_channel internalChannelMap218;
+            public ma_channel internalChannelMap219;
+            public ma_channel internalChannelMap220;
+            public ma_channel internalChannelMap221;
+            public ma_channel internalChannelMap222;
+            public ma_channel internalChannelMap223;
+            public ma_channel internalChannelMap224;
+            public ma_channel internalChannelMap225;
+            public ma_channel internalChannelMap226;
+            public ma_channel internalChannelMap227;
+            public ma_channel internalChannelMap228;
+            public ma_channel internalChannelMap229;
+            public ma_channel internalChannelMap230;
+            public ma_channel internalChannelMap231;
+            public ma_channel internalChannelMap232;
+            public ma_channel internalChannelMap233;
+            public ma_channel internalChannelMap234;
+            public ma_channel internalChannelMap235;
+            public ma_channel internalChannelMap236;
+            public ma_channel internalChannelMap237;
+            public ma_channel internalChannelMap238;
+            public ma_channel internalChannelMap239;
+            public ma_channel internalChannelMap240;
+            public ma_channel internalChannelMap241;
+            public ma_channel internalChannelMap242;
+            public ma_channel internalChannelMap243;
+            public ma_channel internalChannelMap244;
+            public ma_channel internalChannelMap245;
+            public ma_channel internalChannelMap246;
+            public ma_channel internalChannelMap247;
+            public ma_channel internalChannelMap248;
+            public ma_channel internalChannelMap249;
+            public ma_channel internalChannelMap250;
+            public ma_channel internalChannelMap251;
+            public ma_channel internalChannelMap252;
+            public ma_channel internalChannelMap253;
+            public uint internalPeriodSizeInFrames;
+            public uint internalPeriods;
+            public ma_channel_mix_mode channelMixMode;
+            public ma_uint32 calculateLFEFromSpatialChannels;
+            public ma_data_converter converter;
+            public IntPtr pIntermediaryBuffer;
+            public uint intermediaryBufferCap;
+            public uint intermediaryBufferLen;
+        }
+
+
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_context_config ma_context_config_init();
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_context_init(IntPtr backends, uint backendCount, IntPtr pConfig, IntPtr pContext); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_context_uninit(IntPtr pContext); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial UIntPtr ma_context_sizeof();
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_context_get_log(IntPtr pContext); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_context_enumerate_devices(IntPtr pContext, ma_enum_devices_callback_proc callback, IntPtr pUserData); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_context_get_devices(IntPtr pContext, IntPtr ppPlaybackDeviceInfos, IntPtr pPlaybackDeviceCount, IntPtr ppCaptureDeviceInfos, IntPtr pCaptureDeviceCount); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_context_get_device_info(IntPtr pContext, ma_device_type deviceType, IntPtr pDeviceID, IntPtr pDeviceInfo); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_context_is_loopback_supported(IntPtr pContext); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_device_config ma_device_config_init(ma_device_type deviceType);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_init(IntPtr pContext, IntPtr pConfig, IntPtr pDevice); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_init_ex(IntPtr backends, uint backendCount, IntPtr pContextConfig, IntPtr pConfig, IntPtr pDevice); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_device_uninit(IntPtr pDevice); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_device_get_context(IntPtr pDevice); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_device_get_log(IntPtr pDevice); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_get_info(IntPtr pDevice, ma_device_type type, IntPtr pDeviceInfo); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_get_name(IntPtr pDevice, ma_device_type type, ref byte pName, UIntPtr nameCap, IntPtr pLengthNotIncludingNullTerminator); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_start(IntPtr pDevice); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_stop(IntPtr pDevice); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_device_is_started(IntPtr pDevice); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_device_state ma_device_get_state(IntPtr pDevice); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_post_init(IntPtr pDevice, ma_device_type deviceType, IntPtr pPlaybackDescriptor, IntPtr pCaptureDescriptor); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_set_master_volume(IntPtr pDevice, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_get_master_volume(IntPtr pDevice, IntPtr pVolume); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_set_master_volume_db(IntPtr pDevice, float gainDB); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_get_master_volume_db(IntPtr pDevice, IntPtr pGainDB); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_device_handle_backend_data_callback(IntPtr pDevice, IntPtr pOutput, IntPtr pInput, uint frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_calculate_buffer_size_in_frames_from_descriptor(IntPtr pDescriptor, uint nativeSampleRate, ma_performance_profile performanceProfile);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial byte* ma_get_backend_name(ma_backend backend); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_get_backend_from_name(ref byte pBackendName, IntPtr pBackend); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_is_backend_enabled(ma_backend backend);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_get_enabled_backends(IntPtr pBackends, UIntPtr backendCap, IntPtr pBackendCount); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_is_loopback_supported(ma_backend backend);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_calculate_buffer_size_in_milliseconds_from_frames(uint bufferSizeInFrames, uint sampleRate);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_calculate_buffer_size_in_frames_from_milliseconds(uint bufferSizeInMilliseconds, uint sampleRate);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_pcm_frames(IntPtr dst, IntPtr src, ulong frameCount, ma_format format, uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_silence_pcm_frames(IntPtr p, ulong frameCount, ma_format format, uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_offset_pcm_frames_ptr(IntPtr p, ulong offsetInFrames, ma_format format, uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_offset_pcm_frames_const_ptr(IntPtr p, ulong offsetInFrames, ma_format format, uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_offset_pcm_frames_ptr_f32(IntPtr p, ulong offsetInFrames, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_offset_pcm_frames_const_ptr_f32(IntPtr p, ulong offsetInFrames, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_clip_samples_u8(IntPtr pDst, IntPtr pSrc, ulong count);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_clip_samples_s16(IntPtr pDst, IntPtr pSrc, ulong count);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_clip_samples_s24(IntPtr pDst, IntPtr pSrc, ulong count);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_clip_samples_s32(IntPtr pDst, IntPtr pSrc, ulong count);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_clip_samples_f32(IntPtr pDst, IntPtr pSrc, ulong count); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_clip_pcm_frames(IntPtr pDst, IntPtr pSrc, ulong frameCount, ma_format format, uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_factor_u8(IntPtr pSamplesOut, IntPtr pSamplesIn, ulong sampleCount, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_factor_s16(IntPtr pSamplesOut, IntPtr pSamplesIn, ulong sampleCount, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_factor_s24(IntPtr pSamplesOut, IntPtr pSamplesIn, ulong sampleCount, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_factor_s32(IntPtr pSamplesOut, IntPtr pSamplesIn, ulong sampleCount, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_factor_f32(IntPtr pSamplesOut, IntPtr pSamplesIn, ulong sampleCount, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_apply_volume_factor_u8(IntPtr pSamples, ulong sampleCount, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_apply_volume_factor_s16(IntPtr pSamples, ulong sampleCount, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_apply_volume_factor_s24(IntPtr pSamples, ulong sampleCount, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_apply_volume_factor_s32(IntPtr pSamples, ulong sampleCount, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_apply_volume_factor_f32(IntPtr pSamples, ulong sampleCount, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_factor_pcm_frames_u8(IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount, uint channels, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_factor_pcm_frames_s16(IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount, uint channels, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_factor_pcm_frames_s24(IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount, uint channels, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_factor_pcm_frames_s32(IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount, uint channels, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_factor_pcm_frames_f32(IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount, uint channels, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_factor_pcm_frames(IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount, ma_format format, uint channels, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_apply_volume_factor_pcm_frames_u8(IntPtr pFrames, ulong frameCount, uint channels, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_apply_volume_factor_pcm_frames_s16(IntPtr pFrames, ulong frameCount, uint channels, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_apply_volume_factor_pcm_frames_s24(IntPtr pFrames, ulong frameCount, uint channels, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_apply_volume_factor_pcm_frames_s32(IntPtr pFrames, ulong frameCount, uint channels, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_apply_volume_factor_pcm_frames_f32(IntPtr pFrames, ulong frameCount, uint channels, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_apply_volume_factor_pcm_frames(IntPtr pFrames, ulong frameCount, ma_format format, uint channels, float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_factor_per_channel_f32(IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount, uint channels, IntPtr pChannelGains); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_and_clip_samples_u8(IntPtr pDst, IntPtr pSrc, ulong count, float volume);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_and_clip_samples_s16(IntPtr pDst, IntPtr pSrc, ulong count, float volume);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_and_clip_samples_s24(IntPtr pDst, IntPtr pSrc, ulong count, float volume);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_and_clip_samples_s32(IntPtr pDst, IntPtr pSrc, ulong count, float volume);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_and_clip_samples_f32(IntPtr pDst, IntPtr pSrc, ulong count, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_copy_and_apply_volume_and_clip_pcm_frames(IntPtr pDst, IntPtr pSrc, ulong frameCount, ma_format format, uint channels, float volume);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_volume_linear_to_db(float factor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_volume_db_to_linear(float gain);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_mix_pcm_frames_f32(IntPtr pDst, IntPtr pSrc, ulong frameCount, uint channels, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    public enum ma_open_mode_flags
+    {
+        MA_OPEN_MODE_READ = 1,
+        MA_OPEN_MODE_WRITE = 2,
+    }
+
+    public enum ma_seek_origin
+    {
+        ma_seek_origin_start = 0,
+        ma_seek_origin_current = 1,
+        ma_seek_origin_end = 2,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_vfs_open(IntPtr pVFS, ref byte pFilePath, uint openMode, IntPtr pFile); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_vfs_open_w(IntPtr pVFS, string pFilePath, uint openMode, IntPtr pFile);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_vfs_close(IntPtr pVFS, ma_handle file);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_vfs_read(IntPtr pVFS, ma_handle file, IntPtr pDst, UIntPtr sizeInBytes, IntPtr pBytesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_vfs_write(IntPtr pVFS, ma_handle file, IntPtr pSrc, UIntPtr sizeInBytes, IntPtr pBytesWritten); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_vfs_seek(IntPtr pVFS, ma_handle file, long offset, ma_seek_origin origin);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_vfs_tell(IntPtr pVFS, ma_handle file, IntPtr pCursor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_vfs_info(IntPtr pVFS, ma_handle file, IntPtr pInfo);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_vfs_open_and_read_file(IntPtr pVFS, ref byte pFilePath, IntPtr ppData, IntPtr pSize, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_default_vfs_init(IntPtr pVFS, IntPtr pAllocationCallbacks);
+
+    // public delegate WARN_PLACEHOLDER ma_read_proc();
+
+    // public delegate WARN_PLACEHOLDER ma_seek_proc();
+
+    // public delegate WARN_PLACEHOLDER ma_tell_proc();
+
+    public enum ma_encoding_format
+    {
+        ma_encoding_format_unknown = 0,
+        ma_encoding_format_wav = 1,
+        ma_encoding_format_flac = 2,
+        ma_encoding_format_mp3 = 3,
+        ma_encoding_format_vorbis = 4,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_decoding_backend_config ma_decoding_backend_config_init(ma_format preferredFormat, uint seekPointCount);
+
+    // public delegate WARN_PLACEHOLDER ma_decoder_read_proc();
+
+    // public delegate WARN_PLACEHOLDER ma_decoder_seek_proc();
+
+    // public delegate WARN_PLACEHOLDER ma_decoder_tell_proc();
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_decoder
+    {
+        public ma_data_source_base ds;
+        public IntPtr pBackend;
+        public IntPtr pBackendVTable;
+        public IntPtr pBackendUserData;
+        public IntPtr onRead; // ma_decoder_read_proc
+        public IntPtr onSeek; // ma_decoder_seek_proc
+        public IntPtr onTell; // ma_decoder_tell_proc
+        public IntPtr pUserData;
+        public ulong readPointerInPCMFrames;
+        public ma_format outputFormat;
+        public uint outputChannels;
+        public uint outputSampleRate;
+        public ma_data_converter converter;
+        public IntPtr pInputCache;
+        public ulong inputCacheCap;
+        public ulong inputCacheConsumed;
+        public ulong inputCacheRemaining;
+        public ma_allocation_callbacks allocationCallbacks;
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_decoder_config ma_decoder_config_init(ma_format outputFormat, uint outputChannels, uint outputSampleRate);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_decoder_config ma_decoder_config_init_default();
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decoder_init(ma_decoder_read_proc onRead, ma_decoder_seek_proc onSeek, IntPtr pUserData, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decoder_init_memory(IntPtr pData, UIntPtr dataSize, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decoder_init_vfs(IntPtr pVFS, ref byte pFilePath, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decoder_init_vfs_w(IntPtr pVFS, string pFilePath, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decoder_init_file(ref byte pFilePath, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decoder_init_file_w(string pFilePath, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decoder_uninit(IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decoder_read_pcm_frames(IntPtr pDecoder, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decoder_seek_to_pcm_frame(IntPtr pDecoder, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decoder_get_data_format(IntPtr pDecoder, IntPtr pFormat, IntPtr pChannels, IntPtr pSampleRate, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decoder_get_cursor_in_pcm_frames(IntPtr pDecoder, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decoder_get_length_in_pcm_frames(IntPtr pDecoder, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decoder_get_available_frames(IntPtr pDecoder, IntPtr pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decode_from_vfs(IntPtr pVFS, ref byte pFilePath, IntPtr pConfig, IntPtr pFrameCountOut, IntPtr ppPCMFramesOut); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decode_file(ref byte pFilePath, IntPtr pConfig, IntPtr pFrameCountOut, IntPtr ppPCMFramesOut); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_decode_memory(IntPtr pData, UIntPtr dataSize, IntPtr pConfig, IntPtr pFrameCountOut, IntPtr ppPCMFramesOut); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    // public delegate WARN_PLACEHOLDER ma_encoder_write_proc();
+
+    // public delegate WARN_PLACEHOLDER ma_encoder_seek_proc();
+
+    // public delegate WARN_PLACEHOLDER ma_encoder_init_proc();
+
+    // public delegate WARN_PLACEHOLDER ma_encoder_uninit_proc();
+
+    // public delegate WARN_PLACEHOLDER ma_encoder_write_pcm_frames_proc();
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_encoder_config ma_encoder_config_init(ma_encoding_format encodingFormat, ma_format format, uint channels, uint sampleRate);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_encoder
+    {
+        public ma_encoder_config config;
+        public IntPtr onWrite; // ma_encoder_write_proc
+        public IntPtr onSeek; // ma_encoder_seek_proc
+        public IntPtr onInit; // ma_encoder_init_proc
+        public IntPtr onUninit; // ma_encoder_uninit_proc
+        public IntPtr onWritePCMFrames; // ma_encoder_write_pcm_frames_proc
+        public IntPtr pUserData;
+        public IntPtr pInternalEncoder;
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_encoder_init(ma_encoder_write_proc onWrite, ma_encoder_seek_proc onSeek, IntPtr pUserData, IntPtr pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_encoder_init_vfs(IntPtr pVFS, ref byte pFilePath, IntPtr pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_encoder_init_vfs_w(IntPtr pVFS, string pFilePath, IntPtr pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_encoder_init_file(ref byte pFilePath, IntPtr pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_encoder_init_file_w(string pFilePath, IntPtr pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_encoder_uninit(IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_encoder_write_pcm_frames(IntPtr pEncoder, IntPtr pFramesIn, ulong frameCount, IntPtr pFramesWritten); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    public enum ma_waveform_type
+    {
+        ma_waveform_type_sine = 0,
+        ma_waveform_type_square = 1,
+        ma_waveform_type_triangle = 2,
+        ma_waveform_type_sawtooth = 3,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_waveform_config ma_waveform_config_init(ma_format format, uint channels, uint sampleRate, ma_waveform_type type, double amplitude, double frequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_waveform_init(IntPtr pConfig, IntPtr pWaveform);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_waveform_uninit(IntPtr pWaveform);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_waveform_read_pcm_frames(IntPtr pWaveform, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_waveform_seek_to_pcm_frame(IntPtr pWaveform, ulong frameIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_waveform_set_amplitude(IntPtr pWaveform, double amplitude);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_waveform_set_frequency(IntPtr pWaveform, double frequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_waveform_set_type(IntPtr pWaveform, ma_waveform_type type);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_waveform_set_sample_rate(IntPtr pWaveform, uint sampleRate);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_pulsewave_config ma_pulsewave_config_init(ma_format format, uint channels, uint sampleRate, double dutyCycle, double amplitude, double frequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pulsewave_init(IntPtr pConfig, IntPtr pWaveform);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_pulsewave_uninit(IntPtr pWaveform);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pulsewave_read_pcm_frames(IntPtr pWaveform, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pulsewave_seek_to_pcm_frame(IntPtr pWaveform, ulong frameIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pulsewave_set_amplitude(IntPtr pWaveform, double amplitude);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pulsewave_set_frequency(IntPtr pWaveform, double frequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pulsewave_set_sample_rate(IntPtr pWaveform, uint sampleRate);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_pulsewave_set_duty_cycle(IntPtr pWaveform, double dutyCycle);
+
+    public enum ma_noise_type
+    {
+        ma_noise_type_white = 0,
+        ma_noise_type_pink = 1,
+        ma_noise_type_brownian = 2,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_noise_config ma_noise_config_init(ma_format format, uint channels, ma_noise_type type, int seed, double amplitude);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_noise_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_noise_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pNoise);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_noise_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNoise);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_noise_uninit(IntPtr pNoise, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_noise_read_pcm_frames(IntPtr pNoise, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_noise_set_amplitude(IntPtr pNoise, double amplitude);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_noise_set_seed(IntPtr pNoise, int seed);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_noise_set_type(IntPtr pNoise, ma_noise_type type);
+
+    public enum ma_resource_manager_data_source_flags
+    {
+        MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_STREAM = 1,
+        MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_DECODE = 2,
+        MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_ASYNC = 4,
+        MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_WAIT_INIT = 8,
+        MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_UNKNOWN_LENGTH = 16,
+        MA_RESOURCE_MANAGER_DATA_SOURCE_FLAG_LOOPING = 32,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_resource_manager_pipeline_notifications ma_resource_manager_pipeline_notifications_init();
+
+    public enum ma_resource_manager_flags
+    {
+        MA_RESOURCE_MANAGER_FLAG_NON_BLOCKING = 1,
+        MA_RESOURCE_MANAGER_FLAG_NO_THREADING = 2,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_resource_manager_data_source_config ma_resource_manager_data_source_config_init();
+
+    public enum ma_resource_manager_data_supply_type
+    {
+        ma_resource_manager_data_supply_type_unknown = 0,
+        ma_resource_manager_data_supply_type_encoded = 1,
+        ma_resource_manager_data_supply_type_decoded = 2,
+        ma_resource_manager_data_supply_type_decoded_paged = 3,
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_resource_manager_data_buffer_node
+    {
+        public uint hashedName32;
+        public uint refCount;
+        public ma_result result;
+        public uint executionCounter;
+        public uint executionPointer;
+        public ma_uint32 isDataOwnedByResourceManager;
+        public ma_resource_manager_data_supply data;
+        public ma_resource_manager_data_buffer_node* pParent;
+        public ma_resource_manager_data_buffer_node* pChildLo;
+        public ma_resource_manager_data_buffer_node* pChildHi;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_resource_manager_data_buffer
+    {
+        public ma_data_source_base ds;
+        public IntPtr pResourceManager;
+        public ma_resource_manager_data_buffer_node* pNode;
+        public uint flags;
+        public uint executionCounter;
+        public uint executionPointer;
+        public ulong seekTargetInPCMFrames;
+        public ma_uint32 seekToCursorOnNextRead;
+        public ma_result result;
+        public ma_uint32 isLooping;
+        public ma_atomic_bool32 isConnectorInitialized;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_resource_manager_data_stream
+    {
+        public ma_data_source_base ds;
+        public IntPtr pResourceManager;
+        public uint flags;
+        public ma_decoder decoder;
+        public ma_uint32 isDecoderInitialized;
+        public ulong totalLengthInPCMFrames;
+        public uint relativeCursor;
+        public ulong absoluteCursor;
+        public uint currentPageIndex;
+        public uint executionCounter;
+        public uint executionPointer;
+        public ma_uint32 isLooping;
+        public IntPtr pPageData;
+        public ma_uint32 pageFrameCount0;
+        public ma_uint32 pageFrameCount1;
+        public ma_result result;
+        public ma_uint32 isDecoderAtEnd;
+        public ma_bool32 isPageValid0;
+        public ma_bool32 isPageValid1;
+        public ma_uint32 seekCounter;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_resource_manager_data_source
+    {
+        public uint flags;
+        public uint executionCounter;
+        public uint executionPointer;
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_resource_manager_config ma_resource_manager_config_init();
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_resource_manager
+    {
+        public ma_resource_manager_config config;
+        public ma_resource_manager_data_buffer_node* pRootDataBufferNode;
+        public ma_pthread_mutex_t dataBufferBSTLock;
+        public ma_thread jobThreads0;
+        public ma_thread jobThreads1;
+        public ma_thread jobThreads2;
+        public ma_thread jobThreads3;
+        public ma_thread jobThreads4;
+        public ma_thread jobThreads5;
+        public ma_thread jobThreads6;
+        public ma_thread jobThreads7;
+        public ma_thread jobThreads8;
+        public ma_thread jobThreads9;
+        public ma_thread jobThreads10;
+        public ma_thread jobThreads11;
+        public ma_thread jobThreads12;
+        public ma_thread jobThreads13;
+        public ma_thread jobThreads14;
+        public ma_thread jobThreads15;
+        public ma_thread jobThreads16;
+        public ma_thread jobThreads17;
+        public ma_thread jobThreads18;
+        public ma_thread jobThreads19;
+        public ma_thread jobThreads20;
+        public ma_thread jobThreads21;
+        public ma_thread jobThreads22;
+        public ma_thread jobThreads23;
+        public ma_thread jobThreads24;
+        public ma_thread jobThreads25;
+        public ma_thread jobThreads26;
+        public ma_thread jobThreads27;
+        public ma_thread jobThreads28;
+        public ma_thread jobThreads29;
+        public ma_thread jobThreads30;
+        public ma_thread jobThreads31;
+        public ma_thread jobThreads32;
+        public ma_thread jobThreads33;
+        public ma_thread jobThreads34;
+        public ma_thread jobThreads35;
+        public ma_thread jobThreads36;
+        public ma_thread jobThreads37;
+        public ma_thread jobThreads38;
+        public ma_thread jobThreads39;
+        public ma_thread jobThreads40;
+        public ma_thread jobThreads41;
+        public ma_thread jobThreads42;
+        public ma_thread jobThreads43;
+        public ma_thread jobThreads44;
+        public ma_thread jobThreads45;
+        public ma_thread jobThreads46;
+        public ma_thread jobThreads47;
+        public ma_thread jobThreads48;
+        public ma_thread jobThreads49;
+        public ma_thread jobThreads50;
+        public ma_thread jobThreads51;
+        public ma_thread jobThreads52;
+        public ma_thread jobThreads53;
+        public ma_thread jobThreads54;
+        public ma_thread jobThreads55;
+        public ma_thread jobThreads56;
+        public ma_thread jobThreads57;
+        public ma_thread jobThreads58;
+        public ma_thread jobThreads59;
+        public ma_thread jobThreads60;
+        public ma_thread jobThreads61;
+        public ma_thread jobThreads62;
+        public ma_thread jobThreads63;
+        public ma_job_queue jobQueue;
+        public ma_default_vfs defaultVFS;
+        public ma_log log;
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_init(IntPtr pConfig, IntPtr pResourceManager); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_resource_manager_uninit(IntPtr pResourceManager); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_resource_manager_get_log(IntPtr pResourceManager); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_register_file(IntPtr pResourceManager, ref byte pFilePath, uint flags); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_register_file_w(IntPtr pResourceManager, string pFilePath, uint flags); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_register_decoded_data(IntPtr pResourceManager, ref byte pName, IntPtr pData, ulong frameCount, ma_format format, uint channels, uint sampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_register_decoded_data_w(IntPtr pResourceManager, string pName, IntPtr pData, ulong frameCount, ma_format format, uint channels, uint sampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_register_encoded_data(IntPtr pResourceManager, ref byte pName, IntPtr pData, UIntPtr sizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_register_encoded_data_w(IntPtr pResourceManager, string pName, IntPtr pData, UIntPtr sizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_unregister_file(IntPtr pResourceManager, ref byte pFilePath); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_unregister_file_w(IntPtr pResourceManager, string pFilePath); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_unregister_data(IntPtr pResourceManager, ref byte pName); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_unregister_data_w(IntPtr pResourceManager, string pName); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_buffer_init_ex(IntPtr pResourceManager, IntPtr pConfig, IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_buffer_init(IntPtr pResourceManager, ref byte pFilePath, uint flags, IntPtr pNotifications, IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_buffer_init_w(IntPtr pResourceManager, string pFilePath, uint flags, IntPtr pNotifications, IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_buffer_init_copy(IntPtr pResourceManager, IntPtr pExistingDataBuffer, IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_buffer_uninit(IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_buffer_read_pcm_frames(IntPtr pDataBuffer, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_buffer_seek_to_pcm_frame(IntPtr pDataBuffer, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_buffer_get_data_format(IntPtr pDataBuffer, IntPtr pFormat, IntPtr pChannels, IntPtr pSampleRate, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_buffer_get_cursor_in_pcm_frames(IntPtr pDataBuffer, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_buffer_get_length_in_pcm_frames(IntPtr pDataBuffer, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_buffer_result(IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_buffer_set_looping(IntPtr pDataBuffer, ma_uint32 isLooping); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_resource_manager_data_buffer_is_looping(IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_buffer_get_available_frames(IntPtr pDataBuffer, IntPtr pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_stream_init_ex(IntPtr pResourceManager, IntPtr pConfig, IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_stream_init(IntPtr pResourceManager, ref byte pFilePath, uint flags, IntPtr pNotifications, IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_stream_init_w(IntPtr pResourceManager, string pFilePath, uint flags, IntPtr pNotifications, IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_stream_uninit(IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_stream_read_pcm_frames(IntPtr pDataStream, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_stream_seek_to_pcm_frame(IntPtr pDataStream, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_stream_get_data_format(IntPtr pDataStream, IntPtr pFormat, IntPtr pChannels, IntPtr pSampleRate, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_stream_get_cursor_in_pcm_frames(IntPtr pDataStream, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_stream_get_length_in_pcm_frames(IntPtr pDataStream, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_stream_result(IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_stream_set_looping(IntPtr pDataStream, ma_uint32 isLooping); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_resource_manager_data_stream_is_looping(IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_stream_get_available_frames(IntPtr pDataStream, IntPtr pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_source_init_ex(IntPtr pResourceManager, IntPtr pConfig, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_source_init(IntPtr pResourceManager, ref byte pName, uint flags, IntPtr pNotifications, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_source_init_w(IntPtr pResourceManager, string pName, uint flags, IntPtr pNotifications, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_source_init_copy(IntPtr pResourceManager, IntPtr pExistingDataSource, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_source_uninit(IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_source_read_pcm_frames(IntPtr pDataSource, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_source_seek_to_pcm_frame(IntPtr pDataSource, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_source_get_data_format(IntPtr pDataSource, IntPtr pFormat, IntPtr pChannels, IntPtr pSampleRate, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_source_get_cursor_in_pcm_frames(IntPtr pDataSource, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_source_get_length_in_pcm_frames(IntPtr pDataSource, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_source_result(IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_source_set_looping(IntPtr pDataSource, ma_uint32 isLooping); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_resource_manager_data_source_is_looping(IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_data_source_get_available_frames(IntPtr pDataSource, IntPtr pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_post_job(IntPtr pResourceManager, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_post_job_quit(IntPtr pResourceManager); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_next_job(IntPtr pResourceManager, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_process_job(IntPtr pResourceManager, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_resource_manager_process_next_job(IntPtr pResourceManager); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    public enum ma_node_flags
+    {
+        MA_NODE_FLAG_PASSTHROUGH = 1,
+        MA_NODE_FLAG_CONTINUOUS_PROCESSING = 2,
+        MA_NODE_FLAG_ALLOW_NULL_INPUT = 4,
+        MA_NODE_FLAG_DIFFERENT_PROCESSING_RATES = 8,
+        MA_NODE_FLAG_SILENT_OUTPUT = 16,
+    }
+
+    public enum ma_node_state
+    {
+        ma_node_state_started = 0,
+        ma_node_state_stopped = 1,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_node_config ma_node_config_init();
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_node_output_bus
+    {
+        public IntPtr pNode;
+        public byte outputBusIndex;
+        public byte channels;
+        public byte inputNodeInputBusIndex;
+        public uint flags;
+        public uint refCount;
+        public ma_uint32 isAttached;
+        public ma_uint32 @lock;
+        public float volume;
+        public ma_node_output_bus* pNext;
+        public ma_node_output_bus* pPrev;
+        public IntPtr pInputNode;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_node_input_bus
+    {
+        public ma_node_output_bus head;
+        public uint nextCounter;
+        public ma_uint32 @lock;
+        public byte channels;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_node_base
+    {
+        public IntPtr pNodeGraph;
+        public IntPtr vtable;
+        public uint inputBusCount;
+        public uint outputBusCount;
+        public ma_node_input_bus* pInputBuses;
+        public ma_node_output_bus* pOutputBuses;
+        public float* pCachedData;
+        public ushort cachedDataCapInFramesPerBus;
+        public ushort cachedFrameCountOut;
+        public ushort cachedFrameCountIn;
+        public ushort consumedFrameCountIn;
+        public ma_node_state state;
+        public ma_uint64 stateTimes0;
+        public ma_uint64 stateTimes1;
+        public ulong localTime;
+        public ma_node_input_bus _inputBuses0;
+        public ma_node_input_bus _inputBuses1;
+        public ma_node_output_bus _outputBuses0;
+        public ma_node_output_bus _outputBuses1;
+        public IntPtr _pHeap;
+        public ma_uint32 _ownsHeap;
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_node_get_heap_size(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_node_init_preallocated(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pHeap, IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_node_get_node_graph(IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_node_get_input_bus_count(IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_node_get_output_bus_count(IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_node_get_input_channels(IntPtr pNode, uint inputBusIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_node_get_output_channels(IntPtr pNode, uint outputBusIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_node_attach_output_bus(IntPtr pNode, uint outputBusIndex, IntPtr pOtherNode, uint otherNodeInputBusIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_node_detach_output_bus(IntPtr pNode, uint outputBusIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_node_detach_all_output_buses(IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_node_set_output_bus_volume(IntPtr pNode, uint outputBusIndex, float volume);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_node_get_output_bus_volume(IntPtr pNode, uint outputBusIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_node_set_state(IntPtr pNode, ma_node_state state);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_node_state ma_node_get_state(IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_node_set_state_time(IntPtr pNode, ma_node_state state, ulong globalTime);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_node_get_state_time(IntPtr pNode, ma_node_state state);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_node_state ma_node_get_state_by_time(IntPtr pNode, ulong globalTime);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_node_state ma_node_get_state_by_time_range(IntPtr pNode, ulong globalTimeBeg, ulong globalTimeEnd);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_node_get_time(IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_node_set_time(IntPtr pNode, ulong localTime);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_node_graph_config ma_node_graph_config_init(uint channels);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_node_graph
+    {
+        public ma_node_base @base;
+        public ma_node_base endpoint;
+        public float* pProcessingCache;
+        public uint processingCacheFramesRemaining;
+        public uint processingSizeInFrames;
+        public ma_uint32 isReading;
+        public IntPtr pPreMixStack;
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_node_graph_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNodeGraph); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_node_graph_uninit(IntPtr pNodeGraph, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_node_graph_get_endpoint(IntPtr pNodeGraph); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_node_graph_read_pcm_frames(IntPtr pNodeGraph, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_node_graph_get_channels(IntPtr pNodeGraph); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_node_graph_get_time(IntPtr pNodeGraph); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_node_graph_set_time(IntPtr pNodeGraph, ulong globalTime); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_node_graph_get_processing_size_in_frames(IntPtr pNodeGraph); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_data_source_node_config ma_data_source_node_config_init(IntPtr pDataSource);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pDataSourceNode); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_data_source_node_uninit(IntPtr pDataSourceNode, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_data_source_node_set_looping(IntPtr pDataSourceNode, ma_uint32 isLooping);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_data_source_node_is_looping(IntPtr pDataSourceNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_splitter_node_config ma_splitter_node_config_init(uint channels);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_splitter_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pSplitterNode); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_splitter_node_uninit(IntPtr pSplitterNode, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_biquad_node_config ma_biquad_node_config_init(uint channels, float b0, float b1, float b2, float a0, float a1, float a2);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_biquad_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_biquad_node_reinit(IntPtr pConfig, IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_biquad_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_lpf_node_config ma_lpf_node_config_init(uint channels, uint sampleRate, double cutoffFrequency, uint order);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_lpf_node_reinit(IntPtr pConfig, IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_lpf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_hpf_node_config ma_hpf_node_config_init(uint channels, uint sampleRate, double cutoffFrequency, uint order);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hpf_node_reinit(IntPtr pConfig, IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_hpf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_bpf_node_config ma_bpf_node_config_init(uint channels, uint sampleRate, double cutoffFrequency, uint order);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_bpf_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_bpf_node_reinit(IntPtr pConfig, IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_bpf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_notch_node_config ma_notch_node_config_init(uint channels, uint sampleRate, double q, double frequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_notch_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_notch_node_reinit(IntPtr pConfig, IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_notch_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_peak_node_config ma_peak_node_config_init(uint channels, uint sampleRate, double gainDB, double q, double frequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_peak_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_peak_node_reinit(IntPtr pConfig, IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_peak_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_loshelf_node_config ma_loshelf_node_config_init(uint channels, uint sampleRate, double gainDB, double q, double frequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_loshelf_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_loshelf_node_reinit(IntPtr pConfig, IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_loshelf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_hishelf_node_config ma_hishelf_node_config_init(uint channels, uint sampleRate, double gainDB, double q, double frequency);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hishelf_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_hishelf_node_reinit(IntPtr pConfig, IntPtr pNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_hishelf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_delay_node_config ma_delay_node_config_init(uint channels, uint sampleRate, uint delayInFrames, float decay);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_delay_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pDelayNode); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_delay_node_uninit(IntPtr pDelayNode, IntPtr pAllocationCallbacks);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_delay_node_set_wet(IntPtr pDelayNode, float value);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_delay_node_get_wet(IntPtr pDelayNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_delay_node_set_dry(IntPtr pDelayNode, float value);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_delay_node_get_dry(IntPtr pDelayNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_delay_node_set_decay(IntPtr pDelayNode, float value);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_delay_node_get_decay(IntPtr pDelayNode);
+
+    public enum ma_sound_flags
+    {
+        MA_SOUND_FLAG_STREAM = 1,
+        MA_SOUND_FLAG_DECODE = 2,
+        MA_SOUND_FLAG_ASYNC = 4,
+        MA_SOUND_FLAG_WAIT_INIT = 8,
+        MA_SOUND_FLAG_UNKNOWN_LENGTH = 16,
+        MA_SOUND_FLAG_LOOPING = 32,
+        MA_SOUND_FLAG_NO_DEFAULT_ATTACHMENT = 4096,
+        MA_SOUND_FLAG_NO_PITCH = 8192,
+        MA_SOUND_FLAG_NO_SPATIALIZATION = 16384,
+    }
+
+    public enum ma_engine_node_type
+    {
+        ma_engine_node_type_sound = 0,
+        ma_engine_node_type_group = 1,
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_engine_node_config ma_engine_node_config_init(IntPtr pEngine, ma_engine_node_type type, uint flags);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_engine_node_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_engine_node_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pEngineNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_engine_node_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pEngineNode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_engine_node_uninit(IntPtr pEngineNode, IntPtr pAllocationCallbacks);
+
+    // public delegate WARN_PLACEHOLDER ma_sound_end_proc();
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_sound_config ma_sound_config_init();
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_sound_config ma_sound_config_init_2(IntPtr pEngine);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_sound
+    {
+        public ma_engine_node engineNode;
+        public IntPtr pDataSource;
+        public ulong seekTarget;
+        public ma_uint32 atEnd;
+        public IntPtr endCallback; // ma_sound_end_proc
+        public IntPtr pEndCallbackUserData;
+        public float* pProcessingCache;
+        public uint processingCacheFramesRemaining;
+        public uint processingCacheCap;
+        public ma_uint8 ownsDataSource;
+        public ma_resource_manager_data_source* pResourceManagerDataSource;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_sound_inlined
+    {
+        public ma_sound sound;
+        public ma_sound_inlined* pNext;
+        public ma_sound_inlined* pPrev;
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_sound_config ma_sound_group_config_init();
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_sound_config ma_sound_group_config_init_2(IntPtr pEngine);
+
+    // public delegate WARN_PLACEHOLDER ma_engine_process_proc();
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_engine_config ma_engine_config_init();
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct ma_engine
+    {
+        public ma_node_graph nodeGraph;
+        public ma_resource_manager* pResourceManager;
+        public ma_device* pDevice;
+        public IntPtr pLog;
+        public uint sampleRate;
+        public uint listenerCount;
+        public ma_spatializer_listener listeners0;
+        public ma_spatializer_listener listeners1;
+        public ma_spatializer_listener listeners2;
+        public ma_spatializer_listener listeners3;
+        public ma_allocation_callbacks allocationCallbacks;
+        public ma_uint8 ownsResourceManager;
+        public ma_uint8 ownsDevice;
+        public ma_uint32 inlinedSoundLock;
+        public ma_sound_inlined* pInlinedSoundHead;
+        public uint inlinedSoundCount;
+        public uint gainSmoothTimeInFrames;
+        public uint defaultVolumeSmoothTimeInPCMFrames;
+        public ma_mono_expansion_mode monoExpansionMode;
+        public IntPtr onProcess; // ma_engine_process_proc
+        public IntPtr pProcessUserData;
+        public ma_resampler_config pitchResamplingConfig;
+    }
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_engine_init(IntPtr pConfig, IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_engine_uninit(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_engine_read_pcm_frames(IntPtr pEngine, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_engine_get_node_graph(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_engine_get_resource_manager(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_engine_get_device(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_engine_get_log(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_engine_get_endpoint(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_engine_get_time_in_pcm_frames(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_engine_get_time_in_milliseconds(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_engine_set_time_in_pcm_frames(IntPtr pEngine, ulong globalTime); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_engine_set_time_in_milliseconds(IntPtr pEngine, ulong globalTime); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_engine_get_time(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_engine_set_time(IntPtr pEngine, ulong globalTime); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_engine_get_channels(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_engine_get_sample_rate(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_engine_start(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_engine_stop(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_engine_set_volume(IntPtr pEngine, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_engine_get_volume(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_engine_set_gain_db(IntPtr pEngine, float gainDB); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_engine_get_gain_db(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_engine_get_listener_count(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_engine_find_closest_listener(IntPtr pEngine, float absolutePosX, float absolutePosY, float absolutePosZ); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_engine_listener_set_position(IntPtr pEngine, uint listenerIndex, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_engine_listener_get_position(IntPtr pEngine, uint listenerIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_engine_listener_set_direction(IntPtr pEngine, uint listenerIndex, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_engine_listener_get_direction(IntPtr pEngine, uint listenerIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_engine_listener_set_velocity(IntPtr pEngine, uint listenerIndex, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_engine_listener_get_velocity(IntPtr pEngine, uint listenerIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_engine_listener_set_cone(IntPtr pEngine, uint listenerIndex, float innerAngleInRadians, float outerAngleInRadians, float outerGain); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_engine_listener_get_cone(IntPtr pEngine, uint listenerIndex, IntPtr pInnerAngleInRadians, IntPtr pOuterAngleInRadians, IntPtr pOuterGain); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_engine_listener_set_world_up(IntPtr pEngine, uint listenerIndex, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_engine_listener_get_world_up(IntPtr pEngine, uint listenerIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_engine_listener_set_enabled(IntPtr pEngine, uint listenerIndex, ma_uint32 isEnabled); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_engine_listener_is_enabled(IntPtr pEngine, uint listenerIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_engine_play_sound_ex(IntPtr pEngine, ref byte pFilePath, IntPtr pNode, uint nodeInputBusIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_engine_play_sound(IntPtr pEngine, ref byte pFilePath, IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_init_from_file(IntPtr pEngine, ref byte pFilePath, uint flags, IntPtr pGroup, IntPtr pDoneFence, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_init_from_file_w(IntPtr pEngine, string pFilePath, uint flags, IntPtr pGroup, IntPtr pDoneFence, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_init_copy(IntPtr pEngine, IntPtr pExistingSound, uint flags, IntPtr pGroup, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_init_from_data_source(IntPtr pEngine, IntPtr pDataSource, uint flags, IntPtr pGroup, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_init_ex(IntPtr pEngine, IntPtr pConfig, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_uninit(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_sound_get_engine(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_sound_get_data_source(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_start(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_stop(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_stop_with_fade_in_pcm_frames(IntPtr pSound, ulong fadeLengthInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_stop_with_fade_in_milliseconds(IntPtr pSound, ulong fadeLengthInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_reset_start_time(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_reset_stop_time(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_reset_fade(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_reset_stop_time_and_fade(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_volume(IntPtr pSound, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_get_volume(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_pan(IntPtr pSound, float pan); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_get_pan(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_pan_mode(IntPtr pSound, ma_pan_mode panMode); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_pan_mode ma_sound_get_pan_mode(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_pitch(IntPtr pSound, float pitch); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_get_pitch(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_spatialization_enabled(IntPtr pSound, ma_uint32 enabled); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_sound_is_spatialization_enabled(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_pinned_listener_index(IntPtr pSound, uint listenerIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_sound_get_pinned_listener_index(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_sound_get_listener_index(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_sound_get_direction_to_listener(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_position(IntPtr pSound, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_sound_get_position(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_direction(IntPtr pSound, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_sound_get_direction(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_velocity(IntPtr pSound, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_sound_get_velocity(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_attenuation_model(IntPtr pSound, ma_attenuation_model attenuationModel); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_attenuation_model ma_sound_get_attenuation_model(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_positioning(IntPtr pSound, ma_positioning positioning); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_positioning ma_sound_get_positioning(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_rolloff(IntPtr pSound, float rolloff); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_get_rolloff(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_min_gain(IntPtr pSound, float minGain); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_get_min_gain(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_max_gain(IntPtr pSound, float maxGain); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_get_max_gain(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_min_distance(IntPtr pSound, float minDistance); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_get_min_distance(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_max_distance(IntPtr pSound, float maxDistance); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_get_max_distance(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_cone(IntPtr pSound, float innerAngleInRadians, float outerAngleInRadians, float outerGain); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_get_cone(IntPtr pSound, IntPtr pInnerAngleInRadians, IntPtr pOuterAngleInRadians, IntPtr pOuterGain); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_doppler_factor(IntPtr pSound, float dopplerFactor); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_get_doppler_factor(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_directional_attenuation_factor(IntPtr pSound, float directionalAttenuationFactor); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_get_directional_attenuation_factor(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_fade_in_pcm_frames(IntPtr pSound, float volumeBeg, float volumeEnd, ulong fadeLengthInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_fade_in_milliseconds(IntPtr pSound, float volumeBeg, float volumeEnd, ulong fadeLengthInMilliseconds); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_fade_start_in_pcm_frames(IntPtr pSound, float volumeBeg, float volumeEnd, ulong fadeLengthInFrames, ulong absoluteGlobalTimeInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_fade_start_in_milliseconds(IntPtr pSound, float volumeBeg, float volumeEnd, ulong fadeLengthInMilliseconds, ulong absoluteGlobalTimeInMilliseconds); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_get_current_fade_volume(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_start_time_in_pcm_frames(IntPtr pSound, ulong absoluteGlobalTimeInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_start_time_in_milliseconds(IntPtr pSound, ulong absoluteGlobalTimeInMilliseconds); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_stop_time_in_pcm_frames(IntPtr pSound, ulong absoluteGlobalTimeInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_stop_time_in_milliseconds(IntPtr pSound, ulong absoluteGlobalTimeInMilliseconds); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_stop_time_with_fade_in_pcm_frames(IntPtr pSound, ulong stopAbsoluteGlobalTimeInFrames, ulong fadeLengthInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_stop_time_with_fade_in_milliseconds(IntPtr pSound, ulong stopAbsoluteGlobalTimeInMilliseconds, ulong fadeLengthInMilliseconds); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_sound_is_playing(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_sound_get_time_in_pcm_frames(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_sound_get_time_in_milliseconds(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_set_looping(IntPtr pSound, ma_uint32 isLooping); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_sound_is_looping(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_sound_at_end(IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_seek_to_pcm_frame(IntPtr pSound, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_seek_to_second(IntPtr pSound, float seekPointInSeconds); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_get_data_format(IntPtr pSound, IntPtr pFormat, IntPtr pChannels, IntPtr pSampleRate, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_get_cursor_in_pcm_frames(IntPtr pSound, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_get_length_in_pcm_frames(IntPtr pSound, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_get_cursor_in_seconds(IntPtr pSound, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_get_length_in_seconds(IntPtr pSound, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_set_end_callback(IntPtr pSound, ma_sound_end_proc callback, IntPtr pUserData); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_group_init(IntPtr pEngine, uint flags, IntPtr pParentGroup, IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_group_init_ex(IntPtr pEngine, IntPtr pConfig, IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_uninit(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial IntPtr ma_sound_group_get_engine(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_group_start(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_result ma_sound_group_stop(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_volume(IntPtr pGroup, float volume);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_group_get_volume(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_pan(IntPtr pGroup, float pan);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_group_get_pan(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_pan_mode(IntPtr pGroup, ma_pan_mode panMode);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_pan_mode ma_sound_group_get_pan_mode(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_pitch(IntPtr pGroup, float pitch);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_group_get_pitch(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_spatialization_enabled(IntPtr pGroup, ma_uint32 enabled);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_sound_group_is_spatialization_enabled(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_pinned_listener_index(IntPtr pGroup, uint listenerIndex);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_sound_group_get_pinned_listener_index(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial uint ma_sound_group_get_listener_index(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_sound_group_get_direction_to_listener(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_position(IntPtr pGroup, float x, float y, float z);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_sound_group_get_position(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_direction(IntPtr pGroup, float x, float y, float z);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_sound_group_get_direction(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_velocity(IntPtr pGroup, float x, float y, float z);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_vec3f ma_sound_group_get_velocity(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_attenuation_model(IntPtr pGroup, ma_attenuation_model attenuationModel);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_attenuation_model ma_sound_group_get_attenuation_model(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_positioning(IntPtr pGroup, ma_positioning positioning);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_positioning ma_sound_group_get_positioning(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_rolloff(IntPtr pGroup, float rolloff);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_group_get_rolloff(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_min_gain(IntPtr pGroup, float minGain);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_group_get_min_gain(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_max_gain(IntPtr pGroup, float maxGain);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_group_get_max_gain(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_min_distance(IntPtr pGroup, float minDistance);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_group_get_min_distance(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_max_distance(IntPtr pGroup, float maxDistance);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_group_get_max_distance(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_cone(IntPtr pGroup, float innerAngleInRadians, float outerAngleInRadians, float outerGain);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_get_cone(IntPtr pGroup, IntPtr pInnerAngleInRadians, IntPtr pOuterAngleInRadians, IntPtr pOuterGain); // WARN_UNKNOWN_POINTER_PARAMETER
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_doppler_factor(IntPtr pGroup, float dopplerFactor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_group_get_doppler_factor(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_directional_attenuation_factor(IntPtr pGroup, float directionalAttenuationFactor);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_group_get_directional_attenuation_factor(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_fade_in_pcm_frames(IntPtr pGroup, float volumeBeg, float volumeEnd, ulong fadeLengthInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_fade_in_milliseconds(IntPtr pGroup, float volumeBeg, float volumeEnd, ulong fadeLengthInMilliseconds);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial float ma_sound_group_get_current_fade_volume(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_start_time_in_pcm_frames(IntPtr pGroup, ulong absoluteGlobalTimeInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_start_time_in_milliseconds(IntPtr pGroup, ulong absoluteGlobalTimeInMilliseconds);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_stop_time_in_pcm_frames(IntPtr pGroup, ulong absoluteGlobalTimeInFrames);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial void ma_sound_group_set_stop_time_in_milliseconds(IntPtr pGroup, ulong absoluteGlobalTimeInMilliseconds);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ma_uint32 ma_sound_group_is_playing(IntPtr pGroup);
+
+    [LibraryImport(nativeLibName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
+    public static partial ulong ma_sound_group_get_time_in_pcm_frames(IntPtr pGroup);
+
+
+}
