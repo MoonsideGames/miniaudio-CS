@@ -354,7 +354,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_version(ref uint pMajor, ref uint pMinor, ref uint pRevision); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_version(IntPtr pMajor, IntPtr pMinor, IntPtr pRevision); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -391,27 +391,27 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_log_init(ref ma_allocation_callbacks pAllocationCallbacks, ref ma_log pLog); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_log_init(IntPtr pAllocationCallbacks, IntPtr pLog); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_log_uninit(ref ma_log pLog); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_log_uninit(IntPtr pLog); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_log_register_callback(ref ma_log pLog, ma_log_callback callback); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_log_register_callback(IntPtr pLog, ma_log_callback callback); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_log_unregister_callback(ref ma_log pLog, ma_log_callback callback); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_log_unregister_callback(IntPtr pLog, ma_log_callback callback); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_log_post(ref ma_log pLog, uint level, IntPtr pMessage); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_log_post(IntPtr pLog, uint level, IntPtr pMessage); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_log_postf(ref ma_log pLog, uint level, IntPtr pFormat); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_log_postf(IntPtr pLog, uint level, IntPtr pFormat); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Explicit)]
     public struct ma_biquad_coefficient
@@ -502,35 +502,35 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_biquad_get_heap_size(ref ma_biquad_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_biquad_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_biquad_init_preallocated(ref ma_biquad_config pConfig, IntPtr pHeap, ref ma_biquad pBQ); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_biquad_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pBQ); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_biquad_init(ref ma_biquad_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_biquad pBQ); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_biquad_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pBQ); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_biquad_uninit(ref ma_biquad pBQ, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_biquad_uninit(IntPtr pBQ, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_biquad_reinit(ref ma_biquad_config pConfig, ref ma_biquad pBQ); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_biquad_reinit(IntPtr pConfig, IntPtr pBQ); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_biquad_clear_cache(ref ma_biquad pBQ); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_biquad_clear_cache(IntPtr pBQ); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_biquad_process_pcm_frames(ref ma_biquad pBQ, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_biquad_process_pcm_frames(IntPtr pBQ, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_biquad_get_latency(ref ma_biquad pBQ); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_biquad_get_latency(IntPtr pBQ); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_lpf1_config
@@ -582,35 +582,35 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf1_get_heap_size(ref ma_lpf1_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf1_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf1_init_preallocated(ref ma_lpf1_config pConfig, IntPtr pHeap, ref ma_lpf1 pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf1_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf1_init(ref ma_lpf1_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_lpf1 pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf1_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_lpf1_uninit(ref ma_lpf1 pLPF, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_lpf1_uninit(IntPtr pLPF, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf1_reinit(ref ma_lpf1_config pConfig, ref ma_lpf1 pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf1_reinit(IntPtr pConfig, IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf1_clear_cache(ref ma_lpf1 pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf1_clear_cache(IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf1_process_pcm_frames(ref ma_lpf1 pLPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf1_process_pcm_frames(IntPtr pLPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_lpf1_get_latency(ref ma_lpf1 pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_lpf1_get_latency(IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_lpf2
@@ -620,35 +620,35 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf2_get_heap_size(ref ma_lpf1_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf2_init_preallocated(ref ma_lpf1_config pConfig, IntPtr pHeap, ref ma_lpf2 pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf2_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf2_init(ref ma_lpf1_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_lpf2 pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf2_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_lpf2_uninit(ref ma_lpf2 pLPF, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_lpf2_uninit(IntPtr pLPF, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf2_reinit(ref ma_lpf1_config pConfig, ref ma_lpf2 pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf2_reinit(IntPtr pConfig, IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf2_clear_cache(ref ma_lpf2 pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf2_clear_cache(IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf2_process_pcm_frames(ref ma_lpf2 pLPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf2_process_pcm_frames(IntPtr pLPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_lpf2_get_latency(ref ma_lpf2 pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_lpf2_get_latency(IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_lpf_config
@@ -680,35 +680,35 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf_get_heap_size(ref ma_lpf_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf_init_preallocated(ref ma_lpf_config pConfig, IntPtr pHeap, ref ma_lpf pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf_init(ref ma_lpf_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_lpf pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_lpf_uninit(ref ma_lpf pLPF, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_lpf_uninit(IntPtr pLPF, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf_reinit(ref ma_lpf_config pConfig, ref ma_lpf pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf_reinit(IntPtr pConfig, IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf_clear_cache(ref ma_lpf pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf_clear_cache(IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf_process_pcm_frames(ref ma_lpf pLPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf_process_pcm_frames(IntPtr pLPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_lpf_get_latency(ref ma_lpf pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_lpf_get_latency(IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_hpf1_config
@@ -760,31 +760,31 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf1_get_heap_size(ref ma_hpf1_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf1_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf1_init_preallocated(ref ma_hpf1_config pConfig, IntPtr pHeap, ref ma_hpf1 pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf1_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf1_init(ref ma_hpf1_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_hpf1 pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf1_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_hpf1_uninit(ref ma_hpf1 pHPF, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_hpf1_uninit(IntPtr pHPF, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf1_reinit(ref ma_hpf1_config pConfig, ref ma_hpf1 pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf1_reinit(IntPtr pConfig, IntPtr pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf1_process_pcm_frames(ref ma_hpf1 pHPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf1_process_pcm_frames(IntPtr pHPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_hpf1_get_latency(ref ma_hpf1 pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_hpf1_get_latency(IntPtr pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_hpf2
@@ -794,31 +794,31 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf2_get_heap_size(ref ma_hpf1_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf2_init_preallocated(ref ma_hpf1_config pConfig, IntPtr pHeap, ref ma_hpf2 pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf2_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf2_init(ref ma_hpf1_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_hpf2 pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf2_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_hpf2_uninit(ref ma_hpf2 pHPF, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_hpf2_uninit(IntPtr pHPF, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf2_reinit(ref ma_hpf1_config pConfig, ref ma_hpf2 pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf2_reinit(IntPtr pConfig, IntPtr pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf2_process_pcm_frames(ref ma_hpf2 pHPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf2_process_pcm_frames(IntPtr pHPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_hpf2_get_latency(ref ma_hpf2 pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_hpf2_get_latency(IntPtr pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_hpf_config
@@ -850,31 +850,31 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf_get_heap_size(ref ma_hpf_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf_init_preallocated(ref ma_hpf_config pConfig, IntPtr pHeap, ref ma_hpf pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pLPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf_init(ref ma_hpf_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_hpf pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_hpf_uninit(ref ma_hpf pHPF, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_hpf_uninit(IntPtr pHPF, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf_reinit(ref ma_hpf_config pConfig, ref ma_hpf pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf_reinit(IntPtr pConfig, IntPtr pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf_process_pcm_frames(ref ma_hpf pHPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf_process_pcm_frames(IntPtr pHPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_hpf_get_latency(ref ma_hpf pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_hpf_get_latency(IntPtr pHPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_bpf2_config
@@ -898,31 +898,31 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_bpf2_get_heap_size(ref ma_bpf2_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_bpf2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_bpf2_init_preallocated(ref ma_bpf2_config pConfig, IntPtr pHeap, ref ma_bpf2 pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_bpf2_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_bpf2_init(ref ma_bpf2_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_bpf2 pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_bpf2_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_bpf2_uninit(ref ma_bpf2 pBPF, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_bpf2_uninit(IntPtr pBPF, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_bpf2_reinit(ref ma_bpf2_config pConfig, ref ma_bpf2 pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_bpf2_reinit(IntPtr pConfig, IntPtr pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_bpf2_process_pcm_frames(ref ma_bpf2 pBPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_bpf2_process_pcm_frames(IntPtr pBPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_bpf2_get_latency(ref ma_bpf2 pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_bpf2_get_latency(IntPtr pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_bpf_config
@@ -951,31 +951,31 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_bpf_get_heap_size(ref ma_bpf_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_bpf_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_bpf_init_preallocated(ref ma_bpf_config pConfig, IntPtr pHeap, ref ma_bpf pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_bpf_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_bpf_init(ref ma_bpf_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_bpf pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_bpf_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_bpf_uninit(ref ma_bpf pBPF, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_bpf_uninit(IntPtr pBPF, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_bpf_reinit(ref ma_bpf_config pConfig, ref ma_bpf pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_bpf_reinit(IntPtr pConfig, IntPtr pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_bpf_process_pcm_frames(ref ma_bpf pBPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_bpf_process_pcm_frames(IntPtr pBPF, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_bpf_get_latency(ref ma_bpf pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_bpf_get_latency(IntPtr pBPF); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_notch2_config
@@ -1009,31 +1009,31 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_notch2_get_heap_size(ref ma_notch2_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_notch2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_notch2_init_preallocated(ref ma_notch2_config pConfig, IntPtr pHeap, ref ma_notch2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_notch2_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_notch2_init(ref ma_notch2_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_notch2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_notch2_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_notch2_uninit(ref ma_notch2 pFilter, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_notch2_uninit(IntPtr pFilter, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_notch2_reinit(ref ma_notch2_config pConfig, ref ma_notch2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_notch2_reinit(IntPtr pConfig, IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_notch2_process_pcm_frames(ref ma_notch2 pFilter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_notch2_process_pcm_frames(IntPtr pFilter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_notch2_get_latency(ref ma_notch2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_notch2_get_latency(IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_peak2_config
@@ -1069,31 +1069,31 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_peak2_get_heap_size(ref ma_peak2_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_peak2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_peak2_init_preallocated(ref ma_peak2_config pConfig, IntPtr pHeap, ref ma_peak2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_peak2_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_peak2_init(ref ma_peak2_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_peak2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_peak2_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_peak2_uninit(ref ma_peak2 pFilter, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_peak2_uninit(IntPtr pFilter, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_peak2_reinit(ref ma_peak2_config pConfig, ref ma_peak2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_peak2_reinit(IntPtr pConfig, IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_peak2_process_pcm_frames(ref ma_peak2 pFilter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_peak2_process_pcm_frames(IntPtr pFilter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_peak2_get_latency(ref ma_peak2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_peak2_get_latency(IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_loshelf2_config
@@ -1129,31 +1129,31 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_loshelf2_get_heap_size(ref ma_loshelf2_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_loshelf2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_loshelf2_init_preallocated(ref ma_loshelf2_config pConfig, IntPtr pHeap, ref ma_loshelf2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_loshelf2_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_loshelf2_init(ref ma_loshelf2_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_loshelf2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_loshelf2_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_loshelf2_uninit(ref ma_loshelf2 pFilter, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_loshelf2_uninit(IntPtr pFilter, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_loshelf2_reinit(ref ma_loshelf2_config pConfig, ref ma_loshelf2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_loshelf2_reinit(IntPtr pConfig, IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_loshelf2_process_pcm_frames(ref ma_loshelf2 pFilter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_loshelf2_process_pcm_frames(IntPtr pFilter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_loshelf2_get_latency(ref ma_loshelf2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_loshelf2_get_latency(IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_hishelf2_config
@@ -1189,31 +1189,31 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hishelf2_get_heap_size(ref ma_hishelf2_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hishelf2_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hishelf2_init_preallocated(ref ma_hishelf2_config pConfig, IntPtr pHeap, ref ma_hishelf2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hishelf2_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hishelf2_init(ref ma_hishelf2_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_hishelf2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hishelf2_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_hishelf2_uninit(ref ma_hishelf2 pFilter, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_hishelf2_uninit(IntPtr pFilter, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hishelf2_reinit(ref ma_hishelf2_config pConfig, ref ma_hishelf2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hishelf2_reinit(IntPtr pConfig, IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hishelf2_process_pcm_frames(ref ma_hishelf2 pFilter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hishelf2_process_pcm_frames(IntPtr pFilter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_hishelf2_get_latency(ref ma_hishelf2 pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_hishelf2_get_latency(IntPtr pFilter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_delay_config
@@ -1242,39 +1242,39 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_delay_init(ref ma_delay_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_delay pDelay); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_delay_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pDelay); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_delay_uninit(ref ma_delay pDelay, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_delay_uninit(IntPtr pDelay, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_delay_process_pcm_frames(ref ma_delay pDelay, IntPtr pFramesOut, IntPtr pFramesIn, uint frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_delay_process_pcm_frames(IntPtr pDelay, IntPtr pFramesOut, IntPtr pFramesIn, uint frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_delay_set_wet(ref ma_delay pDelay, float value); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_delay_set_wet(IntPtr pDelay, float value); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_delay_get_wet(ref ma_delay pDelay); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_delay_get_wet(IntPtr pDelay); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_delay_set_dry(ref ma_delay pDelay, float value); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_delay_set_dry(IntPtr pDelay, float value); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_delay_get_dry(ref ma_delay pDelay); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_delay_get_dry(IntPtr pDelay); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_delay_set_decay(ref ma_delay pDelay, float value); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_delay_set_decay(IntPtr pDelay, float value); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_delay_get_decay(ref ma_delay pDelay); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_delay_get_decay(IntPtr pDelay); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_gainer_config
@@ -1301,39 +1301,39 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_gainer_get_heap_size(ref ma_gainer_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_gainer_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_gainer_init_preallocated(ref ma_gainer_config pConfig, IntPtr pHeap, ref ma_gainer pGainer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_gainer_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pGainer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_gainer_init(ref ma_gainer_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_gainer pGainer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_gainer_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pGainer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_gainer_uninit(ref ma_gainer pGainer, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_gainer_uninit(IntPtr pGainer, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_gainer_process_pcm_frames(ref ma_gainer pGainer, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_gainer_process_pcm_frames(IntPtr pGainer, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_gainer_set_gain(ref ma_gainer pGainer, float newGain); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_gainer_set_gain(IntPtr pGainer, float newGain); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_gainer_set_gains(ref ma_gainer pGainer, IntPtr pNewGains); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_gainer_set_gains(IntPtr pGainer, IntPtr pNewGains); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_gainer_set_master_volume(ref ma_gainer pGainer, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_gainer_set_master_volume(IntPtr pGainer, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_gainer_get_master_volume(ref ma_gainer pGainer, IntPtr pVolume); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_gainer_get_master_volume(IntPtr pGainer, IntPtr pVolume); // WARN_UNKNOWN_POINTER_PARAMETER
 
     public enum ma_pan_mode
     {
@@ -1365,27 +1365,27 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_panner_init(ref ma_panner_config pConfig, ref ma_panner pPanner); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_panner_init(IntPtr pConfig, IntPtr pPanner); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_panner_process_pcm_frames(ref ma_panner pPanner, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_panner_process_pcm_frames(IntPtr pPanner, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_panner_set_mode(ref ma_panner pPanner, ma_pan_mode mode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_panner_set_mode(IntPtr pPanner, ma_pan_mode mode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_pan_mode ma_panner_get_mode(ref ma_panner pPanner); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_pan_mode ma_panner_get_mode(IntPtr pPanner); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_panner_set_pan(ref ma_panner pPanner, float pan); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_panner_set_pan(IntPtr pPanner, float pan); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_panner_get_pan(ref ma_panner pPanner); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_panner_get_pan(IntPtr pPanner); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_fader_config
@@ -1411,27 +1411,27 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_fader_init(ref ma_fader_config pConfig, ref ma_fader pFader); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_fader_init(IntPtr pConfig, IntPtr pFader); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_fader_process_pcm_frames(ref ma_fader pFader, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_fader_process_pcm_frames(IntPtr pFader, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_fader_get_data_format(ref ma_fader pFader, IntPtr pFormat, ref uint pChannels, ref uint pSampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_fader_get_data_format(IntPtr pFader, IntPtr pFormat, IntPtr pChannels, IntPtr pSampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_fader_set_fade(ref ma_fader pFader, float volumeBeg, float volumeEnd, ulong lengthInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_fader_set_fade(IntPtr pFader, float volumeBeg, float volumeEnd, ulong lengthInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_fader_set_fade_ex(ref ma_fader pFader, float volumeBeg, float volumeEnd, ulong lengthInFrames, long startOffsetInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_fader_set_fade_ex(IntPtr pFader, float volumeBeg, float volumeEnd, ulong lengthInFrames, long startOffsetInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_fader_get_current_volume(ref ma_fader pFader); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_fader_get_current_volume(IntPtr pFader); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_vec3f
@@ -1499,79 +1499,79 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_spatializer_listener_get_heap_size(ref ma_spatializer_listener_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_spatializer_listener_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_spatializer_listener_init_preallocated(ref ma_spatializer_listener_config pConfig, IntPtr pHeap, ref ma_spatializer_listener pListener); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_spatializer_listener_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pListener); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_spatializer_listener_init(ref ma_spatializer_listener_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_spatializer_listener pListener); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_spatializer_listener_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pListener); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_listener_uninit(ref ma_spatializer_listener pListener, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_listener_uninit(IntPtr pListener, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial byte* ma_spatializer_listener_get_channel_map(ref ma_spatializer_listener pListener); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_spatializer_listener_get_channel_map(IntPtr pListener); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_listener_set_cone(ref ma_spatializer_listener pListener, float innerAngleInRadians, float outerAngleInRadians, float outerGain); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_listener_set_cone(IntPtr pListener, float innerAngleInRadians, float outerAngleInRadians, float outerGain); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_listener_get_cone(ref ma_spatializer_listener pListener, IntPtr pInnerAngleInRadians, IntPtr pOuterAngleInRadians, IntPtr pOuterGain); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_listener_get_cone(IntPtr pListener, IntPtr pInnerAngleInRadians, IntPtr pOuterAngleInRadians, IntPtr pOuterGain); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_listener_set_position(ref ma_spatializer_listener pListener, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_listener_set_position(IntPtr pListener, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_vec3f ma_spatializer_listener_get_position(ref ma_spatializer_listener pListener); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_vec3f ma_spatializer_listener_get_position(IntPtr pListener); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_listener_set_direction(ref ma_spatializer_listener pListener, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_listener_set_direction(IntPtr pListener, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_vec3f ma_spatializer_listener_get_direction(ref ma_spatializer_listener pListener); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_vec3f ma_spatializer_listener_get_direction(IntPtr pListener); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_listener_set_velocity(ref ma_spatializer_listener pListener, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_listener_set_velocity(IntPtr pListener, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_vec3f ma_spatializer_listener_get_velocity(ref ma_spatializer_listener pListener); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_vec3f ma_spatializer_listener_get_velocity(IntPtr pListener); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_listener_set_speed_of_sound(ref ma_spatializer_listener pListener, float speedOfSound); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_listener_set_speed_of_sound(IntPtr pListener, float speedOfSound); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_spatializer_listener_get_speed_of_sound(ref ma_spatializer_listener pListener); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_spatializer_listener_get_speed_of_sound(IntPtr pListener); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_listener_set_world_up(ref ma_spatializer_listener pListener, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_listener_set_world_up(IntPtr pListener, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_vec3f ma_spatializer_listener_get_world_up(ref ma_spatializer_listener pListener); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_vec3f ma_spatializer_listener_get_world_up(IntPtr pListener); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_listener_set_enabled(ref ma_spatializer_listener pListener, uint isEnabled); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_listener_set_enabled(IntPtr pListener, uint isEnabled); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_spatializer_listener_is_enabled(ref ma_spatializer_listener pListener); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_spatializer_listener_is_enabled(IntPtr pListener); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_spatializer_config
@@ -1633,147 +1633,147 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_spatializer_get_heap_size(ref ma_spatializer_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_spatializer_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_spatializer_init_preallocated(ref ma_spatializer_config pConfig, IntPtr pHeap, ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_spatializer_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_spatializer_init(ref ma_spatializer_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_spatializer_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_uninit(ref ma_spatializer pSpatializer, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_uninit(IntPtr pSpatializer, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_spatializer_process_pcm_frames(ref ma_spatializer pSpatializer, ref ma_spatializer_listener pListener, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_spatializer_process_pcm_frames(IntPtr pSpatializer, IntPtr pListener, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_spatializer_set_master_volume(ref ma_spatializer pSpatializer, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_spatializer_set_master_volume(IntPtr pSpatializer, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_spatializer_get_master_volume(ref ma_spatializer pSpatializer, IntPtr pVolume); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_spatializer_get_master_volume(IntPtr pSpatializer, IntPtr pVolume); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_spatializer_get_input_channels(ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_spatializer_get_input_channels(IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_spatializer_get_output_channels(ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_spatializer_get_output_channels(IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_set_attenuation_model(ref ma_spatializer pSpatializer, ma_attenuation_model attenuationModel); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_set_attenuation_model(IntPtr pSpatializer, ma_attenuation_model attenuationModel); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_attenuation_model ma_spatializer_get_attenuation_model(ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_attenuation_model ma_spatializer_get_attenuation_model(IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_set_positioning(ref ma_spatializer pSpatializer, ma_positioning positioning); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_set_positioning(IntPtr pSpatializer, ma_positioning positioning); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_positioning ma_spatializer_get_positioning(ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_positioning ma_spatializer_get_positioning(IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_set_rolloff(ref ma_spatializer pSpatializer, float rolloff); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_set_rolloff(IntPtr pSpatializer, float rolloff); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_spatializer_get_rolloff(ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_spatializer_get_rolloff(IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_set_min_gain(ref ma_spatializer pSpatializer, float minGain); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_set_min_gain(IntPtr pSpatializer, float minGain); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_spatializer_get_min_gain(ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_spatializer_get_min_gain(IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_set_max_gain(ref ma_spatializer pSpatializer, float maxGain); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_set_max_gain(IntPtr pSpatializer, float maxGain); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_spatializer_get_max_gain(ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_spatializer_get_max_gain(IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_set_min_distance(ref ma_spatializer pSpatializer, float minDistance); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_set_min_distance(IntPtr pSpatializer, float minDistance); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_spatializer_get_min_distance(ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_spatializer_get_min_distance(IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_set_max_distance(ref ma_spatializer pSpatializer, float maxDistance); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_set_max_distance(IntPtr pSpatializer, float maxDistance); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_spatializer_get_max_distance(ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_spatializer_get_max_distance(IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_set_cone(ref ma_spatializer pSpatializer, float innerAngleInRadians, float outerAngleInRadians, float outerGain); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_set_cone(IntPtr pSpatializer, float innerAngleInRadians, float outerAngleInRadians, float outerGain); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_get_cone(ref ma_spatializer pSpatializer, IntPtr pInnerAngleInRadians, IntPtr pOuterAngleInRadians, IntPtr pOuterGain); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_get_cone(IntPtr pSpatializer, IntPtr pInnerAngleInRadians, IntPtr pOuterAngleInRadians, IntPtr pOuterGain); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_set_doppler_factor(ref ma_spatializer pSpatializer, float dopplerFactor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_set_doppler_factor(IntPtr pSpatializer, float dopplerFactor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_spatializer_get_doppler_factor(ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_spatializer_get_doppler_factor(IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_set_directional_attenuation_factor(ref ma_spatializer pSpatializer, float directionalAttenuationFactor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_set_directional_attenuation_factor(IntPtr pSpatializer, float directionalAttenuationFactor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_spatializer_get_directional_attenuation_factor(ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_spatializer_get_directional_attenuation_factor(IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_set_position(ref ma_spatializer pSpatializer, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_set_position(IntPtr pSpatializer, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_vec3f ma_spatializer_get_position(ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_vec3f ma_spatializer_get_position(IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_set_direction(ref ma_spatializer pSpatializer, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_set_direction(IntPtr pSpatializer, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_vec3f ma_spatializer_get_direction(ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_vec3f ma_spatializer_get_direction(IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_set_velocity(ref ma_spatializer pSpatializer, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_set_velocity(IntPtr pSpatializer, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_vec3f ma_spatializer_get_velocity(ref ma_spatializer pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_vec3f ma_spatializer_get_velocity(IntPtr pSpatializer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_spatializer_get_relative_position_and_direction(ref ma_spatializer pSpatializer, ref ma_spatializer_listener pListener, ref ma_vec3f pRelativePos, ref ma_vec3f pRelativeDir); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_spatializer_get_relative_position_and_direction(IntPtr pSpatializer, IntPtr pListener, IntPtr pRelativePos, IntPtr pRelativeDir); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_linear_resampler_config
@@ -1825,51 +1825,51 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_linear_resampler_get_heap_size(ref ma_linear_resampler_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_linear_resampler_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_linear_resampler_init_preallocated(ref ma_linear_resampler_config pConfig, IntPtr pHeap, ref ma_linear_resampler pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_linear_resampler_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_linear_resampler_init(ref ma_linear_resampler_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_linear_resampler pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_linear_resampler_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_linear_resampler_uninit(ref ma_linear_resampler pResampler, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_linear_resampler_uninit(IntPtr pResampler, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_linear_resampler_process_pcm_frames(ref ma_linear_resampler pResampler, IntPtr pFramesIn, ref ulong pFrameCountIn, IntPtr pFramesOut, ref ulong pFrameCountOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_linear_resampler_process_pcm_frames(IntPtr pResampler, IntPtr pFramesIn, IntPtr pFrameCountIn, IntPtr pFramesOut, IntPtr pFrameCountOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_linear_resampler_set_rate(ref ma_linear_resampler pResampler, uint sampleRateIn, uint sampleRateOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_linear_resampler_set_rate(IntPtr pResampler, uint sampleRateIn, uint sampleRateOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_linear_resampler_set_rate_ratio(ref ma_linear_resampler pResampler, float ratioInOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_linear_resampler_set_rate_ratio(IntPtr pResampler, float ratioInOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ulong ma_linear_resampler_get_input_latency(ref ma_linear_resampler pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ulong ma_linear_resampler_get_input_latency(IntPtr pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ulong ma_linear_resampler_get_output_latency(ref ma_linear_resampler pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ulong ma_linear_resampler_get_output_latency(IntPtr pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_linear_resampler_get_required_input_frame_count(ref ma_linear_resampler pResampler, ulong outputFrameCount, ref ulong pInputFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_linear_resampler_get_required_input_frame_count(IntPtr pResampler, ulong outputFrameCount, IntPtr pInputFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_linear_resampler_get_expected_output_frame_count(ref ma_linear_resampler pResampler, ulong inputFrameCount, ref ulong pOutputFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_linear_resampler_get_expected_output_frame_count(IntPtr pResampler, ulong inputFrameCount, IntPtr pOutputFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_linear_resampler_reset(ref ma_linear_resampler pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_linear_resampler_reset(IntPtr pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_resampling_backend_vtable
@@ -1943,47 +1943,47 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resampler_init_preallocated(IntPtr pConfig, IntPtr pHeap, ref ma_resampler pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resampler_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resampler_init(IntPtr pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_resampler pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resampler_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_resampler_uninit(ref ma_resampler pResampler, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_resampler_uninit(IntPtr pResampler, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resampler_process_pcm_frames(ref ma_resampler pResampler, IntPtr pFramesIn, ref ulong pFrameCountIn, IntPtr pFramesOut, ref ulong pFrameCountOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resampler_process_pcm_frames(IntPtr pResampler, IntPtr pFramesIn, IntPtr pFrameCountIn, IntPtr pFramesOut, IntPtr pFrameCountOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resampler_set_rate(ref ma_resampler pResampler, uint sampleRateIn, uint sampleRateOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resampler_set_rate(IntPtr pResampler, uint sampleRateIn, uint sampleRateOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resampler_set_rate_ratio(ref ma_resampler pResampler, float ratio); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resampler_set_rate_ratio(IntPtr pResampler, float ratio); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ulong ma_resampler_get_input_latency(ref ma_resampler pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ulong ma_resampler_get_input_latency(IntPtr pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ulong ma_resampler_get_output_latency(ref ma_resampler pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ulong ma_resampler_get_output_latency(IntPtr pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resampler_get_required_input_frame_count(ref ma_resampler pResampler, ulong outputFrameCount, ref ulong pInputFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resampler_get_required_input_frame_count(IntPtr pResampler, ulong outputFrameCount, IntPtr pInputFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resampler_get_expected_output_frame_count(ref ma_resampler pResampler, ulong inputFrameCount, ref ulong pOutputFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resampler_get_expected_output_frame_count(IntPtr pResampler, ulong inputFrameCount, IntPtr pOutputFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resampler_reset(ref ma_resampler pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resampler_reset(IntPtr pResampler); // WARN_UNKNOWN_POINTER_PARAMETER
 
     public enum ma_channel_conversion_path
     {
@@ -2018,7 +2018,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_channel_converter_config ma_channel_converter_config_init(ma_format format, uint channelsIn, ref byte pChannelMapIn, uint channelsOut, ref byte pChannelMapOut, ma_channel_mix_mode mixingMode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_channel_converter_config ma_channel_converter_config_init(ma_format format, uint channelsIn, IntPtr pChannelMapIn, uint channelsOut, IntPtr pChannelMapOut, ma_channel_mix_mode mixingMode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_channel_converter
@@ -2047,31 +2047,31 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_channel_converter_get_heap_size(ref ma_channel_converter_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_channel_converter_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_channel_converter_init_preallocated(ref ma_channel_converter_config pConfig, IntPtr pHeap, ref ma_channel_converter pConverter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_channel_converter_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pConverter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_channel_converter_init(ref ma_channel_converter_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_channel_converter pConverter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_channel_converter_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pConverter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_channel_converter_uninit(ref ma_channel_converter pConverter, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_channel_converter_uninit(IntPtr pConverter, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_channel_converter_process_pcm_frames(ref ma_channel_converter pConverter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_channel_converter_process_pcm_frames(IntPtr pConverter, IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_channel_converter_get_input_channel_map(ref ma_channel_converter pConverter, ref byte pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_channel_converter_get_input_channel_map(IntPtr pConverter, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_channel_converter_get_output_channel_map(ref ma_channel_converter pConverter, ref byte pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_channel_converter_get_output_channel_map(IntPtr pConverter, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_data_converter_config
@@ -2134,59 +2134,59 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_converter_get_heap_size(ref ma_data_converter_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_converter_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_converter_init_preallocated(ref ma_data_converter_config pConfig, IntPtr pHeap, ref ma_data_converter pConverter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_converter_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pConverter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_converter_init(ref ma_data_converter_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_data_converter pConverter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_converter_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pConverter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_data_converter_uninit(ref ma_data_converter pConverter, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_data_converter_uninit(IntPtr pConverter, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_converter_process_pcm_frames(ref ma_data_converter pConverter, IntPtr pFramesIn, ref ulong pFrameCountIn, IntPtr pFramesOut, ref ulong pFrameCountOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_converter_process_pcm_frames(IntPtr pConverter, IntPtr pFramesIn, IntPtr pFrameCountIn, IntPtr pFramesOut, IntPtr pFrameCountOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_converter_set_rate(ref ma_data_converter pConverter, uint sampleRateIn, uint sampleRateOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_converter_set_rate(IntPtr pConverter, uint sampleRateIn, uint sampleRateOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_converter_set_rate_ratio(ref ma_data_converter pConverter, float ratioInOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_converter_set_rate_ratio(IntPtr pConverter, float ratioInOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ulong ma_data_converter_get_input_latency(ref ma_data_converter pConverter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ulong ma_data_converter_get_input_latency(IntPtr pConverter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ulong ma_data_converter_get_output_latency(ref ma_data_converter pConverter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ulong ma_data_converter_get_output_latency(IntPtr pConverter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_converter_get_required_input_frame_count(ref ma_data_converter pConverter, ulong outputFrameCount, ref ulong pInputFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_converter_get_required_input_frame_count(IntPtr pConverter, ulong outputFrameCount, IntPtr pInputFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_converter_get_expected_output_frame_count(ref ma_data_converter pConverter, ulong inputFrameCount, ref ulong pOutputFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_converter_get_expected_output_frame_count(IntPtr pConverter, ulong inputFrameCount, IntPtr pOutputFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_converter_get_input_channel_map(ref ma_data_converter pConverter, ref byte pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_converter_get_input_channel_map(IntPtr pConverter, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_converter_get_output_channel_map(ref ma_data_converter pConverter, ref byte pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_converter_get_output_channel_map(IntPtr pConverter, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_converter_reset(ref ma_data_converter pConverter); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_converter_reset(IntPtr pConverter); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2286,47 +2286,47 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial byte ma_channel_map_get_channel(ref byte pChannelMap, uint channelCount, uint channelIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial byte ma_channel_map_get_channel(IntPtr pChannelMap, uint channelCount, uint channelIndex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_channel_map_init_blank(ref byte pChannelMap, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_channel_map_init_blank(IntPtr pChannelMap, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_channel_map_init_standard(ma_standard_channel_map standardChannelMap, ref byte pChannelMap, UIntPtr channelMapCap, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_channel_map_init_standard(ma_standard_channel_map standardChannelMap, IntPtr pChannelMap, UIntPtr channelMapCap, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_channel_map_copy(ref byte pOut, ref byte pIn, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_channel_map_copy(IntPtr pOut, IntPtr pIn, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_channel_map_copy_or_default(ref byte pOut, UIntPtr channelMapCapOut, ref byte pIn, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_channel_map_copy_or_default(IntPtr pOut, UIntPtr channelMapCapOut, IntPtr pIn, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_channel_map_is_valid(ref byte pChannelMap, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_channel_map_is_valid(IntPtr pChannelMap, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_channel_map_is_equal(ref byte pChannelMapA, ref byte pChannelMapB, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_channel_map_is_equal(IntPtr pChannelMapA, IntPtr pChannelMapB, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_channel_map_is_blank(ref byte pChannelMap, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_channel_map_is_blank(IntPtr pChannelMap, uint channels); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_channel_map_contains_channel_position(uint channels, ref byte pChannelMap, byte channelPosition); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_channel_map_contains_channel_position(uint channels, IntPtr pChannelMap, byte channelPosition); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_channel_map_find_channel_position(uint channels, ref byte pChannelMap, byte channelPosition, ref uint pChannelIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_channel_map_find_channel_position(uint channels, IntPtr pChannelMap, byte channelPosition, IntPtr pChannelIndex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial UIntPtr ma_channel_map_to_string(ref byte pChannelMap, uint channels, IntPtr pBufferOut, UIntPtr bufferCap); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial UIntPtr ma_channel_map_to_string(IntPtr pChannelMap, uint channels, IntPtr pBufferOut, UIntPtr bufferCap); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2338,7 +2338,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ulong ma_convert_frames_ex(IntPtr pOut, ulong frameCountOut, IntPtr pIn, ulong frameCountIn, ref ma_data_converter_config pConfig); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ulong ma_convert_frames_ex(IntPtr pOut, ulong frameCountOut, IntPtr pIn, ulong frameCountIn, IntPtr pConfig); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_data_source_vtable
@@ -2381,7 +2381,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_source_init(ref ma_data_source_config pConfig, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_source_init(IntPtr pConfig, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2389,11 +2389,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_source_read_pcm_frames(IntPtr pDataSource, IntPtr pFramesOut, ulong frameCount, ref ulong pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_source_read_pcm_frames(IntPtr pDataSource, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_source_seek_pcm_frames(IntPtr pDataSource, ulong frameCount, ref ulong pFramesSeeked); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_source_seek_pcm_frames(IntPtr pDataSource, ulong frameCount, IntPtr pFramesSeeked); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2409,15 +2409,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_source_get_data_format(IntPtr pDataSource, IntPtr pFormat, ref uint pChannels, ref uint pSampleRate, ref byte pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_source_get_data_format(IntPtr pDataSource, IntPtr pFormat, IntPtr pChannels, IntPtr pSampleRate, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_source_get_cursor_in_pcm_frames(IntPtr pDataSource, ref ulong pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_source_get_cursor_in_pcm_frames(IntPtr pDataSource, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_source_get_length_in_pcm_frames(IntPtr pDataSource, ref ulong pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_source_get_length_in_pcm_frames(IntPtr pDataSource, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2441,7 +2441,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_data_source_get_range_in_pcm_frames(IntPtr pDataSource, ref ulong pRangeBegInFrames, ref ulong pRangeEndInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_data_source_get_range_in_pcm_frames(IntPtr pDataSource, IntPtr pRangeBegInFrames, IntPtr pRangeEndInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2449,7 +2449,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_data_source_get_loop_point_in_pcm_frames(IntPtr pDataSource, ref ulong pLoopBegInFrames, ref ulong pLoopEndInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_data_source_get_loop_point_in_pcm_frames(IntPtr pDataSource, IntPtr pLoopBegInFrames, IntPtr pLoopEndInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2489,47 +2489,47 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_ref_init(ma_format format, uint channels, IntPtr pData, ulong sizeInFrames, ref ma_audio_buffer_ref pAudioBufferRef); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_ref_init(ma_format format, uint channels, IntPtr pData, ulong sizeInFrames, IntPtr pAudioBufferRef); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_audio_buffer_ref_uninit(ref ma_audio_buffer_ref pAudioBufferRef); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_audio_buffer_ref_uninit(IntPtr pAudioBufferRef); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_ref_set_data(ref ma_audio_buffer_ref pAudioBufferRef, IntPtr pData, ulong sizeInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_ref_set_data(IntPtr pAudioBufferRef, IntPtr pData, ulong sizeInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ulong ma_audio_buffer_ref_read_pcm_frames(ref ma_audio_buffer_ref pAudioBufferRef, IntPtr pFramesOut, ulong frameCount, uint loop); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ulong ma_audio_buffer_ref_read_pcm_frames(IntPtr pAudioBufferRef, IntPtr pFramesOut, ulong frameCount, uint loop); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_ref_seek_to_pcm_frame(ref ma_audio_buffer_ref pAudioBufferRef, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_ref_seek_to_pcm_frame(IntPtr pAudioBufferRef, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_ref_map(ref ma_audio_buffer_ref pAudioBufferRef, IntPtr ppFramesOut, ref ulong pFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_ref_map(IntPtr pAudioBufferRef, IntPtr ppFramesOut, IntPtr pFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_ref_unmap(ref ma_audio_buffer_ref pAudioBufferRef, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_ref_unmap(IntPtr pAudioBufferRef, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_audio_buffer_ref_at_end(ref ma_audio_buffer_ref pAudioBufferRef); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_audio_buffer_ref_at_end(IntPtr pAudioBufferRef); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_ref_get_cursor_in_pcm_frames(ref ma_audio_buffer_ref pAudioBufferRef, ref ulong pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_ref_get_cursor_in_pcm_frames(IntPtr pAudioBufferRef, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_ref_get_length_in_pcm_frames(ref ma_audio_buffer_ref pAudioBufferRef, ref ulong pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_ref_get_length_in_pcm_frames(IntPtr pAudioBufferRef, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_ref_get_available_frames(ref ma_audio_buffer_ref pAudioBufferRef, ref ulong pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_ref_get_available_frames(IntPtr pAudioBufferRef, IntPtr pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_audio_buffer_config
@@ -2544,7 +2544,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_audio_buffer_config ma_audio_buffer_config_init(ma_format format, uint channels, ulong sizeInFrames, IntPtr pData, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_audio_buffer_config ma_audio_buffer_config_init(ma_format format, uint channels, ulong sizeInFrames, IntPtr pData, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_audio_buffer
@@ -2557,55 +2557,55 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_init(ref ma_audio_buffer_config pConfig, ref ma_audio_buffer pAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_init(IntPtr pConfig, IntPtr pAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_init_copy(ref ma_audio_buffer_config pConfig, ref ma_audio_buffer pAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_init_copy(IntPtr pConfig, IntPtr pAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_alloc_and_init(ref ma_audio_buffer_config pConfig, IntPtr ppAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_alloc_and_init(IntPtr pConfig, IntPtr ppAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_audio_buffer_uninit(ref ma_audio_buffer pAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_audio_buffer_uninit(IntPtr pAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_audio_buffer_uninit_and_free(ref ma_audio_buffer pAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_audio_buffer_uninit_and_free(IntPtr pAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ulong ma_audio_buffer_read_pcm_frames(ref ma_audio_buffer pAudioBuffer, IntPtr pFramesOut, ulong frameCount, uint loop); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ulong ma_audio_buffer_read_pcm_frames(IntPtr pAudioBuffer, IntPtr pFramesOut, ulong frameCount, uint loop); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_seek_to_pcm_frame(ref ma_audio_buffer pAudioBuffer, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_seek_to_pcm_frame(IntPtr pAudioBuffer, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_map(ref ma_audio_buffer pAudioBuffer, IntPtr ppFramesOut, ref ulong pFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_map(IntPtr pAudioBuffer, IntPtr ppFramesOut, IntPtr pFrameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_unmap(ref ma_audio_buffer pAudioBuffer, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_unmap(IntPtr pAudioBuffer, ulong frameCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_audio_buffer_at_end(ref ma_audio_buffer pAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_audio_buffer_at_end(IntPtr pAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_get_cursor_in_pcm_frames(ref ma_audio_buffer pAudioBuffer, ref ulong pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_get_cursor_in_pcm_frames(IntPtr pAudioBuffer, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_get_length_in_pcm_frames(ref ma_audio_buffer pAudioBuffer, ref ulong pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_get_length_in_pcm_frames(IntPtr pAudioBuffer, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_audio_buffer_get_available_frames(ref ma_audio_buffer pAudioBuffer, ref ulong pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_audio_buffer_get_available_frames(IntPtr pAudioBuffer, IntPtr pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_paged_audio_buffer_page
@@ -2626,39 +2626,39 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_paged_audio_buffer_data_init(ma_format format, uint channels, ref ma_paged_audio_buffer_data pData); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_paged_audio_buffer_data_init(ma_format format, uint channels, IntPtr pData); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_paged_audio_buffer_data_uninit(ref ma_paged_audio_buffer_data pData, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_paged_audio_buffer_data_uninit(IntPtr pData, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial IntPtr ma_paged_audio_buffer_data_get_head(ref ma_paged_audio_buffer_data pData); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_paged_audio_buffer_data_get_head(IntPtr pData); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial IntPtr ma_paged_audio_buffer_data_get_tail(ref ma_paged_audio_buffer_data pData); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_paged_audio_buffer_data_get_tail(IntPtr pData); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_paged_audio_buffer_data_get_length_in_pcm_frames(ref ma_paged_audio_buffer_data pData, ref ulong pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_paged_audio_buffer_data_get_length_in_pcm_frames(IntPtr pData, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_paged_audio_buffer_data_allocate_page(ref ma_paged_audio_buffer_data pData, ulong pageSizeInFrames, IntPtr pInitialData, ref ma_allocation_callbacks pAllocationCallbacks, IntPtr ppPage); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_paged_audio_buffer_data_allocate_page(IntPtr pData, ulong pageSizeInFrames, IntPtr pInitialData, IntPtr pAllocationCallbacks, IntPtr ppPage); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_paged_audio_buffer_data_free_page(ref ma_paged_audio_buffer_data pData, IntPtr pPage, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_paged_audio_buffer_data_free_page(IntPtr pData, IntPtr pPage, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_paged_audio_buffer_data_append_page(ref ma_paged_audio_buffer_data pData, IntPtr pPage); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_paged_audio_buffer_data_append_page(IntPtr pData, IntPtr pPage); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_paged_audio_buffer_data_allocate_and_append_page(ref ma_paged_audio_buffer_data pData, uint pageSizeInFrames, IntPtr pInitialData, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_paged_audio_buffer_data_allocate_and_append_page(IntPtr pData, uint pageSizeInFrames, IntPtr pInitialData, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_paged_audio_buffer_config
@@ -2668,7 +2668,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_paged_audio_buffer_config ma_paged_audio_buffer_config_init(ref ma_paged_audio_buffer_data pData); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_paged_audio_buffer_config ma_paged_audio_buffer_config_init(IntPtr pData); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_paged_audio_buffer
@@ -2682,27 +2682,27 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_paged_audio_buffer_init(ref ma_paged_audio_buffer_config pConfig, ref ma_paged_audio_buffer pPagedAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_paged_audio_buffer_init(IntPtr pConfig, IntPtr pPagedAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_paged_audio_buffer_uninit(ref ma_paged_audio_buffer pPagedAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_paged_audio_buffer_uninit(IntPtr pPagedAudioBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_paged_audio_buffer_read_pcm_frames(ref ma_paged_audio_buffer pPagedAudioBuffer, IntPtr pFramesOut, ulong frameCount, ref ulong pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_paged_audio_buffer_read_pcm_frames(IntPtr pPagedAudioBuffer, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_paged_audio_buffer_seek_to_pcm_frame(ref ma_paged_audio_buffer pPagedAudioBuffer, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_paged_audio_buffer_seek_to_pcm_frame(IntPtr pPagedAudioBuffer, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_paged_audio_buffer_get_cursor_in_pcm_frames(ref ma_paged_audio_buffer pPagedAudioBuffer, ref ulong pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_paged_audio_buffer_get_cursor_in_pcm_frames(IntPtr pPagedAudioBuffer, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_paged_audio_buffer_get_length_in_pcm_frames(ref ma_paged_audio_buffer pPagedAudioBuffer, ref ulong pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_paged_audio_buffer_get_length_in_pcm_frames(IntPtr pPagedAudioBuffer, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_rb
@@ -2720,71 +2720,71 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_rb_init_ex(UIntPtr subbufferSizeInBytes, UIntPtr subbufferCount, UIntPtr subbufferStrideInBytes, IntPtr pOptionalPreallocatedBuffer, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_rb_init_ex(UIntPtr subbufferSizeInBytes, UIntPtr subbufferCount, UIntPtr subbufferStrideInBytes, IntPtr pOptionalPreallocatedBuffer, IntPtr pAllocationCallbacks, IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_rb_init(UIntPtr bufferSizeInBytes, IntPtr pOptionalPreallocatedBuffer, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_rb_init(UIntPtr bufferSizeInBytes, IntPtr pOptionalPreallocatedBuffer, IntPtr pAllocationCallbacks, IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_rb_uninit(ref ma_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_rb_uninit(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_rb_reset(ref ma_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_rb_reset(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_rb_acquire_read(ref ma_rb pRB, IntPtr pSizeInBytes, IntPtr ppBufferOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_rb_acquire_read(IntPtr pRB, IntPtr pSizeInBytes, IntPtr ppBufferOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_rb_commit_read(ref ma_rb pRB, UIntPtr sizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_rb_commit_read(IntPtr pRB, UIntPtr sizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_rb_acquire_write(ref ma_rb pRB, IntPtr pSizeInBytes, IntPtr ppBufferOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_rb_acquire_write(IntPtr pRB, IntPtr pSizeInBytes, IntPtr ppBufferOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_rb_commit_write(ref ma_rb pRB, UIntPtr sizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_rb_commit_write(IntPtr pRB, UIntPtr sizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_rb_seek_read(ref ma_rb pRB, UIntPtr offsetInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_rb_seek_read(IntPtr pRB, UIntPtr offsetInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_rb_seek_write(ref ma_rb pRB, UIntPtr offsetInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_rb_seek_write(IntPtr pRB, UIntPtr offsetInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int ma_rb_pointer_distance(ref ma_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial int ma_rb_pointer_distance(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_rb_available_read(ref ma_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_rb_available_read(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_rb_available_write(ref ma_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_rb_available_write(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial UIntPtr ma_rb_get_subbuffer_size(ref ma_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial UIntPtr ma_rb_get_subbuffer_size(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial UIntPtr ma_rb_get_subbuffer_stride(ref ma_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial UIntPtr ma_rb_get_subbuffer_stride(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial UIntPtr ma_rb_get_subbuffer_offset(ref ma_rb pRB, UIntPtr subbufferIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial UIntPtr ma_rb_get_subbuffer_offset(IntPtr pRB, UIntPtr subbufferIndex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial IntPtr ma_rb_get_subbuffer_ptr(ref ma_rb pRB, UIntPtr subbufferIndex, IntPtr pBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_rb_get_subbuffer_ptr(IntPtr pRB, UIntPtr subbufferIndex, IntPtr pBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_pcm_rb
@@ -2798,87 +2798,87 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pcm_rb_init_ex(ma_format format, uint channels, uint subbufferSizeInFrames, uint subbufferCount, uint subbufferStrideInFrames, IntPtr pOptionalPreallocatedBuffer, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_pcm_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pcm_rb_init_ex(ma_format format, uint channels, uint subbufferSizeInFrames, uint subbufferCount, uint subbufferStrideInFrames, IntPtr pOptionalPreallocatedBuffer, IntPtr pAllocationCallbacks, IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pcm_rb_init(ma_format format, uint channels, uint bufferSizeInFrames, IntPtr pOptionalPreallocatedBuffer, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_pcm_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pcm_rb_init(ma_format format, uint channels, uint bufferSizeInFrames, IntPtr pOptionalPreallocatedBuffer, IntPtr pAllocationCallbacks, IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_pcm_rb_uninit(ref ma_pcm_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_pcm_rb_uninit(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_pcm_rb_reset(ref ma_pcm_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_pcm_rb_reset(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pcm_rb_acquire_read(ref ma_pcm_rb pRB, ref uint pSizeInFrames, IntPtr ppBufferOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pcm_rb_acquire_read(IntPtr pRB, IntPtr pSizeInFrames, IntPtr ppBufferOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pcm_rb_commit_read(ref ma_pcm_rb pRB, uint sizeInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pcm_rb_commit_read(IntPtr pRB, uint sizeInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pcm_rb_acquire_write(ref ma_pcm_rb pRB, ref uint pSizeInFrames, IntPtr ppBufferOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pcm_rb_acquire_write(IntPtr pRB, IntPtr pSizeInFrames, IntPtr ppBufferOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pcm_rb_commit_write(ref ma_pcm_rb pRB, uint sizeInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pcm_rb_commit_write(IntPtr pRB, uint sizeInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pcm_rb_seek_read(ref ma_pcm_rb pRB, uint offsetInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pcm_rb_seek_read(IntPtr pRB, uint offsetInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pcm_rb_seek_write(ref ma_pcm_rb pRB, uint offsetInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pcm_rb_seek_write(IntPtr pRB, uint offsetInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial int ma_pcm_rb_pointer_distance(ref ma_pcm_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial int ma_pcm_rb_pointer_distance(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_pcm_rb_available_read(ref ma_pcm_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_pcm_rb_available_read(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_pcm_rb_available_write(ref ma_pcm_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_pcm_rb_available_write(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_pcm_rb_get_subbuffer_size(ref ma_pcm_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_pcm_rb_get_subbuffer_size(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_pcm_rb_get_subbuffer_stride(ref ma_pcm_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_pcm_rb_get_subbuffer_stride(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_pcm_rb_get_subbuffer_offset(ref ma_pcm_rb pRB, uint subbufferIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_pcm_rb_get_subbuffer_offset(IntPtr pRB, uint subbufferIndex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial IntPtr ma_pcm_rb_get_subbuffer_ptr(ref ma_pcm_rb pRB, uint subbufferIndex, IntPtr pBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_pcm_rb_get_subbuffer_ptr(IntPtr pRB, uint subbufferIndex, IntPtr pBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_format ma_pcm_rb_get_format(ref ma_pcm_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_format ma_pcm_rb_get_format(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_pcm_rb_get_channels(ref ma_pcm_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_pcm_rb_get_channels(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_pcm_rb_get_sample_rate(ref ma_pcm_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_pcm_rb_get_sample_rate(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_pcm_rb_set_sample_rate(ref ma_pcm_rb pRB, uint sampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_pcm_rb_set_sample_rate(IntPtr pRB, uint sampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_duplex_rb
@@ -2888,11 +2888,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_duplex_rb_init(ma_format captureFormat, uint captureChannels, uint sampleRate, uint captureInternalSampleRate, uint captureInternalPeriodSizeInFrames, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_duplex_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_duplex_rb_init(ma_format captureFormat, uint captureChannels, uint sampleRate, uint captureInternalSampleRate, uint captureInternalPeriodSizeInFrames, IntPtr pAllocationCallbacks, IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_duplex_rb_uninit(ref ma_duplex_rb pRB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_duplex_rb_uninit(IntPtr pRB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2900,27 +2900,27 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial IntPtr ma_malloc(UIntPtr sz, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_malloc(UIntPtr sz, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial IntPtr ma_calloc(UIntPtr sz, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_calloc(UIntPtr sz, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial IntPtr ma_realloc(IntPtr p, UIntPtr sz, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_realloc(IntPtr p, UIntPtr sz, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_free(IntPtr p, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_free(IntPtr p, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial IntPtr ma_aligned_malloc(UIntPtr sz, UIntPtr alignment, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_aligned_malloc(UIntPtr sz, UIntPtr alignment, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_aligned_free(IntPtr p, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_aligned_free(IntPtr p, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -2944,63 +2944,63 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_spinlock_lock(ref uint pSpinlock); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_spinlock_lock(IntPtr pSpinlock); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_spinlock_lock_noyield(ref uint pSpinlock); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_spinlock_lock_noyield(IntPtr pSpinlock); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_spinlock_unlock(ref uint pSpinlock); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_spinlock_unlock(IntPtr pSpinlock); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_mutex_init(ref IntPtr pMutex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_mutex_init(IntPtr pMutex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_mutex_uninit(ref IntPtr pMutex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_mutex_uninit(IntPtr pMutex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_mutex_lock(ref IntPtr pMutex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_mutex_lock(IntPtr pMutex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_mutex_unlock(ref IntPtr pMutex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_mutex_unlock(IntPtr pMutex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_event_init(ref ma_event pEvent); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_event_init(IntPtr pEvent); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_event_uninit(ref ma_event pEvent); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_event_uninit(IntPtr pEvent); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_event_wait(ref ma_event pEvent); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_event_wait(IntPtr pEvent); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_event_signal(ref ma_event pEvent); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_event_signal(IntPtr pEvent); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_semaphore_init(int initialValue, ref ma_semaphore pSemaphore); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_semaphore_init(int initialValue, IntPtr pSemaphore); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_semaphore_uninit(ref ma_semaphore pSemaphore); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_semaphore_uninit(IntPtr pSemaphore); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_semaphore_wait(ref ma_semaphore pSemaphore); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_semaphore_wait(IntPtr pSemaphore); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_semaphore_release(ref ma_semaphore pSemaphore); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_semaphore_release(IntPtr pSemaphore); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_fence
@@ -3011,23 +3011,23 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_fence_init(ref ma_fence pFence); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_fence_init(IntPtr pFence); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_fence_uninit(ref ma_fence pFence); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_fence_uninit(IntPtr pFence); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_fence_acquire(ref ma_fence pFence); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_fence_acquire(IntPtr pFence); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_fence_release(ref ma_fence pFence); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_fence_release(IntPtr pFence); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_fence_wait(ref ma_fence pFence); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_fence_wait(IntPtr pFence); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_async_notification_callbacks
@@ -3048,11 +3048,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_async_notification_poll_init(ref ma_async_notification_poll pNotificationPoll); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_async_notification_poll_init(IntPtr pNotificationPoll); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_async_notification_poll_is_signalled(ref ma_async_notification_poll pNotificationPoll); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_async_notification_poll_is_signalled(IntPtr pNotificationPoll); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_async_notification_event
@@ -3063,19 +3063,19 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_async_notification_event_init(ref ma_async_notification_event pNotificationEvent); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_async_notification_event_init(IntPtr pNotificationEvent); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_async_notification_event_uninit(ref ma_async_notification_event pNotificationEvent); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_async_notification_event_uninit(IntPtr pNotificationEvent); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_async_notification_event_wait(ref ma_async_notification_event pNotificationEvent); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_async_notification_event_wait(IntPtr pNotificationEvent); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_async_notification_event_signal(ref ma_async_notification_event pNotificationEvent); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_async_notification_event_signal(IntPtr pNotificationEvent); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_slot_allocator_config
@@ -3106,27 +3106,27 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_slot_allocator_get_heap_size(ref ma_slot_allocator_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_slot_allocator_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_slot_allocator_init_preallocated(ref ma_slot_allocator_config pConfig, IntPtr pHeap, ref ma_slot_allocator pAllocator); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_slot_allocator_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pAllocator); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_slot_allocator_init(ref ma_slot_allocator_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_slot_allocator pAllocator); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_slot_allocator_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pAllocator); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_slot_allocator_uninit(ref ma_slot_allocator pAllocator, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_slot_allocator_uninit(IntPtr pAllocator, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_slot_allocator_alloc(ref ma_slot_allocator pAllocator, ref ulong pSlot); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_slot_allocator_alloc(IntPtr pAllocator, IntPtr pSlot); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_slot_allocator_free(ref ma_slot_allocator pAllocator, ulong slot); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_slot_allocator_free(IntPtr pAllocator, ulong slot); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate ma_result ma_job_proc(ma_job* pJob);
@@ -3367,27 +3367,27 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_job_queue_get_heap_size(ref ma_job_queue_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_job_queue_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_job_queue_init_preallocated(ref ma_job_queue_config pConfig, IntPtr pHeap, ref ma_job_queue pQueue); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_job_queue_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pQueue); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_job_queue_init(ref ma_job_queue_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_job_queue pQueue); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_job_queue_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pQueue); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_job_queue_uninit(ref ma_job_queue pQueue, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_job_queue_uninit(IntPtr pQueue, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_job_queue_post(ref ma_job_queue pQueue, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_job_queue_post(IntPtr pQueue, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_job_queue_next(ref ma_job_queue pQueue, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_job_queue_next(IntPtr pQueue, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
 
     public enum ma_device_state
     {
@@ -3445,19 +3445,19 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_device_job_thread_init(ref ma_device_job_thread_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_device_job_thread pJobThread); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_device_job_thread_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pJobThread); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_device_job_thread_uninit(ref ma_device_job_thread pJobThread, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_device_job_thread_uninit(IntPtr pJobThread, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_device_job_thread_post(ref ma_device_job_thread pJobThread, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_device_job_thread_post(IntPtr pJobThread, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_device_job_thread_next(ref ma_device_job_thread pJobThread, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_device_job_thread_next(IntPtr pJobThread, IntPtr pJob); // WARN_UNKNOWN_POINTER_PARAMETER
 
     public enum ma_device_notification_type
     {
@@ -3694,7 +3694,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_device_id_equal(ref pA, ref pB); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_device_id_equal(IntPtr pA, IntPtr pB); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_device_info
@@ -4509,7 +4509,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_log* ma_context_get_log(IntPtr pContext); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_context_get_log(IntPtr pContext); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4517,11 +4517,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_context_get_devices(IntPtr pContext, IntPtr ppPlaybackDeviceInfos, ref uint pPlaybackDeviceCount, IntPtr ppCaptureDeviceInfos, ref uint pCaptureDeviceCount); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_context_get_devices(IntPtr pContext, IntPtr ppPlaybackDeviceInfos, IntPtr pPlaybackDeviceCount, IntPtr ppCaptureDeviceInfos, IntPtr pCaptureDeviceCount); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_context_get_device_info(IntPtr pContext, ma_device_type deviceType, ref pDeviceID, ref ma_device_info pDeviceInfo); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_context_get_device_info(IntPtr pContext, ma_device_type deviceType, IntPtr pDeviceID, IntPtr pDeviceInfo); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4549,11 +4549,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_log* ma_device_get_log(IntPtr pDevice); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_device_get_log(IntPtr pDevice); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_device_get_info(IntPtr pDevice, ma_device_type type, ref ma_device_info pDeviceInfo); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_device_get_info(IntPtr pDevice, ma_device_type type, IntPtr pDeviceInfo); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4577,7 +4577,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_device_post_init(IntPtr pDevice, ma_device_type deviceType, ref ma_device_descriptor pPlaybackDescriptor, ref ma_device_descriptor pCaptureDescriptor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_device_post_init(IntPtr pDevice, ma_device_type deviceType, IntPtr pPlaybackDescriptor, IntPtr pCaptureDescriptor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4601,7 +4601,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_calculate_buffer_size_in_frames_from_descriptor(ref ma_device_descriptor pDescriptor, uint nativeSampleRate, ma_performance_profile performanceProfile); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_calculate_buffer_size_in_frames_from_descriptor(IntPtr pDescriptor, uint nativeSampleRate, ma_performance_profile performanceProfile); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4657,19 +4657,19 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_clip_samples_u8(ref byte pDst, ref short pSrc, ulong count); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_clip_samples_u8(IntPtr pDst, IntPtr pSrc, ulong count); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_clip_samples_s16(ref short pDst, ref int pSrc, ulong count); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_clip_samples_s16(IntPtr pDst, IntPtr pSrc, ulong count); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_clip_samples_s24(ref byte pDst, ref long pSrc, ulong count); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_clip_samples_s24(IntPtr pDst, IntPtr pSrc, ulong count); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_clip_samples_s32(ref int pDst, ref long pSrc, ulong count); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_clip_samples_s32(IntPtr pDst, IntPtr pSrc, ulong count); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4681,11 +4681,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_copy_and_apply_volume_factor_u8(ref byte pSamplesOut, ref byte pSamplesIn, ulong sampleCount, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_copy_and_apply_volume_factor_u8(IntPtr pSamplesOut, IntPtr pSamplesIn, ulong sampleCount, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_copy_and_apply_volume_factor_s16(ref short pSamplesOut, ref short pSamplesIn, ulong sampleCount, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_copy_and_apply_volume_factor_s16(IntPtr pSamplesOut, IntPtr pSamplesIn, ulong sampleCount, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4693,7 +4693,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_copy_and_apply_volume_factor_s32(ref int pSamplesOut, ref int pSamplesIn, ulong sampleCount, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_copy_and_apply_volume_factor_s32(IntPtr pSamplesOut, IntPtr pSamplesIn, ulong sampleCount, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4701,11 +4701,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_apply_volume_factor_u8(ref byte pSamples, ulong sampleCount, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_apply_volume_factor_u8(IntPtr pSamples, ulong sampleCount, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_apply_volume_factor_s16(ref short pSamples, ulong sampleCount, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_apply_volume_factor_s16(IntPtr pSamples, ulong sampleCount, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4713,7 +4713,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_apply_volume_factor_s32(ref int pSamples, ulong sampleCount, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_apply_volume_factor_s32(IntPtr pSamples, ulong sampleCount, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4721,11 +4721,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_copy_and_apply_volume_factor_pcm_frames_u8(ref byte pFramesOut, ref byte pFramesIn, ulong frameCount, uint channels, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_copy_and_apply_volume_factor_pcm_frames_u8(IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount, uint channels, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_copy_and_apply_volume_factor_pcm_frames_s16(ref short pFramesOut, ref short pFramesIn, ulong frameCount, uint channels, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_copy_and_apply_volume_factor_pcm_frames_s16(IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount, uint channels, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4733,7 +4733,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_copy_and_apply_volume_factor_pcm_frames_s32(ref int pFramesOut, ref int pFramesIn, ulong frameCount, uint channels, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_copy_and_apply_volume_factor_pcm_frames_s32(IntPtr pFramesOut, IntPtr pFramesIn, ulong frameCount, uint channels, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4745,11 +4745,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_apply_volume_factor_pcm_frames_u8(ref byte pFrames, ulong frameCount, uint channels, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_apply_volume_factor_pcm_frames_u8(IntPtr pFrames, ulong frameCount, uint channels, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_apply_volume_factor_pcm_frames_s16(ref short pFrames, ulong frameCount, uint channels, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_apply_volume_factor_pcm_frames_s16(IntPtr pFrames, ulong frameCount, uint channels, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4757,7 +4757,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_apply_volume_factor_pcm_frames_s32(ref int pFrames, ulong frameCount, uint channels, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_apply_volume_factor_pcm_frames_s32(IntPtr pFrames, ulong frameCount, uint channels, float factor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4773,19 +4773,19 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_copy_and_apply_volume_and_clip_samples_u8(ref byte pDst, ref short pSrc, ulong count, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_copy_and_apply_volume_and_clip_samples_u8(IntPtr pDst, IntPtr pSrc, ulong count, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_copy_and_apply_volume_and_clip_samples_s16(ref short pDst, ref int pSrc, ulong count, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_copy_and_apply_volume_and_clip_samples_s16(IntPtr pDst, IntPtr pSrc, ulong count, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_copy_and_apply_volume_and_clip_samples_s24(ref byte pDst, ref long pSrc, ulong count, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_copy_and_apply_volume_and_clip_samples_s24(IntPtr pDst, IntPtr pSrc, ulong count, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_copy_and_apply_volume_and_clip_samples_s32(ref int pDst, ref long pSrc, ulong count, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_copy_and_apply_volume_and_clip_samples_s32(IntPtr pDst, IntPtr pSrc, ulong count, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4841,11 +4841,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_vfs_open(IntPtr pVFS, IntPtr pFilePath, uint openMode, ref IntPtr pFile); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_vfs_open(IntPtr pVFS, IntPtr pFilePath, uint openMode, IntPtr pFile); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_vfs_open_w(IntPtr pVFS, string pFilePath, uint openMode, ref IntPtr pFile); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_vfs_open_w(IntPtr pVFS, string pFilePath, uint openMode, IntPtr pFile); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -4865,15 +4865,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_vfs_tell(IntPtr pVFS, IntPtr file, ref long pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_vfs_tell(IntPtr pVFS, IntPtr file, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_vfs_info(IntPtr pVFS, IntPtr file, ref ma_file_info pInfo); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_vfs_info(IntPtr pVFS, IntPtr file, IntPtr pInfo); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_vfs_open_and_read_file(IntPtr pVFS, IntPtr pFilePath, IntPtr ppData, IntPtr pSize, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_vfs_open_and_read_file(IntPtr pVFS, IntPtr pFilePath, IntPtr ppData, IntPtr pSize, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_default_vfs
@@ -4884,7 +4884,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_default_vfs_init(ref ma_default_vfs pVFS, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_default_vfs_init(IntPtr pVFS, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate ma_result ma_read_proc(void* pUserData, void* pBufferOut, nuint bytesToRead, nuint* pBytesRead);
@@ -5010,27 +5010,27 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decoder_init(ma_decoder_read_proc onRead, ma_decoder_seek_proc onSeek, IntPtr pUserData, ref ma_decoder_config pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decoder_init(ma_decoder_read_proc onRead, ma_decoder_seek_proc onSeek, IntPtr pUserData, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decoder_init_memory(IntPtr pData, UIntPtr dataSize, ref ma_decoder_config pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decoder_init_memory(IntPtr pData, UIntPtr dataSize, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decoder_init_vfs(IntPtr pVFS, IntPtr pFilePath, ref ma_decoder_config pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decoder_init_vfs(IntPtr pVFS, IntPtr pFilePath, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decoder_init_vfs_w(IntPtr pVFS, string pFilePath, ref ma_decoder_config pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decoder_init_vfs_w(IntPtr pVFS, string pFilePath, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decoder_init_file(IntPtr pFilePath, ref ma_decoder_config pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decoder_init_file(IntPtr pFilePath, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decoder_init_file_w(string pFilePath, ref ma_decoder_config pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decoder_init_file_w(string pFilePath, IntPtr pConfig, IntPtr pDecoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5038,7 +5038,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decoder_read_pcm_frames(IntPtr pDecoder, IntPtr pFramesOut, ulong frameCount, ref ulong pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decoder_read_pcm_frames(IntPtr pDecoder, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5046,31 +5046,31 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decoder_get_data_format(IntPtr pDecoder, IntPtr pFormat, ref uint pChannels, ref uint pSampleRate, ref byte pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decoder_get_data_format(IntPtr pDecoder, IntPtr pFormat, IntPtr pChannels, IntPtr pSampleRate, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decoder_get_cursor_in_pcm_frames(IntPtr pDecoder, ref ulong pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decoder_get_cursor_in_pcm_frames(IntPtr pDecoder, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decoder_get_length_in_pcm_frames(IntPtr pDecoder, ref ulong pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decoder_get_length_in_pcm_frames(IntPtr pDecoder, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decoder_get_available_frames(IntPtr pDecoder, ref ulong pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decoder_get_available_frames(IntPtr pDecoder, IntPtr pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decode_from_vfs(IntPtr pVFS, IntPtr pFilePath, ref ma_decoder_config pConfig, ref ulong pFrameCountOut, IntPtr ppPCMFramesOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decode_from_vfs(IntPtr pVFS, IntPtr pFilePath, IntPtr pConfig, IntPtr pFrameCountOut, IntPtr ppPCMFramesOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decode_file(IntPtr pFilePath, ref ma_decoder_config pConfig, ref ulong pFrameCountOut, IntPtr ppPCMFramesOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decode_file(IntPtr pFilePath, IntPtr pConfig, IntPtr pFrameCountOut, IntPtr ppPCMFramesOut); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_decode_memory(IntPtr pData, UIntPtr dataSize, ref ma_decoder_config pConfig, ref ulong pFrameCountOut, IntPtr ppPCMFramesOut); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_decode_memory(IntPtr pData, UIntPtr dataSize, in ma_decoder_config pConfig, out ulong pFrameCountOut, out IntPtr ppPCMFramesOut);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate ma_result ma_encoder_write_proc(ma_encoder* pEncoder, void* pBufferIn, nuint bytesToWrite, nuint* pBytesWritten);
@@ -5131,23 +5131,23 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_encoder_init(ma_encoder_write_proc onWrite, ma_encoder_seek_proc onSeek, IntPtr pUserData, ref ma_encoder_config pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_encoder_init(ma_encoder_write_proc onWrite, ma_encoder_seek_proc onSeek, IntPtr pUserData, IntPtr pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_encoder_init_vfs(IntPtr pVFS, IntPtr pFilePath, ref ma_encoder_config pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_encoder_init_vfs(IntPtr pVFS, IntPtr pFilePath, IntPtr pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_encoder_init_vfs_w(IntPtr pVFS, string pFilePath, ref ma_encoder_config pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_encoder_init_vfs_w(IntPtr pVFS, string pFilePath, IntPtr pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_encoder_init_file(IntPtr pFilePath, ref ma_encoder_config pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_encoder_init_file(IntPtr pFilePath, IntPtr pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_encoder_init_file_w(string pFilePath, ref ma_encoder_config pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_encoder_init_file_w(string pFilePath, IntPtr pConfig, IntPtr pEncoder); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5155,7 +5155,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_encoder_write_pcm_frames(IntPtr pEncoder, IntPtr pFramesIn, ulong frameCount, ref ulong pFramesWritten); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_encoder_write_pcm_frames(IntPtr pEncoder, IntPtr pFramesIn, ulong frameCount, IntPtr pFramesWritten); // WARN_UNKNOWN_POINTER_PARAMETER
 
     public enum ma_waveform_type
     {
@@ -5191,35 +5191,35 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_waveform_init(ref ma_waveform_config pConfig, ref ma_waveform pWaveform); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_waveform_init(IntPtr pConfig, IntPtr pWaveform); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_waveform_uninit(ref ma_waveform pWaveform); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_waveform_uninit(IntPtr pWaveform); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_waveform_read_pcm_frames(ref ma_waveform pWaveform, IntPtr pFramesOut, ulong frameCount, ref ulong pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_waveform_read_pcm_frames(IntPtr pWaveform, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_waveform_seek_to_pcm_frame(ref ma_waveform pWaveform, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_waveform_seek_to_pcm_frame(IntPtr pWaveform, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_waveform_set_amplitude(ref ma_waveform pWaveform, double amplitude); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_waveform_set_amplitude(IntPtr pWaveform, double amplitude); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_waveform_set_frequency(ref ma_waveform pWaveform, double frequency); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_waveform_set_frequency(IntPtr pWaveform, double frequency); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_waveform_set_type(ref ma_waveform pWaveform, ma_waveform_type type); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_waveform_set_type(IntPtr pWaveform, ma_waveform_type type); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_waveform_set_sample_rate(ref ma_waveform pWaveform, uint sampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_waveform_set_sample_rate(IntPtr pWaveform, uint sampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_pulsewave_config
@@ -5245,35 +5245,35 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pulsewave_init(ref ma_pulsewave_config pConfig, ref ma_pulsewave pWaveform); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pulsewave_init(IntPtr pConfig, IntPtr pWaveform); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_pulsewave_uninit(ref ma_pulsewave pWaveform); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_pulsewave_uninit(IntPtr pWaveform); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pulsewave_read_pcm_frames(ref ma_pulsewave pWaveform, IntPtr pFramesOut, ulong frameCount, ref ulong pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pulsewave_read_pcm_frames(IntPtr pWaveform, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pulsewave_seek_to_pcm_frame(ref ma_pulsewave pWaveform, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pulsewave_seek_to_pcm_frame(IntPtr pWaveform, ulong frameIndex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pulsewave_set_amplitude(ref ma_pulsewave pWaveform, double amplitude); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pulsewave_set_amplitude(IntPtr pWaveform, double amplitude); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pulsewave_set_frequency(ref ma_pulsewave pWaveform, double frequency); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pulsewave_set_frequency(IntPtr pWaveform, double frequency); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pulsewave_set_sample_rate(ref ma_pulsewave pWaveform, uint sampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pulsewave_set_sample_rate(IntPtr pWaveform, uint sampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_pulsewave_set_duty_cycle(ref ma_pulsewave pWaveform, double dutyCycle); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_pulsewave_set_duty_cycle(IntPtr pWaveform, double dutyCycle); // WARN_UNKNOWN_POINTER_PARAMETER
 
     public enum ma_noise_type
     {
@@ -5333,35 +5333,35 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_noise_get_heap_size(ref ma_noise_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_noise_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_noise_init_preallocated(ref ma_noise_config pConfig, IntPtr pHeap, ref ma_noise pNoise); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_noise_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pNoise); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_noise_init(ref ma_noise_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_noise pNoise); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_noise_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNoise); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_noise_uninit(ref ma_noise pNoise, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_noise_uninit(IntPtr pNoise, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_noise_read_pcm_frames(ref ma_noise pNoise, IntPtr pFramesOut, ulong frameCount, ref ulong pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_noise_read_pcm_frames(IntPtr pNoise, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_noise_set_amplitude(ref ma_noise pNoise, double amplitude); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_noise_set_amplitude(IntPtr pNoise, double amplitude); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_noise_set_seed(ref ma_noise pNoise, int seed); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_noise_set_seed(IntPtr pNoise, int seed); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_noise_set_type(ref ma_noise pNoise, ma_noise_type type); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_noise_set_type(IntPtr pNoise, ma_noise_type type); // WARN_UNKNOWN_POINTER_PARAMETER
 
     public enum ma_resource_manager_data_source_flags
     {
@@ -5589,7 +5589,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_init(ref ma_resource_manager_config pConfig, IntPtr pResourceManager); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_init(IntPtr pConfig, IntPtr pResourceManager); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5597,7 +5597,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_log* ma_resource_manager_get_log(IntPtr pResourceManager); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_resource_manager_get_log(IntPtr pResourceManager); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5641,15 +5641,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_buffer_init_ex(IntPtr pResourceManager, ref ma_resource_manager_data_source_config pConfig, IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_buffer_init_ex(IntPtr pResourceManager, IntPtr pConfig, IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_buffer_init(IntPtr pResourceManager, IntPtr pFilePath, uint flags, ref ma_resource_manager_pipeline_notifications pNotifications, IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_buffer_init(IntPtr pResourceManager, IntPtr pFilePath, uint flags, IntPtr pNotifications, IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_buffer_init_w(IntPtr pResourceManager, string pFilePath, uint flags, ref ma_resource_manager_pipeline_notifications pNotifications, IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_buffer_init_w(IntPtr pResourceManager, string pFilePath, uint flags, IntPtr pNotifications, IntPtr pDataBuffer); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5661,7 +5661,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_buffer_read_pcm_frames(IntPtr pDataBuffer, IntPtr pFramesOut, ulong frameCount, ref ulong pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_buffer_read_pcm_frames(IntPtr pDataBuffer, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5669,15 +5669,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_buffer_get_data_format(IntPtr pDataBuffer, IntPtr pFormat, ref uint pChannels, ref uint pSampleRate, ref byte pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_buffer_get_data_format(IntPtr pDataBuffer, IntPtr pFormat, IntPtr pChannels, IntPtr pSampleRate, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_buffer_get_cursor_in_pcm_frames(IntPtr pDataBuffer, ref ulong pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_buffer_get_cursor_in_pcm_frames(IntPtr pDataBuffer, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_buffer_get_length_in_pcm_frames(IntPtr pDataBuffer, ref ulong pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_buffer_get_length_in_pcm_frames(IntPtr pDataBuffer, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5693,19 +5693,19 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_buffer_get_available_frames(IntPtr pDataBuffer, ref ulong pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_buffer_get_available_frames(IntPtr pDataBuffer, IntPtr pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_stream_init_ex(IntPtr pResourceManager, ref ma_resource_manager_data_source_config pConfig, IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_stream_init_ex(IntPtr pResourceManager, IntPtr pConfig, IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_stream_init(IntPtr pResourceManager, IntPtr pFilePath, uint flags, ref ma_resource_manager_pipeline_notifications pNotifications, IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_stream_init(IntPtr pResourceManager, IntPtr pFilePath, uint flags, IntPtr pNotifications, IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_stream_init_w(IntPtr pResourceManager, string pFilePath, uint flags, ref ma_resource_manager_pipeline_notifications pNotifications, IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_stream_init_w(IntPtr pResourceManager, string pFilePath, uint flags, IntPtr pNotifications, IntPtr pDataStream); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5713,7 +5713,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_stream_read_pcm_frames(IntPtr pDataStream, IntPtr pFramesOut, ulong frameCount, ref ulong pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_stream_read_pcm_frames(IntPtr pDataStream, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5721,15 +5721,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_stream_get_data_format(IntPtr pDataStream, IntPtr pFormat, ref uint pChannels, ref uint pSampleRate, ref byte pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_stream_get_data_format(IntPtr pDataStream, IntPtr pFormat, IntPtr pChannels, IntPtr pSampleRate, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_stream_get_cursor_in_pcm_frames(IntPtr pDataStream, ref ulong pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_stream_get_cursor_in_pcm_frames(IntPtr pDataStream, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_stream_get_length_in_pcm_frames(IntPtr pDataStream, ref ulong pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_stream_get_length_in_pcm_frames(IntPtr pDataStream, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5745,19 +5745,19 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_stream_get_available_frames(IntPtr pDataStream, ref ulong pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_stream_get_available_frames(IntPtr pDataStream, IntPtr pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_source_init_ex(IntPtr pResourceManager, ref ma_resource_manager_data_source_config pConfig, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_source_init_ex(IntPtr pResourceManager, IntPtr pConfig, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_source_init(IntPtr pResourceManager, IntPtr pName, uint flags, ref ma_resource_manager_pipeline_notifications pNotifications, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_source_init(IntPtr pResourceManager, IntPtr pName, uint flags, IntPtr pNotifications, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_source_init_w(IntPtr pResourceManager, string pName, uint flags, ref ma_resource_manager_pipeline_notifications pNotifications, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_source_init_w(IntPtr pResourceManager, string pName, uint flags, IntPtr pNotifications, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5769,7 +5769,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_source_read_pcm_frames(IntPtr pDataSource, IntPtr pFramesOut, ulong frameCount, ref ulong pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_source_read_pcm_frames(IntPtr pDataSource, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5777,15 +5777,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_source_get_data_format(IntPtr pDataSource, IntPtr pFormat, ref uint pChannels, ref uint pSampleRate, ref byte pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_source_get_data_format(IntPtr pDataSource, IntPtr pFormat, IntPtr pChannels, IntPtr pSampleRate, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_source_get_cursor_in_pcm_frames(IntPtr pDataSource, ref ulong pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_source_get_cursor_in_pcm_frames(IntPtr pDataSource, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_source_get_length_in_pcm_frames(IntPtr pDataSource, ref ulong pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_source_get_length_in_pcm_frames(IntPtr pDataSource, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5801,7 +5801,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_source_get_available_frames(IntPtr pDataSource, ref ulong pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_source_get_available_frames(IntPtr pDataSource, IntPtr pAvailableFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5934,23 +5934,23 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_node_get_heap_size(ref ma_node_graph pNodeGraph, ref ma_node_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_node_get_heap_size(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_node_init_preallocated(ref ma_node_graph pNodeGraph, ref ma_node_config pConfig, IntPtr pHeap, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_node_init_preallocated(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pHeap, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_node_init(ref ma_node_graph pNodeGraph, ref ma_node_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_node_uninit(IntPtr pNode, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_node_graph* ma_node_get_node_graph(IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_node_get_node_graph(IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6046,11 +6046,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_node_graph_init(ref ma_node_graph_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, IntPtr pNodeGraph); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_node_graph_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNodeGraph); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_node_graph_uninit(IntPtr pNodeGraph, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_node_graph_uninit(IntPtr pNodeGraph, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6058,7 +6058,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_node_graph_read_pcm_frames(IntPtr pNodeGraph, IntPtr pFramesOut, ulong frameCount, ref ulong pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_node_graph_read_pcm_frames(IntPtr pNodeGraph, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6096,19 +6096,19 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_source_node_init(IntPtr pNodeGraph, ref ma_data_source_node_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_data_source_node pDataSourceNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_source_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pDataSourceNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_data_source_node_uninit(ref ma_data_source_node pDataSourceNode, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_data_source_node_uninit(IntPtr pDataSourceNode, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_data_source_node_set_looping(ref ma_data_source_node pDataSourceNode, uint isLooping); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_data_source_node_set_looping(IntPtr pDataSourceNode, uint isLooping); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_data_source_node_is_looping(ref ma_data_source_node pDataSourceNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_data_source_node_is_looping(IntPtr pDataSourceNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_splitter_node_config
@@ -6130,11 +6130,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_splitter_node_init(IntPtr pNodeGraph, ref ma_splitter_node_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_splitter_node pSplitterNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_splitter_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pSplitterNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_splitter_node_uninit(ref ma_splitter_node pSplitterNode, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_splitter_node_uninit(IntPtr pSplitterNode, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_biquad_node_config
@@ -6156,15 +6156,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_biquad_node_init(IntPtr pNodeGraph, ref ma_biquad_node_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_biquad_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_biquad_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_biquad_node_reinit(ref ma_biquad_config pConfig, ref ma_biquad_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_biquad_node_reinit(IntPtr pConfig, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_biquad_node_uninit(ref ma_biquad_node pNode, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_biquad_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_lpf_node_config
@@ -6186,15 +6186,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf_node_init(IntPtr pNodeGraph, ref ma_lpf_node_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_lpf_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_lpf_node_reinit(ref ma_lpf_config pConfig, ref ma_lpf_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_lpf_node_reinit(IntPtr pConfig, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_lpf_node_uninit(ref ma_lpf_node pNode, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_lpf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_hpf_node_config
@@ -6216,15 +6216,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf_node_init(IntPtr pNodeGraph, ref ma_hpf_node_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_hpf_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hpf_node_reinit(ref ma_hpf_config pConfig, ref ma_hpf_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hpf_node_reinit(IntPtr pConfig, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_hpf_node_uninit(ref ma_hpf_node pNode, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_hpf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_bpf_node_config
@@ -6246,15 +6246,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_bpf_node_init(IntPtr pNodeGraph, ref ma_bpf_node_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_bpf_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_bpf_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_bpf_node_reinit(ref ma_bpf_config pConfig, ref ma_bpf_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_bpf_node_reinit(IntPtr pConfig, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_bpf_node_uninit(ref ma_bpf_node pNode, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_bpf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_notch_node_config
@@ -6276,15 +6276,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_notch_node_init(IntPtr pNodeGraph, ref ma_notch_node_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_notch_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_notch_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_notch_node_reinit(ref ma_notch2_config pConfig, ref ma_notch_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_notch_node_reinit(IntPtr pConfig, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_notch_node_uninit(ref ma_notch_node pNode, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_notch_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_peak_node_config
@@ -6306,15 +6306,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_peak_node_init(IntPtr pNodeGraph, ref ma_peak_node_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_peak_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_peak_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_peak_node_reinit(ref ma_peak2_config pConfig, ref ma_peak_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_peak_node_reinit(IntPtr pConfig, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_peak_node_uninit(ref ma_peak_node pNode, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_peak_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_loshelf_node_config
@@ -6336,15 +6336,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_loshelf_node_init(IntPtr pNodeGraph, ref ma_loshelf_node_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_loshelf_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_loshelf_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_loshelf_node_reinit(ref ma_loshelf2_config pConfig, ref ma_loshelf_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_loshelf_node_reinit(IntPtr pConfig, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_loshelf_node_uninit(ref ma_loshelf_node pNode, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_loshelf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_hishelf_node_config
@@ -6366,15 +6366,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hishelf_node_init(IntPtr pNodeGraph, ref ma_hishelf_node_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_hishelf_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hishelf_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_hishelf_node_reinit(ref ma_hishelf2_config pConfig, ref ma_hishelf_node pNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_hishelf_node_reinit(IntPtr pConfig, IntPtr pNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_hishelf_node_uninit(ref ma_hishelf_node pNode, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_hishelf_node_uninit(IntPtr pNode, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_delay_node_config
@@ -6396,35 +6396,35 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_delay_node_init(IntPtr pNodeGraph, ref ma_delay_node_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_delay_node pDelayNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_delay_node_init(IntPtr pNodeGraph, IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pDelayNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_delay_node_uninit(ref ma_delay_node pDelayNode, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_delay_node_uninit(IntPtr pDelayNode, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_delay_node_set_wet(ref ma_delay_node pDelayNode, float value); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_delay_node_set_wet(IntPtr pDelayNode, float value); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_delay_node_get_wet(ref ma_delay_node pDelayNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_delay_node_get_wet(IntPtr pDelayNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_delay_node_set_dry(ref ma_delay_node pDelayNode, float value); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_delay_node_set_dry(IntPtr pDelayNode, float value); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_delay_node_get_dry(ref ma_delay_node pDelayNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_delay_node_get_dry(IntPtr pDelayNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_delay_node_set_decay(ref ma_delay_node pDelayNode, float value); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_delay_node_set_decay(IntPtr pDelayNode, float value); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_delay_node_get_decay(ref ma_delay_node pDelayNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_delay_node_get_decay(IntPtr pDelayNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     public enum ma_sound_flags
     {
@@ -6463,7 +6463,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_engine_node_config ma_engine_node_config_init(ref ma_engine pEngine, ma_engine_node_type type, uint flags); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_engine_node_config ma_engine_node_config_init(IntPtr pEngine, ma_engine_node_type type, uint flags); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_engine_node
@@ -6501,19 +6501,19 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_engine_node_get_heap_size(ref ma_engine_node_config pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_engine_node_get_heap_size(IntPtr pConfig, IntPtr pHeapSizeInBytes); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_engine_node_init_preallocated(ref ma_engine_node_config pConfig, IntPtr pHeap, ref ma_engine_node pEngineNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_engine_node_init_preallocated(IntPtr pConfig, IntPtr pHeap, IntPtr pEngineNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_engine_node_init(ref ma_engine_node_config pConfig, ref ma_allocation_callbacks pAllocationCallbacks, ref ma_engine_node pEngineNode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_engine_node_init(IntPtr pConfig, IntPtr pAllocationCallbacks, IntPtr pEngineNode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_engine_node_uninit(ref ma_engine_node pEngineNode, ref ma_allocation_callbacks pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_engine_node_uninit(IntPtr pEngineNode, IntPtr pAllocationCallbacks); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void ma_sound_end_proc(void* pUserData, ma_sound* pSound);
@@ -6550,7 +6550,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_sound_config ma_sound_config_init_2(ref ma_engine pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_sound_config ma_sound_config_init_2(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_sound
@@ -6582,7 +6582,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_sound_config ma_sound_group_config_init_2(ref ma_engine pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_sound_config ma_sound_group_config_init_2(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     public delegate void ma_engine_process_proc(void* pUserData, float* pFramesOut, ulong frameCount);
@@ -6653,15 +6653,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_engine_init(ref ma_engine_config pConfig, IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_engine_init(out ma_engine_config pConfig, IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_engine_uninit(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_engine_uninit(in ma_engine pEngine);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_engine_read_pcm_frames(IntPtr pEngine, IntPtr pFramesOut, ulong frameCount, ref ulong pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_engine_read_pcm_frames(IntPtr pEngine, IntPtr pFramesOut, ulong frameCount, IntPtr pFramesRead); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6677,7 +6677,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_log* ma_engine_get_log(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_engine_get_log(IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6801,27 +6801,27 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_engine_play_sound(IntPtr pEngine, IntPtr pFilePath, ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_engine_play_sound(IntPtr pEngine, IntPtr pFilePath, IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_sound_init_from_file(IntPtr pEngine, IntPtr pFilePath, uint flags, ref ma_sound pGroup, ref ma_fence pDoneFence, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_sound_init_from_file(IntPtr pEngine, IntPtr pFilePath, uint flags, IntPtr pGroup, IntPtr pDoneFence, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_sound_init_from_file_w(IntPtr pEngine, string pFilePath, uint flags, ref ma_sound pGroup, ref ma_fence pDoneFence, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_sound_init_from_file_w(IntPtr pEngine, string pFilePath, uint flags, IntPtr pGroup, IntPtr pDoneFence, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_sound_init_copy(IntPtr pEngine, IntPtr pExistingSound, uint flags, ref ma_sound pGroup, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_sound_init_copy(IntPtr pEngine, IntPtr pExistingSound, uint flags, IntPtr pGroup, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_sound_init_from_data_source(IntPtr pEngine, IntPtr pDataSource, uint flags, ref ma_sound pGroup, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_sound_init_from_data_source(IntPtr pEngine, IntPtr pDataSource, uint flags, IntPtr pGroup, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_sound_init_ex(IntPtr pEngine, ref ma_sound_config pConfig, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_sound_init_ex(IntPtr pEngine, IntPtr pConfig, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -7105,15 +7105,15 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_sound_get_data_format(IntPtr pSound, IntPtr pFormat, ref uint pChannels, ref uint pSampleRate, ref byte pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_sound_get_data_format(IntPtr pSound, IntPtr pFormat, IntPtr pChannels, IntPtr pSampleRate, IntPtr pChannelMap, UIntPtr channelMapCap); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_sound_get_cursor_in_pcm_frames(IntPtr pSound, ref ulong pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_sound_get_cursor_in_pcm_frames(IntPtr pSound, IntPtr pCursor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_sound_get_length_in_pcm_frames(IntPtr pSound, ref ulong pLength); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_sound_get_length_in_pcm_frames(IntPtr pSound, IntPtr pLength); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -7129,223 +7129,223 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_sound_group_init(IntPtr pEngine, uint flags, ref ma_sound pParentGroup, ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_sound_group_init(IntPtr pEngine, uint flags, IntPtr pParentGroup, IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_sound_group_init_ex(IntPtr pEngine, ref ma_sound_config pConfig, ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_sound_group_init_ex(IntPtr pEngine, IntPtr pConfig, IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_uninit(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_uninit(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial IntPtr ma_sound_group_get_engine(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial IntPtr ma_sound_group_get_engine(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_sound_group_start(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_sound_group_start(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_sound_group_stop(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_sound_group_stop(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_volume(ref ma_sound pGroup, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_volume(IntPtr pGroup, float volume); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_sound_group_get_volume(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_sound_group_get_volume(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_pan(ref ma_sound pGroup, float pan); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_pan(IntPtr pGroup, float pan); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_sound_group_get_pan(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_sound_group_get_pan(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_pan_mode(ref ma_sound pGroup, ma_pan_mode panMode); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_pan_mode(IntPtr pGroup, ma_pan_mode panMode); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_pan_mode ma_sound_group_get_pan_mode(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_pan_mode ma_sound_group_get_pan_mode(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_pitch(ref ma_sound pGroup, float pitch); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_pitch(IntPtr pGroup, float pitch); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_sound_group_get_pitch(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_sound_group_get_pitch(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_spatialization_enabled(ref ma_sound pGroup, uint enabled); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_spatialization_enabled(IntPtr pGroup, uint enabled); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_sound_group_is_spatialization_enabled(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_sound_group_is_spatialization_enabled(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_pinned_listener_index(ref ma_sound pGroup, uint listenerIndex); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_pinned_listener_index(IntPtr pGroup, uint listenerIndex); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_sound_group_get_pinned_listener_index(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_sound_group_get_pinned_listener_index(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_sound_group_get_listener_index(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_sound_group_get_listener_index(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_vec3f ma_sound_group_get_direction_to_listener(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_vec3f ma_sound_group_get_direction_to_listener(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_position(ref ma_sound pGroup, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_position(IntPtr pGroup, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_vec3f ma_sound_group_get_position(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_vec3f ma_sound_group_get_position(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_direction(ref ma_sound pGroup, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_direction(IntPtr pGroup, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_vec3f ma_sound_group_get_direction(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_vec3f ma_sound_group_get_direction(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_velocity(ref ma_sound pGroup, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_velocity(IntPtr pGroup, float x, float y, float z); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_vec3f ma_sound_group_get_velocity(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_vec3f ma_sound_group_get_velocity(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_attenuation_model(ref ma_sound pGroup, ma_attenuation_model attenuationModel); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_attenuation_model(IntPtr pGroup, ma_attenuation_model attenuationModel); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_attenuation_model ma_sound_group_get_attenuation_model(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_attenuation_model ma_sound_group_get_attenuation_model(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_positioning(ref ma_sound pGroup, ma_positioning positioning); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_positioning(IntPtr pGroup, ma_positioning positioning); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_positioning ma_sound_group_get_positioning(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_positioning ma_sound_group_get_positioning(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_rolloff(ref ma_sound pGroup, float rolloff); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_rolloff(IntPtr pGroup, float rolloff); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_sound_group_get_rolloff(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_sound_group_get_rolloff(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_min_gain(ref ma_sound pGroup, float minGain); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_min_gain(IntPtr pGroup, float minGain); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_sound_group_get_min_gain(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_sound_group_get_min_gain(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_max_gain(ref ma_sound pGroup, float maxGain); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_max_gain(IntPtr pGroup, float maxGain); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_sound_group_get_max_gain(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_sound_group_get_max_gain(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_min_distance(ref ma_sound pGroup, float minDistance); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_min_distance(IntPtr pGroup, float minDistance); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_sound_group_get_min_distance(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_sound_group_get_min_distance(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_max_distance(ref ma_sound pGroup, float maxDistance); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_max_distance(IntPtr pGroup, float maxDistance); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_sound_group_get_max_distance(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_sound_group_get_max_distance(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_cone(ref ma_sound pGroup, float innerAngleInRadians, float outerAngleInRadians, float outerGain); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_cone(IntPtr pGroup, float innerAngleInRadians, float outerAngleInRadians, float outerGain); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_get_cone(ref ma_sound pGroup, IntPtr pInnerAngleInRadians, IntPtr pOuterAngleInRadians, IntPtr pOuterGain); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_get_cone(IntPtr pGroup, IntPtr pInnerAngleInRadians, IntPtr pOuterAngleInRadians, IntPtr pOuterGain); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_doppler_factor(ref ma_sound pGroup, float dopplerFactor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_doppler_factor(IntPtr pGroup, float dopplerFactor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_sound_group_get_doppler_factor(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_sound_group_get_doppler_factor(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_directional_attenuation_factor(ref ma_sound pGroup, float directionalAttenuationFactor); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_directional_attenuation_factor(IntPtr pGroup, float directionalAttenuationFactor); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_sound_group_get_directional_attenuation_factor(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_sound_group_get_directional_attenuation_factor(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_fade_in_pcm_frames(ref ma_sound pGroup, float volumeBeg, float volumeEnd, ulong fadeLengthInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_fade_in_pcm_frames(IntPtr pGroup, float volumeBeg, float volumeEnd, ulong fadeLengthInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_fade_in_milliseconds(ref ma_sound pGroup, float volumeBeg, float volumeEnd, ulong fadeLengthInMilliseconds); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_fade_in_milliseconds(IntPtr pGroup, float volumeBeg, float volumeEnd, ulong fadeLengthInMilliseconds); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial float ma_sound_group_get_current_fade_volume(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial float ma_sound_group_get_current_fade_volume(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_start_time_in_pcm_frames(ref ma_sound pGroup, ulong absoluteGlobalTimeInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_start_time_in_pcm_frames(IntPtr pGroup, ulong absoluteGlobalTimeInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_start_time_in_milliseconds(ref ma_sound pGroup, ulong absoluteGlobalTimeInMilliseconds); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_start_time_in_milliseconds(IntPtr pGroup, ulong absoluteGlobalTimeInMilliseconds); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_stop_time_in_pcm_frames(ref ma_sound pGroup, ulong absoluteGlobalTimeInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_stop_time_in_pcm_frames(IntPtr pGroup, ulong absoluteGlobalTimeInFrames); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial void ma_sound_group_set_stop_time_in_milliseconds(ref ma_sound pGroup, ulong absoluteGlobalTimeInMilliseconds); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial void ma_sound_group_set_stop_time_in_milliseconds(IntPtr pGroup, ulong absoluteGlobalTimeInMilliseconds); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial uint ma_sound_group_is_playing(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial uint ma_sound_group_is_playing(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ulong ma_sound_group_get_time_in_pcm_frames(ref ma_sound pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ulong ma_sound_group_get_time_in_pcm_frames(IntPtr pGroup); // WARN_UNKNOWN_POINTER_PARAMETER
 
 
 }

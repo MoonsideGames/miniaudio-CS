@@ -164,7 +164,7 @@ internal static class UserProvidedData
         { ("ma_decoder_get_available_frames", "pDecoder"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10098:18
         { ("ma_decode_from_vfs", "ppPCMFramesOut"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10104:18
         { ("ma_decode_file", "ppPCMFramesOut"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10105:18
-        { ("ma_decode_memory", "ppPCMFramesOut"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10106:18
+        { ("ma_decode_memory", "ppPCMFramesOut"), PointerFunctionDataIntent.Out }, // ../miniaudio/miniaudio.h:10106:18
         { ("ma_encoder_init", "pEncoder"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10159:18
         { ("ma_encoder_init_vfs", "pEncoder"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10160:18
         { ("ma_encoder_init_vfs_w", "pEncoder"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10161:18
@@ -273,7 +273,7 @@ internal static class UserProvidedData
         { ("ma_delay_node_init", "pNodeGraph"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11096:18
         { ("ma_engine_node_get_heap_size", "pHeapSizeInBytes"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11200:18
         { ("ma_engine_init", "pEngine"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11344:18
-        { ("ma_engine_uninit", "pEngine"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11345:13
+        { ("ma_engine_uninit", "pEngine"), PointerFunctionDataIntent.In }, // ../miniaudio/miniaudio.h:11345:13
         { ("ma_engine_read_pcm_frames", "pEngine"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11346:18
         { ("ma_engine_get_node_graph", "__return"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11347:23
         { ("ma_engine_get_node_graph", "pEngine"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11347:23
@@ -1066,8 +1066,8 @@ internal static class UserProvidedData
         { ("ma_decode_from_vfs", "pFrameCountOut"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10104:18
         { ("ma_decode_file", "pConfig"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10105:18
         { ("ma_decode_file", "pFrameCountOut"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10105:18
-        { ("ma_decode_memory", "pConfig"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10106:18
-        { ("ma_decode_memory", "pFrameCountOut"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10106:18
+        { ("ma_decode_memory", "pConfig"), PointerFunctionDataIntent.In }, // ../miniaudio/miniaudio.h:10106:18
+        { ("ma_decode_memory", "pFrameCountOut"), PointerFunctionDataIntent.Out }, // ../miniaudio/miniaudio.h:10106:18
         { ("ma_encoder_init", "pConfig"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10159:18
         { ("ma_encoder_init_vfs", "pConfig"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10160:18
         { ("ma_encoder_init_vfs_w", "pConfig"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10161:18
@@ -1242,7 +1242,7 @@ internal static class UserProvidedData
         { ("ma_engine_node_uninit", "pAllocationCallbacks"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11203:13
         { ("ma_sound_config_init_2", "pEngine"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11239:24
         { ("ma_sound_group_config_init_2", "pEngine"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11277:30
-        { ("ma_engine_init", "pConfig"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11344:18
+        { ("ma_engine_init", "pConfig"), PointerFunctionDataIntent.Out }, // ../miniaudio/miniaudio.h:11344:18
         { ("ma_engine_read_pcm_frames", "pFramesRead"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11346:18
         { ("ma_engine_get_log", "__return"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11352:16
         { ("ma_engine_play_sound", "pGroup"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11387:18
