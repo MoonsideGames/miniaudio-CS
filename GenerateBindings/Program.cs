@@ -1112,8 +1112,6 @@ public static unsafe class Interop
             "unsigned-char"    => "byte",
             "void"             => "void",
             "pointer"          => "IntPtr",
-            "pthread_t"        => "IntPtr",
-            "pthread_mutex_t"  => "IntPtr",
             "function-pointer" => "FUNCTION_POINTER",
             "enum"             => type.Name!,
             "struct"           => GetAnonymousTypedef(type).Name!,
@@ -1230,9 +1228,11 @@ public static unsafe class Interop
                 }
                 else
                 {
+                    var nestedStructName = field.Name! + "__Nested";
+
                     structDefinition.OffsetFields.Add((
                         byteOffset + (uint) field.BitOffset! / 8,
-                        ConstructStruct(field.Name!, fieldTypedef)
+                        $"public {nestedStructName} {field.Name!};\n\n{ConstructStruct(field.Name! + "__Nested", fieldTypedef)}"
                     ));
                 }
             }
@@ -1244,9 +1244,12 @@ public static unsafe class Interop
                     name = "Anonymous" + structDefinition.AnonymousTypeCounter;
                     structDefinition.AnonymousTypeCounter += 1;
                 }
+
+                var nestedStructName = name + "__Nested";
+
                 structDefinition.OffsetFields.Add((
                     byteOffset + (uint) field.BitOffset! / 8,
-                    ConstructUnion(name, fieldTypedef)
+                    $"public {nestedStructName} {name};\n\n{ConstructUnion(nestedStructName, fieldTypedef)}"
                 ));
             }
             else if (fieldTypeName == "" && fieldTypedef.Tag == "enum" && fieldTypedef.ID.HasValue)

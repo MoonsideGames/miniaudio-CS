@@ -1,5 +1,6 @@
 #!/bin/sh
 cat > tmp.c <<- EOM
+#define NO_PTHREAD_IN_HEADER
 #include "miniaudio.h"
 EOM
 

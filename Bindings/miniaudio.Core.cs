@@ -1735,8 +1735,10 @@ public static unsafe partial class Interop
         public uint inAdvanceFrac;
         public uint inTimeInt;
         public uint inTimeFrac;
+        public x0__Nested x0;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct x0
+        public struct x0__Nested
         {
             [FieldOffset(0)]
             public float* f32;
@@ -1745,8 +1747,10 @@ public static unsafe partial class Interop
         }
 
 
+        public x1__Nested x1;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct x1
+        public struct x1__Nested
         {
             [FieldOffset(0)]
             public float* f32;
@@ -1839,8 +1843,10 @@ public static unsafe partial class Interop
         public ma_resample_algorithm algorithm;
         public ma_resampling_backend_vtable* pBackendVTable;
         public IntPtr pBackendUserData;
+        public linear__Nested linear;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct linear
+        public struct linear__Nested
         {
             public uint lpfOrder;
         }
@@ -1862,8 +1868,10 @@ public static unsafe partial class Interop
         public uint channels;
         public uint sampleRateIn;
         public uint sampleRateOut;
+        public state__Nested state;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct state
+        public struct state__Nested
         {
             [FieldOffset(0)]
             public ma_linear_resampler linear;
@@ -1968,8 +1976,10 @@ public static unsafe partial class Interop
         public byte* pChannelMapIn;
         public byte* pChannelMapOut;
         public byte* pShuffleTable;
+        public weights__Nested weights;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct weights
+        public struct weights__Nested
         {
             [FieldOffset(0)]
             public float** f32;
@@ -3088,12 +3098,16 @@ public static unsafe partial class Interop
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_job
     {
+        public toc__Nested toc;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct toc
+        public struct toc__Nested
         {
             [FieldOffset(0)]
+            public breakup__Nested breakup;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct breakup
+            public struct breakup__Nested
             {
                 public ushort code;
                 public ushort slot;
@@ -3108,12 +3122,16 @@ public static unsafe partial class Interop
 
         public ulong next;
         public uint order;
+        public data__Nested data;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct data
+        public struct data__Nested
         {
             [FieldOffset(0)]
+            public custom__Nested custom;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct custom
+            public struct custom__Nested
             {
                 public IntPtr proc; // ma_job_proc
                 public ulong data0;
@@ -3122,12 +3140,16 @@ public static unsafe partial class Interop
 
 
             [FieldOffset(0)]
+            public resourceManager__Nested resourceManager;
+
             [StructLayout(LayoutKind.Explicit)]
-            public struct resourceManager
+            public struct resourceManager__Nested
             {
                 [FieldOffset(0)]
+                public loadDataBufferNode__Nested loadDataBufferNode;
+
                 [StructLayout(LayoutKind.Sequential)]
-                public struct loadDataBufferNode
+                public struct loadDataBufferNode__Nested
                 {
                     public IntPtr pResourceManager;
                     public IntPtr pDataBufferNode;
@@ -3142,8 +3164,10 @@ public static unsafe partial class Interop
 
 
                 [FieldOffset(0)]
+                public freeDataBufferNode__Nested freeDataBufferNode;
+
                 [StructLayout(LayoutKind.Sequential)]
-                public struct freeDataBufferNode
+                public struct freeDataBufferNode__Nested
                 {
                     public IntPtr pResourceManager;
                     public IntPtr pDataBufferNode;
@@ -3153,8 +3177,10 @@ public static unsafe partial class Interop
 
 
                 [FieldOffset(0)]
+                public pageDataBufferNode__Nested pageDataBufferNode;
+
                 [StructLayout(LayoutKind.Sequential)]
-                public struct pageDataBufferNode
+                public struct pageDataBufferNode__Nested
                 {
                     public IntPtr pResourceManager;
                     public IntPtr pDataBufferNode;
@@ -3165,8 +3191,10 @@ public static unsafe partial class Interop
 
 
                 [FieldOffset(0)]
+                public loadDataBuffer__Nested loadDataBuffer;
+
                 [StructLayout(LayoutKind.Sequential)]
-                public struct loadDataBuffer
+                public struct loadDataBuffer__Nested
                 {
                     public IntPtr pDataBuffer;
                     public IntPtr pInitNotification;
@@ -3182,8 +3210,10 @@ public static unsafe partial class Interop
 
 
                 [FieldOffset(0)]
+                public freeDataBuffer__Nested freeDataBuffer;
+
                 [StructLayout(LayoutKind.Sequential)]
-                public struct freeDataBuffer
+                public struct freeDataBuffer__Nested
                 {
                     public IntPtr pDataBuffer;
                     public IntPtr pDoneNotification;
@@ -3192,8 +3222,10 @@ public static unsafe partial class Interop
 
 
                 [FieldOffset(0)]
+                public loadDataStream__Nested loadDataStream;
+
                 [StructLayout(LayoutKind.Sequential)]
-                public struct loadDataStream
+                public struct loadDataStream__Nested
                 {
                     public IntPtr pDataStream;
                     public byte* pFilePath;
@@ -3205,8 +3237,10 @@ public static unsafe partial class Interop
 
 
                 [FieldOffset(0)]
+                public freeDataStream__Nested freeDataStream;
+
                 [StructLayout(LayoutKind.Sequential)]
-                public struct freeDataStream
+                public struct freeDataStream__Nested
                 {
                     public IntPtr pDataStream;
                     public IntPtr pDoneNotification;
@@ -3215,8 +3249,10 @@ public static unsafe partial class Interop
 
 
                 [FieldOffset(0)]
+                public pageDataStream__Nested pageDataStream;
+
                 [StructLayout(LayoutKind.Sequential)]
-                public struct pageDataStream
+                public struct pageDataStream__Nested
                 {
                     public IntPtr pDataStream;
                     public uint pageIndex;
@@ -3224,8 +3260,10 @@ public static unsafe partial class Interop
 
 
                 [FieldOffset(0)]
+                public seekDataStream__Nested seekDataStream;
+
                 [StructLayout(LayoutKind.Sequential)]
-                public struct seekDataStream
+                public struct seekDataStream__Nested
                 {
                     public IntPtr pDataStream;
                     public ulong frameIndex;
@@ -3236,16 +3274,22 @@ public static unsafe partial class Interop
 
 
             [FieldOffset(0)]
+            public device__Nested device;
+
             [StructLayout(LayoutKind.Explicit)]
-            public struct device
+            public struct device__Nested
             {
                 [FieldOffset(0)]
+                public aaudio__Nested aaudio;
+
                 [StructLayout(LayoutKind.Explicit)]
-                public struct aaudio
+                public struct aaudio__Nested
                 {
                     [FieldOffset(0)]
+                    public reroute__Nested reroute;
+
                     [StructLayout(LayoutKind.Sequential)]
-                    public struct reroute
+                    public struct reroute__Nested
                     {
                         public IntPtr pDevice;
                         public uint deviceType;
@@ -3411,36 +3455,46 @@ public static unsafe partial class Interop
     {
         public ma_device* pDevice;
         public ma_device_notification_type type;
+        public data__Nested data;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct data
+        public struct data__Nested
         {
             [FieldOffset(0)]
+            public started__Nested started;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct started
+            public struct started__Nested
             {
                 public int _unused;
             }
 
 
             [FieldOffset(0)]
+            public stopped__Nested stopped;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct stopped
+            public struct stopped__Nested
             {
                 public int _unused;
             }
 
 
             [FieldOffset(0)]
+            public rerouted__Nested rerouted;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct rerouted
+            public struct rerouted__Nested
             {
                 public int _unused;
             }
 
 
             [FieldOffset(0)]
+            public interruption__Nested interruption;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct interruption
+            public struct interruption__Nested
             {
                 public int _unused;
             }
@@ -3613,8 +3667,10 @@ public static unsafe partial class Interop
         [FieldOffset(0)]
         public fixed byte webaudio[32];
         [FieldOffset(0)]
+        public custom__Nested custom;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct custom
+        public struct custom__Nested
         {
             [FieldOffset(0)]
             public int i;
@@ -3677,8 +3733,10 @@ public static unsafe partial class Interop
         public IntPtr stopCallback; // ma_stop_proc
         public IntPtr pUserData;
         public ma_resampler_config resampling;
+        public playback__Nested playback;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct playback
+        public struct playback__Nested
         {
             public ma_device_id* pDeviceID;
             public ma_format format;
@@ -3690,8 +3748,10 @@ public static unsafe partial class Interop
         }
 
 
+        public capture__Nested capture;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct capture
+        public struct capture__Nested
         {
             public ma_device_id* pDeviceID;
             public ma_format format;
@@ -3703,8 +3763,10 @@ public static unsafe partial class Interop
         }
 
 
+        public wasapi__Nested wasapi;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct wasapi
+        public struct wasapi__Nested
         {
             public ma_wasapi_usage usage;
             public byte noAutoConvertSRC;
@@ -3716,8 +3778,10 @@ public static unsafe partial class Interop
         }
 
 
+        public alsa__Nested alsa;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct alsa
+        public struct alsa__Nested
         {
             public uint noMMap;
             public uint noAutoFormat;
@@ -3726,8 +3790,10 @@ public static unsafe partial class Interop
         }
 
 
+        public pulse__Nested pulse;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct pulse
+        public struct pulse__Nested
         {
             public byte* pStreamNamePlayback;
             public byte* pStreamNameCapture;
@@ -3735,15 +3801,19 @@ public static unsafe partial class Interop
         }
 
 
+        public coreaudio__Nested coreaudio;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct coreaudio
+        public struct coreaudio__Nested
         {
             public uint allowNominalSampleRateChange;
         }
 
 
+        public opensl__Nested opensl;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct opensl
+        public struct opensl__Nested
         {
             public ma_opensl_stream_type streamType;
             public ma_opensl_recording_preset recordingPreset;
@@ -3751,8 +3821,10 @@ public static unsafe partial class Interop
         }
 
 
+        public aaudio__Nested aaudio;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct aaudio
+        public struct aaudio__Nested
         {
             public ma_aaudio_usage usage;
             public ma_aaudio_content_type contentType;
@@ -3809,22 +3881,28 @@ public static unsafe partial class Interop
         public UIntPtr threadStackSize;
         public IntPtr pUserData;
         public ma_allocation_callbacks allocationCallbacks;
+        public dsound__Nested dsound;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct dsound
+        public struct dsound__Nested
         {
             public IntPtr hWnd;
         }
 
 
+        public alsa__Nested alsa;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct alsa
+        public struct alsa__Nested
         {
             public uint useVerboseDeviceEnumeration;
         }
 
 
+        public pulse__Nested pulse;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct pulse
+        public struct pulse__Nested
         {
             public byte* pApplicationName;
             public byte* pServerName;
@@ -3832,8 +3910,10 @@ public static unsafe partial class Interop
         }
 
 
+        public coreaudio__Nested coreaudio;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct coreaudio
+        public struct coreaudio__Nested
         {
             public ma_ios_session_category sessionCategory;
             public uint sessionCategoryOptions;
@@ -3842,8 +3922,10 @@ public static unsafe partial class Interop
         }
 
 
+        public jack__Nested jack;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct jack
+        public struct jack__Nested
         {
             public byte* pClientName;
             public uint tryStartServer;
@@ -3858,20 +3940,26 @@ public static unsafe partial class Interop
     {
         public int code;
         public ma_event* pEvent;
+        public data__Nested data;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct data
+        public struct data__Nested
         {
             [FieldOffset(0)]
+            public quit__Nested quit;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct quit
+            public struct quit__Nested
             {
                 public int _unused;
             }
 
 
             [FieldOffset(0)]
+            public createAudioClient__Nested createAudioClient;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct createAudioClient
+            public struct createAudioClient__Nested
             {
                 public ma_device_type deviceType;
                 public IntPtr pAudioClient;
@@ -3881,8 +3969,10 @@ public static unsafe partial class Interop
 
 
             [FieldOffset(0)]
+            public releaseAudioClient__Nested releaseAudioClient;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct releaseAudioClient
+            public struct releaseAudioClient__Nested
             {
                 public ma_device* pDevice;
                 public ma_device_type deviceType;
@@ -3911,12 +4001,16 @@ public static unsafe partial class Interop
         public uint playbackDeviceInfoCount;
         public uint captureDeviceInfoCount;
         public ma_device_info* pDeviceInfos;
+        public Anonymous0__Nested Anonymous0;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct Anonymous0
+        public struct Anonymous0__Nested
         {
             [FieldOffset(0)]
+            public alsa__Nested alsa;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct alsa
+            public struct alsa__Nested
             {
                 public IntPtr asoundSO;
                 public IntPtr snd_pcm_open;
@@ -3992,8 +4086,10 @@ public static unsafe partial class Interop
 
 
             [FieldOffset(0)]
+            public pulse__Nested pulse;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct pulse
+            public struct pulse__Nested
             {
                 public IntPtr pulseSO;
                 public IntPtr pa_mainloop_new;
@@ -4065,8 +4161,10 @@ public static unsafe partial class Interop
 
 
             [FieldOffset(0)]
+            public jack__Nested jack;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct jack
+            public struct jack__Nested
             {
                 public IntPtr jackSO;
                 public IntPtr jack_client_open;
@@ -4091,8 +4189,10 @@ public static unsafe partial class Interop
 
 
             [FieldOffset(0)]
+            public null_backend__Nested null_backend;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct null_backend
+            public struct null_backend__Nested
             {
                 public int _unused;
             }
@@ -4101,12 +4201,16 @@ public static unsafe partial class Interop
         }
 
 
+        public Anonymous1__Nested Anonymous1;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct Anonymous1
+        public struct Anonymous1__Nested
         {
             [FieldOffset(0)]
+            public posix__Nested posix;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct posix
+            public struct posix__Nested
             {
                 public int _unused;
             }
@@ -4143,14 +4247,18 @@ public static unsafe partial class Interop
         public byte noFixedSizedCallback;
         public ma_atomic_float masterVolumeFactor;
         public ma_duplex_rb duplexRB;
+        public resampling__Nested resampling;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct resampling
+        public struct resampling__Nested
         {
             public ma_resample_algorithm algorithm;
             public ma_resampling_backend_vtable* pBackendVTable;
             public IntPtr pBackendUserData;
+            public linear__Nested linear;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct linear
+            public struct linear__Nested
             {
                 public uint lpfOrder;
             }
@@ -4159,8 +4267,10 @@ public static unsafe partial class Interop
         }
 
 
+        public playback__Nested playback;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct playback
+        public struct playback__Nested
         {
             public ma_device_id* pID;
             public ma_device_id id;
@@ -4188,8 +4298,10 @@ public static unsafe partial class Interop
         }
 
 
+        public capture__Nested capture;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct capture
+        public struct capture__Nested
         {
             public ma_device_id* pID;
             public ma_device_id id;
@@ -4213,12 +4325,16 @@ public static unsafe partial class Interop
         }
 
 
+        public Anonymous0__Nested Anonymous0;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct Anonymous0
+        public struct Anonymous0__Nested
         {
             [FieldOffset(0)]
+            public alsa__Nested alsa;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct alsa
+            public struct alsa__Nested
             {
                 public IntPtr pPCMPlayback;
                 public IntPtr pPCMCapture;
@@ -4234,8 +4350,10 @@ public static unsafe partial class Interop
 
 
             [FieldOffset(0)]
+            public pulse__Nested pulse;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct pulse
+            public struct pulse__Nested
             {
                 public IntPtr pMainLoop;
                 public IntPtr pPulseContext;
@@ -4245,8 +4363,10 @@ public static unsafe partial class Interop
 
 
             [FieldOffset(0)]
+            public jack__Nested jack;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct jack
+            public struct jack__Nested
             {
                 public IntPtr pClient;
                 public IntPtr* ppPortsPlayback;
@@ -4257,8 +4377,10 @@ public static unsafe partial class Interop
 
 
             [FieldOffset(0)]
+            public null_device__Nested null_device;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct null_device
+            public struct null_device__Nested
             {
                 public IntPtr deviceThread;
                 public ma_event operationEvent;
@@ -4763,12 +4885,16 @@ public static unsafe partial class Interop
         public ulong inputCacheConsumed;
         public ulong inputCacheRemaining;
         public ma_allocation_callbacks allocationCallbacks;
+        public data__Nested data;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct data
+        public struct data__Nested
         {
             [FieldOffset(0)]
+            public vfs__Nested vfs;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct vfs
+            public struct vfs__Nested
             {
                 public IntPtr pVFS;
                 public IntPtr file;
@@ -4776,8 +4902,10 @@ public static unsafe partial class Interop
 
 
             [FieldOffset(0)]
+            public memory__Nested memory;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct memory
+            public struct memory__Nested
             {
                 public byte* pData;
                 public UIntPtr dataSize;
@@ -4902,12 +5030,16 @@ public static unsafe partial class Interop
         public IntPtr onWritePCMFrames; // ma_encoder_write_pcm_frames_proc
         public IntPtr pUserData;
         public IntPtr pInternalEncoder;
+        public data__Nested data;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct data
+        public struct data__Nested
         {
             [FieldOffset(0)]
+            public vfs__Nested vfs;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct vfs
+            public struct vfs__Nested
             {
                 public IntPtr pVFS;
                 public IntPtr file;
@@ -5093,12 +5225,16 @@ public static unsafe partial class Interop
         public ma_data_source_base ds;
         public ma_noise_config config;
         public ma_lcg lcg;
+        public state__Nested state;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct state
+        public struct state__Nested
         {
             [FieldOffset(0)]
+            public pink__Nested pink;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct pink
+            public struct pink__Nested
             {
                 public double** bin;
                 public double* accumulation;
@@ -5107,8 +5243,10 @@ public static unsafe partial class Interop
 
 
             [FieldOffset(0)]
+            public brownian__Nested brownian;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct brownian
+            public struct brownian__Nested
             {
                 public double* accumulation;
             }
@@ -5218,12 +5356,16 @@ public static unsafe partial class Interop
     public struct ma_resource_manager_data_supply
     {
         public ma_resource_manager_data_supply_type type;
+        public backend__Nested backend;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct backend
+        public struct backend__Nested
         {
             [FieldOffset(0)]
+            public encoded__Nested encoded;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct encoded
+            public struct encoded__Nested
             {
                 public IntPtr pData;
                 public UIntPtr sizeInBytes;
@@ -5231,8 +5373,10 @@ public static unsafe partial class Interop
 
 
             [FieldOffset(0)]
+            public decoded__Nested decoded;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct decoded
+            public struct decoded__Nested
             {
                 public IntPtr pData;
                 public ulong totalFrameCount;
@@ -5244,8 +5388,10 @@ public static unsafe partial class Interop
 
 
             [FieldOffset(0)]
+            public decodedPaged__Nested decodedPaged;
+
             [StructLayout(LayoutKind.Sequential)]
-            public struct decodedPaged
+            public struct decodedPaged__Nested
             {
                 public ma_paged_audio_buffer_data data;
                 public ulong decodedFrameCount;
@@ -5287,8 +5433,10 @@ public static unsafe partial class Interop
         public ma_result result;
         public uint isLooping;
         public ma_atomic_bool32 isConnectorInitialized;
+        public connector__Nested connector;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct connector
+        public struct connector__Nested
         {
             [FieldOffset(0)]
             public ma_decoder decoder;
@@ -5327,8 +5475,10 @@ public static unsafe partial class Interop
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_resource_manager_data_source
     {
+        public backend__Nested backend;
+
         [StructLayout(LayoutKind.Explicit)]
-        public struct backend
+        public struct backend__Nested
         {
             [FieldOffset(0)]
             public ma_resource_manager_data_buffer buffer;
@@ -6275,8 +6425,10 @@ public static unsafe partial class Interop
         public uint isPitchDisabled;
         public uint isSpatializationDisabled;
         public uint pinnedListenerIndex;
+        public fadeSettings__Nested fadeSettings;
+
         [StructLayout(LayoutKind.Sequential)]
-        public struct fadeSettings
+        public struct fadeSettings__Nested
         {
             public ma_atomic_float volumeBeg;
             public ma_atomic_float volumeEnd;

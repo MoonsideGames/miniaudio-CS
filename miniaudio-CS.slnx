@@ -1,3 +1,6 @@
 <Solution>
+  <Folder Name="/Bindings/">
+    <Project Path="Bindings/miniaudio.Core.csproj" />
+  </Folder>
   <Project Path="GenerateBindings/GenerateBindings.csproj" />
 </Solution>
