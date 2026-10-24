@@ -133,7 +133,7 @@ internal static partial class Program
             {
                 TypedefMap[entry.Name!] = entry.Type!;
 
-                if (entry.Type!.Tag == "struct" && entry.Type!.Name == "")
+                if ((entry.Type!.Tag == "struct" || entry.Type!.Tag == "union") && entry.Type!.Name == "")
                 {
                     if (AnonymousTypeIDMap.ContainsKey(entry.Type.ID!.Value))
                     {
@@ -1118,7 +1118,7 @@ public static unsafe class Interop
             "enum"             => type.Name!,
             "struct"           => GetAnonymousTypedef(type).Name!,
             "array"            => "INLINE_ARRAY",
-            "union"            => type.Name!,
+            "union"            => GetAnonymousTypedef(type).Name!,
             _                  => type.Tag!
         };
     }
@@ -1164,21 +1164,6 @@ public static unsafe class Interop
         var definitions = new StringBuilder();
         ConstructStructFields(structDefinition, entry, typePrefix: $"{structName}_");
 
-        // FIXME: what if the union contains a bitfield...
-        // if (StructDefinition.ContainsUnion)
-        // {
-        //     definitions.Append("[StructLayout(LayoutKind.Explicit)]\n");
-        //     definitions.Append($"public struct {structName}\n{{\n");
-
-        //     foreach (var (offset, field) in StructDefinition.OffsetFields)
-        //     {
-        //         definitions.Append($"[FieldOffset({offset})]\n");
-        //         definitions.Append($"{field}\n");
-        //     }
-
-        //     definitions.Append("}\n\n");
-        // }
-        // else
         if (structDefinition.ContainsBitfield)
         {
             definitions.Append("[StructLayout(LayoutKind.Sequential)]\n");

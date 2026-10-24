@@ -444,58 +444,13 @@ public static unsafe partial class Interop
     {
         public ma_format format;
         public uint channels;
-        [StructLayout(LayoutKind.Explicit)]
-        public struct b0
-        {
-            [FieldOffset(0)]
-            public float f32;
-            [FieldOffset(0)]
-            public int s32;
-        }
-
-
-        [StructLayout(LayoutKind.Explicit)]
-        public struct b1
-        {
-            [FieldOffset(0)]
-            public float f32;
-            [FieldOffset(0)]
-            public int s32;
-        }
-
-
-        [StructLayout(LayoutKind.Explicit)]
-        public struct b2
-        {
-            [FieldOffset(0)]
-            public float f32;
-            [FieldOffset(0)]
-            public int s32;
-        }
-
-
-        [StructLayout(LayoutKind.Explicit)]
-        public struct a1
-        {
-            [FieldOffset(0)]
-            public float f32;
-            [FieldOffset(0)]
-            public int s32;
-        }
-
-
-        [StructLayout(LayoutKind.Explicit)]
-        public struct a2
-        {
-            [FieldOffset(0)]
-            public float f32;
-            [FieldOffset(0)]
-            public int s32;
-        }
-
-
-        public * pR1;
-        public * pR2;
+        public ma_biquad_coefficient b0;
+        public ma_biquad_coefficient b1;
+        public ma_biquad_coefficient b2;
+        public ma_biquad_coefficient a1;
+        public ma_biquad_coefficient a2;
+        public ma_biquad_coefficient* pR1;
+        public ma_biquad_coefficient* pR2;
         public IntPtr _pHeap;
         public uint _ownsHeap;
     }
@@ -565,17 +520,8 @@ public static unsafe partial class Interop
     {
         public ma_format format;
         public uint channels;
-        [StructLayout(LayoutKind.Explicit)]
-        public struct a
-        {
-            [FieldOffset(0)]
-            public float f32;
-            [FieldOffset(0)]
-            public int s32;
-        }
-
-
-        public * pR1;
+        public ma_biquad_coefficient a;
+        public ma_biquad_coefficient* pR1;
         public IntPtr _pHeap;
         public uint _ownsHeap;
     }
@@ -743,17 +689,8 @@ public static unsafe partial class Interop
     {
         public ma_format format;
         public uint channels;
-        [StructLayout(LayoutKind.Explicit)]
-        public struct a
-        {
-            [FieldOffset(0)]
-            public float f32;
-            [FieldOffset(0)]
-            public int s32;
-        }
-
-
-        public * pR1;
+        public ma_biquad_coefficient a;
+        public ma_biquad_coefficient* pR1;
         public IntPtr _pHeap;
         public uint _ownsHeap;
     }
@@ -3699,53 +3636,7 @@ public static unsafe partial class Interop
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_device_info
     {
-        [StructLayout(LayoutKind.Explicit)]
-        public struct id
-        {
-            [FieldOffset(0)]
-            public fixed ushort wasapi[64];
-            [FieldOffset(0)]
-            public fixed byte dsound[16];
-            [FieldOffset(0)]
-            public uint winmm;
-            [FieldOffset(0)]
-            public fixed byte alsa[256];
-            [FieldOffset(0)]
-            public fixed byte pulse[256];
-            [FieldOffset(0)]
-            public int jack;
-            [FieldOffset(0)]
-            public fixed byte coreaudio[256];
-            [FieldOffset(0)]
-            public fixed byte sndio[256];
-            [FieldOffset(0)]
-            public fixed byte audio4[256];
-            [FieldOffset(0)]
-            public fixed byte oss[64];
-            [FieldOffset(0)]
-            public int aaudio;
-            [FieldOffset(0)]
-            public uint opensl;
-            [FieldOffset(0)]
-            public fixed byte webaudio[32];
-            [FieldOffset(0)]
-            [StructLayout(LayoutKind.Explicit)]
-            public struct custom
-            {
-                [FieldOffset(0)]
-                public int i;
-                [FieldOffset(0)]
-                public fixed byte s[256];
-                [FieldOffset(0)]
-                public IntPtr p;
-            }
-
-
-            [FieldOffset(0)]
-            public int nullbackend;
-        }
-
-
+        public ma_device_id id;
         public fixed byte name[256];
         public uint isDefault;
         public uint nativeDataFormatCount;
@@ -3789,7 +3680,7 @@ public static unsafe partial class Interop
         [StructLayout(LayoutKind.Sequential)]
         public struct playback
         {
-            public * pDeviceID;
+            public ma_device_id* pDeviceID;
             public ma_format format;
             public uint channels;
             public byte* pChannelMap;
@@ -3802,7 +3693,7 @@ public static unsafe partial class Interop
         [StructLayout(LayoutKind.Sequential)]
         public struct capture
         {
-            public * pDeviceID;
+            public ma_device_id* pDeviceID;
             public ma_format format;
             public uint channels;
             public byte* pChannelMap;
@@ -3881,7 +3772,7 @@ public static unsafe partial class Interop
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_device_descriptor
     {
-        public * pDeviceID;
+        public ma_device_id* pDeviceID;
         public ma_share_mode shareMode;
         public ma_format format;
         public uint channels;
@@ -4271,54 +4162,8 @@ public static unsafe partial class Interop
         [StructLayout(LayoutKind.Sequential)]
         public struct playback
         {
-            public * pID;
-            [StructLayout(LayoutKind.Explicit)]
-            public struct id
-            {
-                [FieldOffset(0)]
-                public fixed ushort wasapi[64];
-                [FieldOffset(0)]
-                public fixed byte dsound[16];
-                [FieldOffset(0)]
-                public uint winmm;
-                [FieldOffset(0)]
-                public fixed byte alsa[256];
-                [FieldOffset(0)]
-                public fixed byte pulse[256];
-                [FieldOffset(0)]
-                public int jack;
-                [FieldOffset(0)]
-                public fixed byte coreaudio[256];
-                [FieldOffset(0)]
-                public fixed byte sndio[256];
-                [FieldOffset(0)]
-                public fixed byte audio4[256];
-                [FieldOffset(0)]
-                public fixed byte oss[64];
-                [FieldOffset(0)]
-                public int aaudio;
-                [FieldOffset(0)]
-                public uint opensl;
-                [FieldOffset(0)]
-                public fixed byte webaudio[32];
-                [FieldOffset(0)]
-                [StructLayout(LayoutKind.Explicit)]
-                public struct custom
-                {
-                    [FieldOffset(0)]
-                    public int i;
-                    [FieldOffset(0)]
-                    public fixed byte s[256];
-                    [FieldOffset(0)]
-                    public IntPtr p;
-                }
-
-
-                [FieldOffset(0)]
-                public int nullbackend;
-            }
-
-
+            public ma_device_id* pID;
+            public ma_device_id id;
             public fixed byte name[256];
             public ma_share_mode shareMode;
             public ma_format format;
@@ -4346,54 +4191,8 @@ public static unsafe partial class Interop
         [StructLayout(LayoutKind.Sequential)]
         public struct capture
         {
-            public * pID;
-            [StructLayout(LayoutKind.Explicit)]
-            public struct id
-            {
-                [FieldOffset(0)]
-                public fixed ushort wasapi[64];
-                [FieldOffset(0)]
-                public fixed byte dsound[16];
-                [FieldOffset(0)]
-                public uint winmm;
-                [FieldOffset(0)]
-                public fixed byte alsa[256];
-                [FieldOffset(0)]
-                public fixed byte pulse[256];
-                [FieldOffset(0)]
-                public int jack;
-                [FieldOffset(0)]
-                public fixed byte coreaudio[256];
-                [FieldOffset(0)]
-                public fixed byte sndio[256];
-                [FieldOffset(0)]
-                public fixed byte audio4[256];
-                [FieldOffset(0)]
-                public fixed byte oss[64];
-                [FieldOffset(0)]
-                public int aaudio;
-                [FieldOffset(0)]
-                public uint opensl;
-                [FieldOffset(0)]
-                public fixed byte webaudio[32];
-                [FieldOffset(0)]
-                [StructLayout(LayoutKind.Explicit)]
-                public struct custom
-                {
-                    [FieldOffset(0)]
-                    public int i;
-                    [FieldOffset(0)]
-                    public fixed byte s[256];
-                    [FieldOffset(0)]
-                    public IntPtr p;
-                }
-
-
-                [FieldOffset(0)]
-                public int nullbackend;
-            }
-
-
+            public ma_device_id* pID;
+            public ma_device_id id;
             public fixed byte name[256];
             public ma_share_mode shareMode;
             public ma_format format;
@@ -4467,16 +4266,7 @@ public static unsafe partial class Interop
                 public ma_semaphore operationSemaphore;
                 public uint operation;
                 public ma_result operationResult;
-                [StructLayout(LayoutKind.Explicit)]
-                public struct timer
-                {
-                    [FieldOffset(0)]
-                    public long counter;
-                    [FieldOffset(0)]
-                    public double counterD;
-                }
-
-
+                public ma_timer timer;
                 public double priorRunTime;
                 public uint currentPeriodFramesRemainingPlayback;
                 public uint currentPeriodFramesRemainingCapture;
@@ -6593,7 +6383,7 @@ public static unsafe partial class Interop
         public ma_resource_manager* pResourceManager;
         public ma_context* pContext;
         public ma_device* pDevice;
-        public * pPlaybackDeviceID;
+        public ma_device_id* pPlaybackDeviceID;
         public IntPtr dataCallback; // ma_device_data_proc
         public IntPtr notificationCallback; // ma_device_notification_proc
         public ma_log* pLog;
