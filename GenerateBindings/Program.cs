@@ -394,7 +394,7 @@ internal static partial class Program
 
                         UnusedUserProvidedTypes.Remove(entry.Name!); // assume the core bindings have some use for this definition
                     }
-                    else if ((componentType.Tag == "pointer") && IsDefinedType(componentType.Type?.Tag))
+                    else if ((componentType.Tag == "pointer") && IsDefinedType(componentType.Type!))
                     {
                         var subtype = GetTypeFromTypedefMap(type: componentType.Type!);
                         var subtypeName = CSharpTypeFromFFI(subtype, TypeContext.FunctionData);
@@ -1052,7 +1052,7 @@ public static unsafe class Interop
 
     private static string CSharpTypeFromFFI(RawFFIEntry type, TypeContext context)
     {
-        if ((type.Tag == "pointer") && IsDefinedType(type.Type!.Tag))
+        if ((type.Tag == "pointer") && IsDefinedType(type.Type!))
         {
             var subtype = GetTypeFromTypedefMap(type.Type!);
             var subtypeName = CSharpTypeFromFFI(subtype, context);
@@ -1139,9 +1139,17 @@ public static unsafe class Interop
         };
     }
 
-    private static bool IsDefinedType(string? typeName)
+    private static bool IsDefinedType(RawFFIEntry type)
     {
-        if (typeName == null) return false;
+        if (type == null) return false;
+
+        // FIXME: this is so jank
+        while (GetTypeFromTypedefMap(type) != type)
+        {
+            type = GetTypeFromTypedefMap(type);
+        }
+
+        var typeName = type.Tag;
 
         return
             (typeName != "void") && (
