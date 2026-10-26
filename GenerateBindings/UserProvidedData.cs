@@ -272,7 +272,7 @@ internal static class UserProvidedData
         { ("ma_hishelf_node_init", "pNodeGraph"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11076:18
         { ("ma_delay_node_init", "pNodeGraph"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11096:18
         { ("ma_engine_node_get_heap_size", "pHeapSizeInBytes"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11200:18
-        { ("ma_engine_init", "pEngine"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11344:18
+        { ("ma_engine_init", "pEngine"), PointerFunctionDataIntent.Out }, // ../miniaudio/miniaudio.h:11344:18
         { ("ma_engine_uninit", "pEngine"), PointerFunctionDataIntent.In }, // ../miniaudio/miniaudio.h:11345:13
         { ("ma_engine_read_pcm_frames", "pEngine"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11346:18
         { ("ma_engine_get_node_graph", "__return"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11347:23
@@ -1242,7 +1242,7 @@ internal static class UserProvidedData
         { ("ma_engine_node_uninit", "pAllocationCallbacks"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11203:13
         { ("ma_sound_config_init_2", "pEngine"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11239:24
         { ("ma_sound_group_config_init_2", "pEngine"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11277:30
-        { ("ma_engine_init", "pConfig"), PointerFunctionDataIntent.Out }, // ../miniaudio/miniaudio.h:11344:18
+        { ("ma_engine_init", "pConfig"), PointerFunctionDataIntent.In }, // ../miniaudio/miniaudio.h:11344:18
         { ("ma_engine_read_pcm_frames", "pFramesRead"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11346:18
         { ("ma_engine_get_log", "__return"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11352:16
         { ("ma_engine_play_sound", "pGroup"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:11387:18

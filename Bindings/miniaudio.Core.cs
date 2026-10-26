@@ -6613,7 +6613,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_engine_init(out ma_engine_config pConfig, IntPtr pEngine); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_engine_init(in ma_engine_config pConfig, out ma_engine pEngine);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
