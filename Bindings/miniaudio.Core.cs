@@ -5547,7 +5547,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_init(IntPtr pConfig, IntPtr pResourceManager); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_init(in ma_resource_manager_config pConfig, out ma_resource_manager pResourceManager);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]

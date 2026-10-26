@@ -173,7 +173,7 @@ internal static class UserProvidedData
         { ("ma_encoder_uninit", "pEncoder"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10164:13
         { ("ma_encoder_write_pcm_frames", "pEncoder"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10165:18
         { ("ma_noise_get_heap_size", "pHeapSizeInBytes"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10284:18
-        { ("ma_resource_manager_init", "pResourceManager"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10542:18
+        { ("ma_resource_manager_init", "pResourceManager"), PointerFunctionDataIntent.Out }, // ../miniaudio/miniaudio.h:10542:18
         { ("ma_resource_manager_uninit", "pResourceManager"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10543:13
         { ("ma_resource_manager_get_log", "pResourceManager"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10544:16
         { ("ma_resource_manager_register_file", "pResourceManager"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10547:18
@@ -1107,7 +1107,7 @@ internal static class UserProvidedData
         { ("ma_noise_set_amplitude", "pNoise"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10289:18
         { ("ma_noise_set_seed", "pNoise"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10290:18
         { ("ma_noise_set_type", "pNoise"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10291:18
-        { ("ma_resource_manager_init", "pConfig"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10542:18
+        { ("ma_resource_manager_init", "pConfig"), PointerFunctionDataIntent.In }, // ../miniaudio/miniaudio.h:10542:18
         { ("ma_resource_manager_get_log", "__return"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10544:16
         { ("ma_resource_manager_data_buffer_init_ex", "pConfig"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10559:18
         { ("ma_resource_manager_data_buffer_init", "pNotifications"), PointerFunctionDataIntent.Unknown }, // ../miniaudio/miniaudio.h:10560:18
