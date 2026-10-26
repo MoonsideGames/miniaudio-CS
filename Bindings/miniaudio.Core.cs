@@ -60,6 +60,24 @@ public static unsafe partial class Interop
 
     // ../miniaudio/miniaudio.h
 
+    [StructLayout(LayoutKind.Explicit)]
+    public struct ma_pthread_mutex_t
+    {
+        [FieldOffset(0)]
+        public fixed byte __data[40];
+        [FieldOffset(0)]
+        public ulong __alignment;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    public struct ma_pthread_cond_t
+    {
+        [FieldOffset(0)]
+        public fixed byte __data[48];
+        [FieldOffset(0)]
+        public ulong __alignment;
+    }
+
     public enum ma_log_level
     {
         MA_LOG_LEVEL_DEBUG = 4,
@@ -340,16 +358,16 @@ public static unsafe partial class Interop
     public struct ma_event
     {
         public uint value;
-        public IntPtr @lock;
-        public pthread_cond_t cond;
+        public ma_pthread_mutex_t @lock;
+        public ma_pthread_cond_t cond;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_semaphore
     {
         public int value;
-        public IntPtr @lock;
-        public pthread_cond_t cond;
+        public ma_pthread_mutex_t @lock;
+        public ma_pthread_cond_t cond;
     }
 
     [LibraryImport(nativeLibName)]
@@ -386,7 +404,7 @@ public static unsafe partial class Interop
 
         public uint callbackCount;
         public ma_allocation_callbacks allocationCallbacks;
-        public IntPtr @lock;
+        public ma_pthread_mutex_t @lock;
     }
 
     [LibraryImport(nativeLibName)]
@@ -3419,7 +3437,7 @@ public static unsafe partial class Interop
     [StructLayout(LayoutKind.Sequential)]
     public struct ma_device_job_thread
     {
-        public IntPtr thread;
+        public ulong thread;
         public ma_job_queue jobQueue;
         public uint _hasThread;
     }
@@ -3995,8 +4013,8 @@ public static unsafe partial class Interop
         public UIntPtr threadStackSize;
         public IntPtr pUserData;
         public ma_allocation_callbacks allocationCallbacks;
-        public IntPtr deviceEnumLock;
-        public IntPtr deviceInfoLock;
+        public ma_pthread_mutex_t deviceEnumLock;
+        public ma_pthread_mutex_t deviceInfoLock;
         public uint deviceInfoCapacity;
         public uint playbackDeviceInfoCount;
         public uint captureDeviceInfoCount;
@@ -4080,7 +4098,7 @@ public static unsafe partial class Interop
                 public IntPtr snd_pcm_poll_descriptors_count;
                 public IntPtr snd_pcm_poll_descriptors_revents;
                 public IntPtr snd_config_update_free_global;
-                public IntPtr internalDeviceEnumLock;
+                public ma_pthread_mutex_t internalDeviceEnumLock;
                 public uint useVerboseDeviceEnumeration;
             }
 
@@ -4234,11 +4252,11 @@ public static unsafe partial class Interop
         public IntPtr onNotification; // ma_device_notification_proc
         public IntPtr onStop; // ma_stop_proc
         public IntPtr pUserData;
-        public IntPtr startStopLock;
+        public ma_pthread_mutex_t startStopLock;
         public ma_event wakeupEvent;
         public ma_event startEvent;
         public ma_event stopEvent;
-        public IntPtr thread;
+        public ulong thread;
         public ma_result workResult;
         public byte isOwnerOfContext;
         public byte noPreSilencedOutputBuffer;
@@ -4382,7 +4400,7 @@ public static unsafe partial class Interop
             [StructLayout(LayoutKind.Sequential)]
             public struct null_device__Nested
             {
-                public IntPtr deviceThread;
+                public ulong deviceThread;
                 public ma_event operationEvent;
                 public ma_event operationCompletionEvent;
                 public ma_semaphore operationSemaphore;
@@ -5520,8 +5538,8 @@ public static unsafe partial class Interop
     {
         public ma_resource_manager_config config;
         public ma_resource_manager_data_buffer_node* pRootDataBufferNode;
-        public IntPtr dataBufferBSTLock;
-        public fixed IntPtr jobThreads[64];
+        public ma_pthread_mutex_t dataBufferBSTLock;
+        public fixed ulong jobThreads[64];
         public ma_job_queue jobQueue;
         public ma_default_vfs defaultVFS;
         public ma_log log;
