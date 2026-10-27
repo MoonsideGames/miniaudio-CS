@@ -5567,7 +5567,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_register_decoded_data(IntPtr pResourceManager, IntPtr pName, IntPtr pData, ulong frameCount, ma_format format, uint channels, uint sampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_register_decoded_data(in ma_resource_manager pResourceManager, IntPtr pName, IntPtr pData, ulong frameCount, ma_format format, uint channels, uint sampleRate); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -5711,11 +5711,11 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_source_init(IntPtr pResourceManager, IntPtr pName, uint flags, IntPtr pNotifications, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_source_init(in ma_resource_manager pResourceManager, IntPtr pName, uint flags, IntPtr pNotifications, out ma_resource_manager_data_source pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
 
     [LibraryImport(nativeLibName, StringMarshalling = StringMarshalling.Utf8)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_resource_manager_data_source_init_w(IntPtr pResourceManager, string pName, uint flags, IntPtr pNotifications, IntPtr pDataSource); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_resource_manager_data_source_init_w(in ma_resource_manager pResourceManager, string pName, uint flags, ref ma_resource_manager_pipeline_notifications pNotifications, out ma_resource_manager_data_source pDataSource);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
@@ -6777,7 +6777,7 @@ public static unsafe partial class Interop
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
-    public static partial ma_result ma_sound_init_from_data_source(IntPtr pEngine, IntPtr pDataSource, uint flags, IntPtr pGroup, IntPtr pSound); // WARN_UNKNOWN_POINTER_PARAMETER
+    public static partial ma_result ma_sound_init_from_data_source(in ma_engine pEngine, IntPtr pDataSource, uint flags, in ma_sound pGroup, out ma_sound pSound);
 
     [LibraryImport(nativeLibName)]
     [UnmanagedCallConv(CallConvs = [typeof(CallConvCdecl)])]
